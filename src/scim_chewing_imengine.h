@@ -80,12 +80,14 @@ public:
 private:
 	bool commit( ChewingOutput *pgo );
 	void reload_config( const ConfigPointer &scim_config );
+	bool match_key_event( const KeyEventList &keylist, const KeyEvent &key );
 	Connection m_reload_signal_connection;
 	WideString m_converted_string;
 	WideString m_preedit_string;
 	WideString m_commit_string;
 	WideString m_aux_string;
-	KeyEvent m_chi_eng_key;
+	KeyEventList m_chi_eng_keys;
+	KeyEvent m_prev_key;
 	ChewingIMEngineFactory *m_factory;
 	ChewingLookupTable m_lookup_table;
 	IConvert m_iconv;

@@ -233,8 +233,9 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 
 	// add chi/eng toggle key
 	str = m_factory->m_config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
-			String ("Shift+Shift_L+KeyRelease"));
-	scim_string_to_key (m_chi_eng_key, str);
+			String ("Shift+Shift_L+KeyRelease") + 
+			String ("Shift+Shift_R+KeyRelease"));
+	scim_string_to_key_list (m_chi_eng_keys, str);
 
 	/* Configure the direction for user's phrase addition */
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
@@ -257,13 +258,16 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	 * This is a workaround against the known issue in OpenOffice with 
 	 * GTK+ im module hanlding key pressed/released events.
 	 */
-	if ( key.is_key_release() )
-		return true;
-	
-	if (m_chi_eng_key.code == key.code) {
+
+	if (match_key_event(m_chi_eng_keys, key)) {
+		m_prev_key = key;
 		OnKeyCapslock( &da, &gOut );
 		return commit( &gOut );
 	}
+	m_prev_key = key;
+
+	if ( key.is_key_release() )
+		return true;
 
 	if (
 		key.mask == SCIM_KEY_NullMask || 
@@ -439,6 +443,19 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	if ( pgo->keystrokeRtn & KEYSTROKE_IGNORE )
 		return false;
 	return true;
+}
+
+bool ChewingIMEngineInstance::match_key_event(
+		const KeyEventList &keylist,
+		const KeyEvent &key )
+{
+	KeyEventList::const_iterator kit;
+	for( kit = keylist.begin(); kit != keylist.end(); ++kit ) {
+		if (key.code == kit->code && key.mask == kit->mask)
+			if (key.is_key_press() || m_prev_key.code == key.code)
+				return true;
+	}
+	return false;
 }
 
 ChewingLookupTable::ChewingLookupTable()
