@@ -17,6 +17,13 @@
 2005-03-18  Kanru Chen  <koster@debian.org.tw>
 
 	* scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::trigger_property):
+	Use trigger_property to change the chi/eng mode, so we can use
+	property button to change the mode.
+	
+2005-03-18  Kanru Chen  <koster@debian.org.tw>
+
+	* scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::commit):
 	Make Zuin output much pretty and readable.
 

@@ -92,7 +92,7 @@ private:
 
 	void initialize_all_properties ();
 	void refresh_all_properties ();
-	void refresh_status_property ();
+	void refresh_chieng_property ();
 
 	Connection m_reload_signal_connection;
 	WideString m_converted_string;
