@@ -256,10 +256,6 @@ ChewingIMEngineInstance::~ChewingIMEngineInstance()
 
 bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 {
-	/* 
-	 * This is a workaround against the known issue in OpenOffice with 
-	 * GTK+ im module hanlding key pressed/released events.
-	 */
 
 	if (match_key_event(m_chi_eng_keys, key)) {
 		m_prev_key = key;
@@ -268,6 +264,10 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	}
 	m_prev_key = key;
 
+	/* 
+	 * This is a workaround against the known issue in OpenOffice with 
+	 * GTK+ im module hanlding key pressed/released events.
+	 */
 	if ( key.is_key_release() )
 		return true;
 
@@ -313,6 +313,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 				OnKeyTab( &da, &gOut );
 				break;
 			default:
+				SCIM_DEBUG_IMENGINE( 1 ) << "OnKeyDefault: " << key.get_ascii_code() << "\n";
 				OnKeyDefault(
 					&da, 
 					key.get_ascii_code(), 
@@ -423,7 +424,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 						SCIM_ATTR_DECORATE_UNDERLINE));
 	}
 	// cursor decoration
-	attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_HIGHLIGHT));
+	attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
 
 	// update display
 	update_preedit_string( m_preedit_string,attr );
