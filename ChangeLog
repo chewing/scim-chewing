@@ -1,3 +1,8 @@
+2005-02-25  Kanru Chen  <koster@debian.org.tw>
+	
+	* src/scim_chewing_config_entry.h:
+	Fix typo.
+
 2005-02-24  Jim Huang  <jserv@kaffe.org>
 
 	* src/scim_chewing_imengine_setup.cpp:
