@@ -226,7 +226,7 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	cf.inp_ename = (char *) strdup( "Chewing" );
 
 	InitChewing( &da, &cf );
-	config.selectAreaLen = 55;
+	config.selectAreaLen = SCIM_CHEWING_SELECTION_KEYS_NUM * 5 + 5;
 	config.maxChiSymbolLen = 16;
 
 	/* Configure selection keys definition */

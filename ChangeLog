@@ -1,3 +1,9 @@
+2005-02-21  Kanru Chen  <koster@debian.org.tw>
+
+	* src/scim_chewing_imengine.cpp
+	(reload_config):
+	Let selectAreaLen have correct value.
+
 2005-02-21  Jim Huang  <jserv@kaffe.org>
 
 	* src/scim_chewing_imengine.h,
