@@ -1,3 +1,17 @@
+2005-02-21  Jim Huang  <jserv@kaffe.org>
+
+	* src/scim_chewing_imengine.h,
+	src/scim_chewing_config_entry.h,
+	src/scim_chewing_imengine.cpp,
+	src/scim_chewing_imengine_setup.cpp:
+	Bump copyright date.
+
+	* src/scim_chewing_imengine_setup.cpp:
+	Fix intl macro.
+
+	* po/zh_TW.po:
+	Update zh_TW translation to adapt recent SetupIM changes.
+	
 2005-02-20  Kanru Chen  <koster@debian.org.tw>
 
 	* po/scim-chewing.pot,

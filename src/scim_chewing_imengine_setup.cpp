@@ -6,7 +6,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2004
+ * Copyright (c) 2005
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -138,11 +138,11 @@ static KeyboardConfigData __config_keyboards[] =
         // key
         SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY,
         // label
-        N_( "Trigger keys:" ),
+        _( "Trigger keys:" ),
         // title
-        N_( "Select trigger keys" ),
+        _( "Select trigger keys" ),
         // tooltip
-        N_( "The key events to switch Chewing input mode. "
+        _( "The key events to switch Chewing input mode. "
             "Click on the button on the right to edit it." ),
         // entry
         NULL,
@@ -155,11 +155,11 @@ static KeyboardConfigData __config_keyboards[] =
         // key
         SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY,
         // label
-        N_("Chewing CHI/ENG keys:"),
+        _("Chewing CHI/ENG keys:"),
         // title
-        N_("Select CHI/ENG keys"),
+        _("Select CHI/ENG keys"),
         // tooltip
-        N_("The key events to switch English and Chinese mode. "
+        _("The key events to switch English and Chinese mode. "
            "Click on the button on the right to edit it."),
         // entry
         NULL,
