@@ -223,12 +223,12 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	config.bAddPhraseForward = 1;
 
 	/* Configure selection keys definition */
-	default_selectionKeys[ SCIM_CHEWING_SELETION_KEYS_NUM ] = '\0';
-	for ( int i = 0; i < SCIM_CHEWING_SELETION_KEYS_NUM; i++ ) {
-		config.selKey[ i ] = m_factory->m_config->read(
-			String( 
-			  SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
-			default_selectionKeys[ i ] );
+	m_factory->m_config->read(
+			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
+			default_selectionKeys );
+	default_selectionKeys[ SCIM_CHEWING_SELECTION_KEYS_NUM ] = '\0';
+	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; i++ ) {
+		config.selKey[ i ] = default_selectionKeys[ i ];
 	}
 
 	SetConfig( &da, &config );
@@ -389,6 +389,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	}
 	update_preedit_string( m_preedit_string, AttributeList() );
 	update_preedit_caret( pgo->chiSymbolCursor );
+
+	// show preedit string
 	if ( m_preedit_string.empty() ) {
 		hide_preedit_string();
 	} else {
@@ -427,7 +429,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 }
 
 ChewingLookupTable::ChewingLookupTable()
-	: LookupTable( SCIM_CHEWING_SELETION_KEYS_NUM )
+	: LookupTable( SCIM_CHEWING_SELECTION_KEYS_NUM )
 {
 }
 
@@ -465,7 +467,7 @@ void ChewingLookupTable::init()
 	std::vector< WideString > labels;
 	m_iconv.set_encoding( LIBCHEWING_ENCODING );
 	char buf[ 2 ] = { 0, 0 };
-	for ( int i = 0; i < (SCIM_CHEWING_SELETION_KEYS_NUM - 1); ++i ) {
+	for ( int i = 0; i < (SCIM_CHEWING_SELECTION_KEYS_NUM); ++i ) {
 		buf[ 0 ] = '1' + i;
 		labels.push_back( utf8_mbstowcs( buf ) );
 	}
