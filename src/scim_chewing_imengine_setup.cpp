@@ -118,6 +118,7 @@ struct KeyboardConfigData {
 // Internal data declaration.
 // static bool __config_use_capslock          = true;
 static bool __config_add_phrase_forward = false;
+static bool __config_space_as_selection = true;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
 static String __config_kb_type_data_translated;
@@ -126,6 +127,7 @@ static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
 static GtkWidget    * __widget_add_phrase_forward = 0;
+static GtkWidget    * __widget_space_as_selection = 0;
 static GtkWidget    * __widget_kb_type = 0;
 static GList *kb_type_list = 0;
 // static GtkWidget    * __widget_show_candidate_comment= 0;
@@ -209,45 +211,38 @@ static GtkWidget *create_options_page()
 {
 	GtkWidget *vbox;
 
-
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
 
-//	__widget_use_capslock = gtk_check_button_new_with_mnemonic (_("Use _CapsLock"));
-//	gtk_widget_show (__widget_use_capslock);
-//	gtk_box_pack_start (GTK_BOX (vbox), __widget_use_capslock, FALSE, FALSE, 4);
-//	gtk_container_set_border_width (GTK_CONTAINER (__widget_use_capslock), 4);
+	__widget_add_phrase_forward =
+		gtk_check_button_new_with_mnemonic( _( "Add _Phrase forward" ) );
+	gtk_widget_show( __widget_add_phrase_forward );
+	gtk_box_pack_start( GTK_BOX( vbox ), __widget_add_phrase_forward, FALSE, FALSE, 4 );
+	gtk_container_set_border_width( GTK_CONTAINER( __widget_add_phrase_forward ), 4 );
 
-	__widget_add_phrase_forward = gtk_check_button_new_with_mnemonic (_("Add _Phrase forward"));
-	gtk_widget_show (__widget_add_phrase_forward);
-	gtk_box_pack_start (GTK_BOX (vbox), __widget_add_phrase_forward, FALSE, FALSE, 4);
-	gtk_container_set_border_width (GTK_CONTAINER (__widget_add_phrase_forward), 4);
+	g_signal_connect(
+			(gpointer) __widget_add_phrase_forward, "toggled",
+			G_CALLBACK( on_default_toggle_button_toggled ),
+			&__config_add_phrase_forward );
 
-//	__widget_show_candidate_comment = gtk_check_button_new_with_mnemonic (_("_Show candidate comment"));
-//	gtk_widget_show (__widget_show_candidate_comment);
-//	gtk_box_pack_start (GTK_BOX (vbox), __widget_show_candidate_comment, FALSE, FALSE, 4);
-//	gtk_container_set_border_width (GTK_CONTAINER (__widget_show_candidate_comment), 4);
+	gtk_tooltips_set_tip(
+			__widget_tooltips, __widget_add_phrase_forward,
+			_( "Whether to add Phrase forward or not." ), NULL );
 
-	// Connect all signals.
-//	g_signal_connect ((gpointer) __widget_use_capslock, "toggled",
-//			G_CALLBACK (on_default_toggle_button_toggled),
-//			&__config_use_capslock);
-	g_signal_connect ((gpointer) __widget_add_phrase_forward, "toggled",
-			G_CALLBACK (on_default_toggle_button_toggled),
-			&__config_add_phrase_forward);
-//	g_signal_connect ((gpointer) __widget_show_candidate_comment, "toggled",
-//			G_CALLBACK (on_default_toggle_button_toggled),
-//			&__config_show_candidate_comment);
+	__widget_space_as_selection = 
+		gtk_check_button_new_with_mnemonic( _( "_SpaceKey as selection key" ) );
+	gtk_widget_show( __widget_space_as_selection );
+	gtk_box_pack_start( GTK_BOX( vbox ), __widget_space_as_selection, FALSE, FALSE, 4 );
+	gtk_container_set_border_width( GTK_CONTAINER( __widget_space_as_selection ), 4 );
 
-	// Set all tooltips.
-//	gtk_tooltips_set_tip (__widget_tooltips, __widget_use_capslock,
-//			_("Whether to use Caps Lock key for changing chewing output mode to Jamo or not."), NULL);
+	g_signal_connect(
+			(gpointer) __widget_space_as_selection, "toggled",
+			G_CALLBACK( on_default_toggle_button_toggled ),
+			&__config_space_as_selection );
 
-	gtk_tooltips_set_tip (__widget_tooltips, __widget_add_phrase_forward,
-			_("Whether to add Phrase forward or not."), NULL);
-
-//	gtk_tooltips_set_tip (__widget_tooltips, __widget_show_candidate_comment,
-//			_("Whether to show the comment of candidates or not."), NULL);
+	gtk_tooltips_set_tip(
+			__widget_tooltips, __widget_space_as_selection,
+			_( "Whether SpaceKey is used as selection key or not." ), NULL );
 
 	return vbox;
 }
@@ -418,24 +413,18 @@ static GtkWidget *create_setup_window()
 
 void setup_widget_value()
 {
-//	if (__widget_use_capslock) {
-//		gtk_toggle_button_set_active (
-//				GTK_TOGGLE_BUTTON (__widget_use_capslock),
-//				__config_use_capslock);
-//	}
-
-	if (__widget_add_phrase_forward) {
-		gtk_toggle_button_set_active (
-				GTK_TOGGLE_BUTTON (__widget_add_phrase_forward),
+	if ( __widget_add_phrase_forward ) {
+		gtk_toggle_button_set_active(
+				GTK_TOGGLE_BUTTON( __widget_add_phrase_forward ),
 				__config_add_phrase_forward);
 	}
 
-//	if (__widget_show_candidate_comment) {
-//		gtk_toggle_button_set_active (
-//				GTK_TOGGLE_BUTTON (__widget_show_candidate_comment),
-//				__config_show_candidate_comment);
-//	}
-
+	if ( __widget_space_as_selection ) {
+		gtk_toggle_button_set_active(
+				GTK_TOGGLE_BUTTON( __widget_space_as_selection ),
+				__config_space_as_selection );
+	}
+	
 	for (int i = 0; __config_keyboards [i].key; ++ i) {
 		if (__config_keyboards [i].entry) {
 			gtk_entry_set_text (
@@ -462,23 +451,22 @@ void setup_widget_value()
 void load_config( const ConfigPointer &config )
 {
 	if (!config.null ()) {
-//		__config_use_capslock =
-//			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK),
-//					__config_use_capslock);
 		__config_add_phrase_forward =
-			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
-					__config_add_phrase_forward);
-		__config_kb_type_data = 
-			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),
-					__config_kb_type_data);
-//		__config_show_candidate_comment =
-//			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
-//					__config_show_candidate_comment);
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
+					__config_add_phrase_forward );
 
-		for (int i = 0; __config_keyboards [i].key; ++ i) {
-			__config_keyboards [i].data =
-				config->read (String (__config_keyboards [i].key),
-						__config_keyboards [i].data);
+		__config_space_as_selection =
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
+					__config_space_as_selection );
+
+		__config_kb_type_data = 
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
+					__config_kb_type_data);
+
+		for (int i = 0; __config_keyboards[ i ].key; ++ i) {
+			__config_keyboards[ i ].data =
+				config->read( String( __config_keyboards [ i ].key ),
+						__config_keyboards[ i ].data);
 		}
 
 		setup_widget_value ();
@@ -489,12 +477,13 @@ void load_config( const ConfigPointer &config )
 
 void save_config( const ConfigPointer &config )
 {
-	if (!config.null ()) {
-//		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK),
-//				__config_use_capslock);
-		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
-				__config_add_phrase_forward);
-	        
+	if ( ! config.null() ) {
+		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
+				__config_add_phrase_forward );
+	       
+		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
+				__config_space_as_selection );
+
 		int index_keymap = 
 			(sizeof(builtin_keymaps) / sizeof(_builtin_keymap)) - 1;
 		for ( ; index_keymap >= 0;  index_keymap--) {

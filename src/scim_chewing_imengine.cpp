@@ -142,10 +142,10 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 	String str;
 	// Load Chi/Eng mode keys
 	str = m_config->read(
-			String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
-			String ("Shift+Shift_L+KeyRelease") + 
-			String ("Shift+Shift_R+KeyRelease"));
-	scim_string_to_key_list ( m_chi_eng_keys, str );
+			String( SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY ),
+			String( "Shift+Shift_L+KeyRelease" ) + 
+			String( "Shift+Shift_R+KeyRelease" ) );
+	scim_string_to_key_list( m_chi_eng_keys, str );
 
 	// Load keyboard type
 	m_default_KeyboardType = m_config->read (
@@ -154,8 +154,13 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
 	m_add_phrase_forward = m_config->read(
-			String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
+			String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 			false);
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
+	m_space_as_selection = m_config->read(
+			String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
+			true);
 }
 
 ChewingIMEngineFactory::~ChewingIMEngineFactory()
@@ -269,6 +274,9 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
 	config.bAddPhraseForward = m_factory->m_add_phrase_forward ? 0 : 1;
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
+	config.bSpaceAsSelection = m_factory->m_space_as_selection ? 1 : 0;
 
 	SetConfig( &da, &config );
 }

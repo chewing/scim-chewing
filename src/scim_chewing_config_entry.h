@@ -23,6 +23,9 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD \
 	"/IMEngine/Chewing/AddPhraseForward"
 
+#define SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION \
+	"/IMEngine/Chewing/SpaceAsSelection"
+
 #define SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY \
 	"/IMEngine/Chewing/TriggerKey"
 

@@ -61,6 +61,7 @@ private:
 	KeyEventList m_chi_eng_keys;
 	String m_default_KeyboardType;
 	bool m_add_phrase_forward;
+	bool m_space_as_selection;
 
 	friend class ChewingIMEngineInstance;
 };

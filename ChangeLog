@@ -1,3 +1,19 @@
+2005-03-20 Jim Huang  <jserv@kaffe.org>
+
+	* src/scim_chewing_imengine.h
+	(class ChewingIMEngineFactory),
+	src/scim_chewing_config_entry.h:
+	New member for SpaceAsSelection to decide if perform old style
+	of space key.
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineFactory::reload_config),
+	(ChewingIMEngineInstance::reload_config),
+	src/scim_chewing_imengine_setup.cpp
+	(create_options_page), (setup_widget_value), 
+	(load_config), (save_config):
+	Support the switch if the above option.
+	
 2005-03-18  Kanru Chen  <koster@debian.org.tw>
 
 	* scim_chewing_imengine.cpp
