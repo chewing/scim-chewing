@@ -180,7 +180,7 @@ String ChewingIMEngineFactory::get_icon_file() const
 
 WideString ChewingIMEngineFactory::get_authors() const
 {
-	return utf8_mbstowcs( _( "SCIM-chewing Developers." ) );
+	return utf8_mbstowcs( _( "Chewing core team <http://chewing.csie.net>" ) );
 }
 
 WideString ChewingIMEngineFactory::get_credits() const
@@ -204,7 +204,10 @@ WideString ChewingIMEngineFactory::get_help() const
 			   "\n\n  Tab:\n"
 			   "    Use tab key to dispart or connect a phrase."
 			   "\n\n  Ctrl + [number]:\n"
-			   "    Use ctrl + number key to add a user defined phrase." ) );
+			   "    Use ctrl + number key to add a user-defined phrase. (Here number stands for the length of the user-defined phrase.)"
+			   "\n\n  Ctrl + 0:\n"
+			   "    Use Ctrl + 0 to specify symbolic input."
+		) );
 
 	return utf8_mbstowcs( help );
 }

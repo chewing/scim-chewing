@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-24 14:41+0800\n"
+"POT-Creation-Date: 2005-02-24 15:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "The status of the current input method. Click to change it."
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:77 ../src/scim_chewing_imengine.cpp:567
+#: ../src/scim_chewing_imengine.cpp:77 ../src/scim_chewing_imengine.cpp:570
 msgid "Eng"
 msgstr ""
 
@@ -30,7 +30,7 @@ msgid "Chewing"
 msgstr ""
 
 #: ../src/scim_chewing_imengine.cpp:183
-msgid "SCIM-chewing Developers."
+msgid "Chewing core team <http://chewing.csie.net>"
 msgstr ""
 
 #: ../src/scim_chewing_imengine.cpp:199
@@ -52,10 +52,14 @@ msgid ""
 "    Use tab key to dispart or connect a phrase.\n"
 "\n"
 "  Ctrl + [number]:\n"
-"    Use ctrl + number key to add a user defined phrase."
+"    Use ctrl + number key to add a user-defined phrase. (Here number stands "
+"for the length of the user-defined phrase.)\n"
+"\n"
+"  Ctrl + 0:\n"
+"    Use Ctrl + 0 to specify symbolic input."
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:569
+#: ../src/scim_chewing_imengine.cpp:572
 msgid "Chi"
 msgstr ""
 
