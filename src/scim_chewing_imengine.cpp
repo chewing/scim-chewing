@@ -200,6 +200,7 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 {
 	char default_selectionKeys[] = "1234567890";
 	String default_KeyboardType = String( "KB_DEFAULT" );
+	String str;
 
 	/* Configure Keyboard Type */
 	cf.kb_type = KBStr2Num(
@@ -218,10 +219,6 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	config.selectAreaLen = 55;
 	config.maxChiSymbolLen = 16;
 
-	/* Configure the direction for user's phrase addition */
-	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
-	config.bAddPhraseForward = 1;
-
 	/* Configure selection keys definition */
 	m_factory->m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
@@ -230,6 +227,18 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; i++ ) {
 		config.selKey[ i ] = default_selectionKeys[ i ];
 	}
+
+
+	// add chi/eng toggle key
+	str = m_factory->m_config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
+			String ("Shift+Shift_L+KeyRelease"));
+	scim_string_to_key (m_chi_eng_key, str);
+
+	/* Configure the direction for user's phrase addition */
+	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
+	str = m_factory->m_config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
+			String ("false"));
+	config.bAddPhraseForward = (str == "false") ? 1 : 0;
 
 	SetConfig( &da, &config );
 }
@@ -248,6 +257,11 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	 */
 	if ( key.is_key_release() )
 		return true;
+	
+	if (m_chi_eng_key.code == key.code) {
+		OnKeyCapslock( &da, &gOut );
+		return commit( &gOut );
+	}
 
 	if (
 		key.mask == SCIM_KEY_NullMask || 
@@ -289,9 +303,6 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 				break;
 			case SCIM_KEY_Tab:
 				OnKeyTab( &da, &gOut );
-				break;
-			case SCIM_KEY_Caps_Lock:
-				OnKeyCapslock( &da, &gOut );
 				break;
 			default:
 				OnKeyDefault(

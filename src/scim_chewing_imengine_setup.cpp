@@ -1,5 +1,3 @@
-#if 0 /* jserv: still hacking */
-
 /** @file scim_chewing_imengine_setup.cpp
  * implementation of Setup Module of chewing imengine module.
  */
@@ -37,6 +35,7 @@
 
 #include <scim.h>
 #include <gtk/scimkeyselection.h>
+#include "scim_chewing_config_entry.h"
 
 using namespace scim;
 
@@ -51,15 +50,6 @@ using namespace scim;
 #define scim_setup_module_save_config     chewing_imengine_setup_LTX_scim_setup_module_save_config
 #define scim_setup_module_query_changed   chewing_imengine_setup_LTX_scim_setup_module_query_changed
 
-
-#define SCIM_CONFIG_IMENGINE_HANGUL_USE_CAPSLOCK                "/IMEngine/Chewing/UseCapslock"
-#define SCIM_CONFIG_IMENGINE_HANGUL_USE_DVORAK                  "/IMEngine/Chewing/UseDvorak"
-#define SCIM_CONFIG_IMENGINE_HANGUL_SHOW_CANDIDATE_COMMENT      "/IMEngine/Chewing/ShowCandidateComment"
-#define SCIM_CONFIG_IMENGINE_HANGUL_TRIGGER_KEY                 "/IMEngine/Chewing/TriggerKey"
-#define SCIM_CONFIG_IMENGINE_HANGUL_HANGUL_HANJA_KEY            "/IMEngine/Chewing/HangulHanjaKey"
-#define SCIM_CONFIG_IMENGINE_HANGUL_MANUAL_MODE_KEY             "/IMEngine/Chewing/ManualModeKey"
-
-
 static GtkWidget * create_setup_window();
 static void load_config( const ConfigPointer &config );
 static void save_config( const ConfigPointer &config );
@@ -70,7 +60,7 @@ extern "C" {
 
 	void scim_module_init()
 	{
-		bindtextdomain( GETTEXT_PACKAGE, SCIM_HANGUL_LOCALEDIR );
+		//bindtextdomain( GETTEXT_PACKAGE, SCIM_CHEWING_LOCALEDIR );
 		bind_textdomain_codeset( GETTEXT_PACKAGE, "UTF-8" );
 	}
 
@@ -126,15 +116,17 @@ struct KeyboardConfigData {
 };
 
 // Internal data declaration.
-static bool __config_use_capslock          = true;
+// static bool __config_use_capslock          = true;
 static bool __config_use_dvorak            = false;
-static bool __config_show_candidate_comment= true;
+static bool __config_add_phrase_forward = false;
+// static bool __config_show_candidate_comment= true;
 
 static bool __have_changed                 = false;
 
-static GtkWidget    * __widget_use_capslock          = 0;
+// static GtkWidget    * __widget_use_capslock          = 0;
 static GtkWidget    * __widget_use_dvorak            = 0;
-static GtkWidget    * __widget_show_candidate_comment= 0;
+static GtkWidget    * __widget_add_phrase_forward = 0;
+// static GtkWidget    * __widget_show_candidate_comment= 0;
 static GtkTooltips  * __widget_tooltips              = 0;
 
 static KeyboardConfigData __config_keyboards[] =
@@ -160,9 +152,9 @@ static KeyboardConfigData __config_keyboards[] =
         // key
         SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY,
         // label
-        N_("Hangul to Hanja keys:"),
+        N_("Chewing CHI/ENG keys:"),
         // title
-        N_("Select Hangul to Hanja keys"),
+        N_("Select CHI/ENG keys"),
         // tooltip
         N_("The key events to switch English and Chinese mode. "
            "Click on the button on the right to edit it."),
@@ -171,7 +163,7 @@ static KeyboardConfigData __config_keyboards[] =
         // button
         NULL,
         // data
-        "Tab"
+        "Shift+Shift_L+KeyRelease"
     },
     {
         // key
@@ -218,41 +210,52 @@ static GtkWidget *create_options_page()
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
 
-	__widget_use_capslock = gtk_check_button_new_with_mnemonic (_("Use _CapsLock"));
-	gtk_widget_show (__widget_use_capslock);
-	gtk_box_pack_start (GTK_BOX (vbox), __widget_use_capslock, FALSE, FALSE, 4);
-	gtk_container_set_border_width (GTK_CONTAINER (__widget_use_capslock), 4);
+//	__widget_use_capslock = gtk_check_button_new_with_mnemonic (_("Use _CapsLock"));
+//	gtk_widget_show (__widget_use_capslock);
+//	gtk_box_pack_start (GTK_BOX (vbox), __widget_use_capslock, FALSE, FALSE, 4);
+//	gtk_container_set_border_width (GTK_CONTAINER (__widget_use_capslock), 4);
 
 	__widget_use_dvorak = gtk_check_button_new_with_mnemonic (_("Use _Dvorak keyboard"));
 	gtk_widget_show (__widget_use_dvorak);
 	gtk_box_pack_start (GTK_BOX (vbox), __widget_use_dvorak, FALSE, FALSE, 4);
 	gtk_container_set_border_width (GTK_CONTAINER (__widget_use_dvorak), 4);
 
-	__widget_show_candidate_comment = gtk_check_button_new_with_mnemonic (_("_Show candidate comment"));
-	gtk_widget_show (__widget_show_candidate_comment);
-	gtk_box_pack_start (GTK_BOX (vbox), __widget_show_candidate_comment, FALSE, FALSE, 4);
-	gtk_container_set_border_width (GTK_CONTAINER (__widget_show_candidate_comment), 4);
+	__widget_add_phrase_forward = gtk_check_button_new_with_mnemonic (_("Add _Phrase forward"));
+	gtk_widget_show (__widget_add_phrase_forward);
+	gtk_box_pack_start (GTK_BOX (vbox), __widget_add_phrase_forward, FALSE, FALSE, 4);
+	gtk_container_set_border_width (GTK_CONTAINER (__widget_add_phrase_forward), 4);
+
+//	__widget_show_candidate_comment = gtk_check_button_new_with_mnemonic (_("_Show candidate comment"));
+//	gtk_widget_show (__widget_show_candidate_comment);
+//	gtk_box_pack_start (GTK_BOX (vbox), __widget_show_candidate_comment, FALSE, FALSE, 4);
+//	gtk_container_set_border_width (GTK_CONTAINER (__widget_show_candidate_comment), 4);
 
 	// Connect all signals.
-	g_signal_connect ((gpointer) __widget_use_capslock, "toggled",
-			G_CALLBACK (on_default_toggle_button_toggled),
-			&__config_use_capslock);
+//	g_signal_connect ((gpointer) __widget_use_capslock, "toggled",
+//			G_CALLBACK (on_default_toggle_button_toggled),
+//			&__config_use_capslock);
 	g_signal_connect ((gpointer) __widget_use_dvorak, "toggled",
 			G_CALLBACK (on_default_toggle_button_toggled),
 			&__config_use_dvorak);
-	g_signal_connect ((gpointer) __widget_show_candidate_comment, "toggled",
+	g_signal_connect ((gpointer) __widget_add_phrase_forward, "toggled",
 			G_CALLBACK (on_default_toggle_button_toggled),
-			&__config_show_candidate_comment);
+			&__config_add_phrase_forward);
+//	g_signal_connect ((gpointer) __widget_show_candidate_comment, "toggled",
+//			G_CALLBACK (on_default_toggle_button_toggled),
+//			&__config_show_candidate_comment);
 
 	// Set all tooltips.
-	gtk_tooltips_set_tip (__widget_tooltips, __widget_use_capslock,
-			_("Whether to use Caps Lock key for changing chewing output mode to Jamo or not."), NULL);
+//	gtk_tooltips_set_tip (__widget_tooltips, __widget_use_capslock,
+//			_("Whether to use Caps Lock key for changing chewing output mode to Jamo or not."), NULL);
 
 	gtk_tooltips_set_tip (__widget_tooltips, __widget_use_dvorak,
 			_("Whether to use dvorak keyboard or not."), NULL);
 
-	gtk_tooltips_set_tip (__widget_tooltips, __widget_show_candidate_comment,
-			_("Whether to show the comment of candidates or not."), NULL);
+	gtk_tooltips_set_tip (__widget_tooltips, __widget_add_phrase_forward,
+			_("Whether to add Phrase forward or not."), NULL);
+
+//	gtk_tooltips_set_tip (__widget_tooltips, __widget_show_candidate_comment,
+//			_("Whether to show the comment of candidates or not."), NULL);
 
 	return vbox;
 }
@@ -357,11 +360,11 @@ static GtkWidget *create_setup_window()
 
 void setup_widget_value()
 {
-	if (__widget_use_capslock) {
-		gtk_toggle_button_set_active (
-				GTK_TOGGLE_BUTTON (__widget_use_capslock),
-				__config_use_capslock);
-	}
+//	if (__widget_use_capslock) {
+//		gtk_toggle_button_set_active (
+//				GTK_TOGGLE_BUTTON (__widget_use_capslock),
+//				__config_use_capslock);
+//	}
 
 	if (__widget_use_dvorak) {
 		gtk_toggle_button_set_active (
@@ -369,11 +372,17 @@ void setup_widget_value()
 				__config_use_dvorak);
 	}
 
-	if (__widget_show_candidate_comment) {
+	if (__widget_add_phrase_forward) {
 		gtk_toggle_button_set_active (
-				GTK_TOGGLE_BUTTON (__widget_show_candidate_comment),
-				__config_show_candidate_comment);
+				GTK_TOGGLE_BUTTON (__widget_add_phrase_forward),
+				__config_add_phrase_forward);
 	}
+
+//	if (__widget_show_candidate_comment) {
+//		gtk_toggle_button_set_active (
+//				GTK_TOGGLE_BUTTON (__widget_show_candidate_comment),
+//				__config_show_candidate_comment);
+//	}
 
 	for (int i = 0; __config_keyboards [i].key; ++ i) {
 		if (__config_keyboards [i].entry) {
@@ -387,15 +396,18 @@ void setup_widget_value()
 void load_config( const ConfigPointer &config )
 {
 	if (!config.null ()) {
-		__config_use_capslock =
-			config->read (String (SCIM_CONFIG_IMENGINE_HANGUL_USE_CAPSLOCK),
-					__config_use_capslock);
+//		__config_use_capslock =
+//			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK),
+//					__config_use_capslock);
 		__config_use_dvorak =
-			config->read (String (SCIM_CONFIG_IMENGINE_HANGUL_USE_DVORAK),
+			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK),
 					__config_use_dvorak);
-		__config_show_candidate_comment =
-			config->read (String (SCIM_CONFIG_IMENGINE_HANGUL_SHOW_CANDIDATE_COMMENT),
-					__config_show_candidate_comment);
+		__config_add_phrase_forward =
+			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
+					__config_add_phrase_forward);
+//		__config_show_candidate_comment =
+//			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
+//					__config_show_candidate_comment);
 
 		for (int i = 0; __config_keyboards [i].key; ++ i) {
 			__config_keyboards [i].data =
@@ -412,12 +424,14 @@ void load_config( const ConfigPointer &config )
 void save_config( const ConfigPointer &config )
 {
 	if (!config.null ()) {
-		config->write (String (SCIM_CONFIG_IMENGINE_HANGUL_USE_CAPSLOCK),
-				__config_use_capslock);
-		config->write (String (SCIM_CONFIG_IMENGINE_HANGUL_USE_DVORAK),
+//		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK),
+//				__config_use_capslock);
+		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK),
 				__config_use_dvorak);
-		config->write (String (SCIM_CONFIG_IMENGINE_HANGUL_SHOW_CANDIDATE_COMMENT),
-				__config_show_candidate_comment);
+		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
+				__config_add_phrase_forward);
+//		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
+//				__config_show_candidate_comment);
 
 		for (int i = 0; __config_keyboards [i].key; ++ i) {
 			config->write (String (__config_keyboards [i].key),
@@ -487,5 +501,3 @@ static void on_default_key_selection_clicked(
 		gtk_widget_destroy( dialog );
 	}
 }
-
-#endif

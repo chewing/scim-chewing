@@ -85,6 +85,7 @@ private:
 	WideString m_preedit_string;
 	WideString m_commit_string;
 	WideString m_aux_string;
+	KeyEvent m_chi_eng_key;
 	ChewingIMEngineFactory *m_factory;
 	ChewingLookupTable m_lookup_table;
 	IConvert m_iconv;

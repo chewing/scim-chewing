@@ -15,13 +15,27 @@
 #define SCIM_CHEWING_SELECTION_KEYS_NUM (9)
 
 #define SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS \
-	"/IMEngine/Chewing/User/SelectionKeys"
+	"/IMEngine/Chewing/SelectionKeys"
 
 #define SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE \
-	"/IMEngine/Chewing/User/KeyboardType"
+	"/IMEngine/Chewing/KeyboardType"
 
 #define SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD \
-	"/IMEngine/Chewing/User/AddPhraseForward"
+	"/IMEngine/Chewing/AddPhraseForward"
 
+#define SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY \
+	"/IMEngine/Chewing/TriggerKey"
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY \
+	"/IMEngine/Cheiwng/ChiEngKey"
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK \
+	"/IMEngine/Chewing/UseDvorak"
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK                "/IMEngine/Chewing/UseCapslock"
+#define SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT      "/IMEngine/Chewing/ShowCandidateComment"
+//#define SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY                 "/IMEngine/Chewing/TriggerKey"
+//#define SCIM_CONFIG_IMENGINE_CHEWING_CHEWING_HANJA_KEY            "/IMEngine/Chewing/HangulHanjaKey"
+//#define SCIM_CONFIG_IMENGINE_CHEWING_MANUAL_MODE_KEY             "/IMEngine/Chewing/ManualModeKey"
 #endif
 
