@@ -12,7 +12,7 @@
 	src/scim_chewing_imengine_setup.cpp
 	(create_options_page), (setup_widget_value), 
 	(load_config), (save_config):
-	Support the switch if the above option.
+	Support the switch of the above option.
 	
 2005-03-18  Kanru Chen  <koster@debian.org.tw>
 
