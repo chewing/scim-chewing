@@ -311,6 +311,7 @@ static GtkWidget *create_keyboard_page()
 	kb_type_list = g_list_append(kb_type_list, (void*)"KB_ET26");
 	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DVORAK");
 	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DVORAK_HSU");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_HANYU_PINYING");
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_kb_type), kb_type_list);
 	g_list_free(kb_type_list);
 	gtk_combo_set_use_arrows (GTK_COMBO (__widget_kb_type), TRUE);

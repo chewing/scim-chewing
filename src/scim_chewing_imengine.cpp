@@ -35,7 +35,7 @@
   #define bind_textdomain_codeset(domain,codeset)
 #endif
 
-#define SCIM_PROP_STATUS                                                     "/IMEngine/Chinese/Chewing/Status"
+#define SCIM_PROP_STATUS                                                     "/IMEngine/Chinese/Chewing/ChiEngMode"
 
 #include <scim.h>
 #include <chewing/chewing.h>
