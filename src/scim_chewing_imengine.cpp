@@ -231,15 +231,17 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	}
 
 
-	// add chi/eng toggle key
-	str = m_factory->m_config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
+	// add Chi/Eng toggle key
+	str = m_factory->m_config->read(
+			String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
 			String ("Shift+Shift_L+KeyRelease") + 
 			String ("Shift+Shift_R+KeyRelease"));
 	scim_string_to_key_list (m_chi_eng_keys, str);
 
 	/* Configure the direction for user's phrase addition */
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
-	str = m_factory->m_config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
+	str = m_factory->m_config->read(
+			String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
 			String ("false"));
 	config.bAddPhraseForward = (str == "false") ? 1 : 0;
 

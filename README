@@ -6,9 +6,6 @@ How to build SCIM-chewing
     # apt-get install scim-dev
 
 2. Make sure you have installed libchewing 0.2.4 (or above version).
-   [NOTE] If you svn checkout, you must select
-
-    libchewing/branches/libchewing_production
 
    # ./autogen.sh
    # ./configure
@@ -23,7 +20,7 @@ How to build SCIM-chewing
    # sudo make install
 
 
-How to lauch SCIM-chewing
+How to launch SCIM-chewing
 =========================
 1. Make sure you have alread installed SCIM-chewing, to see if the
    following file exists or not.

@@ -1,3 +1,19 @@
+2005-02-07  Kanru Chen  <koster@debian.org.tw>
+	* src/scim_chewing_imengine.h,
+	trunk/src/scim_chewing_imengine.cpp (ChewingIMEngineInstance::commit):
+	Add functionality to show phrase interval using fonts decorated by
+	underline, caret by highlight fonts, and Zuin symbol after the
+	specific caret.
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::match_key_event):
+	New method. Make checking keys more convenient.
+	
+2005-02-06  Kanru Chen  <koster@debian.org.tw>
+	* src/scim_chewing_imengine.cpp,
+	src/scim_chewing_imengine_setup.cpp:
+	Initial working SetupUI. Support USER_KB_TYPE entry.
+
 2004-12-21  Jim Huang  <jserv@kaffe.org>
 	* configure.ac:
 	Bump version to 0.1.1
