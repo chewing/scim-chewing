@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-20 22:59+0800\n"
+"POT-Creation-Date: 2005-02-24 00:51+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,28 +20,42 @@ msgstr ""
 msgid "The status of the current input method. Click to change it."
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:77 ../src/scim_chewing_imengine.cpp:511
+#: ../src/scim_chewing_imengine.cpp:77 ../src/scim_chewing_imengine.cpp:567
 msgid "Eng"
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:143
+#: ../src/scim_chewing_imengine.cpp:168
 #: ../src/scim_chewing_imengine_setup.cpp:83
 msgid "Chewing"
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:158
+#: ../src/scim_chewing_imengine.cpp:183
 msgid "SCIM-chewing Developers."
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:163
-msgid "Here should put some credits"
+#: ../src/scim_chewing_imengine.cpp:199
+msgid "Hot Keys:"
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:168
-msgid "Here should put some help"
+#: ../src/scim_chewing_imengine.cpp:201
+msgid "    Switch between English/Chinese mode."
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:513
+#: ../src/scim_chewing_imengine.cpp:202
+msgid ""
+"\n"
+"\n"
+"  Space:\n"
+"    Use space key to select candidate phrases.\n"
+"\n"
+"  Tab:\n"
+"    Use tab key to dispart or connect a phrase.\n"
+"\n"
+"  Ctrl + [number]:\n"
+"    Use ctrl + number key to add a user defined phrase."
+msgstr ""
+
+#: ../src/scim_chewing_imengine.cpp:569
 msgid "Chi"
 msgstr ""
 
@@ -50,34 +64,34 @@ msgid "A Intelligent Chinese Phonetic IMEngine Module."
 msgstr ""
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:141
+#: ../src/scim_chewing_imengine_setup.cpp:139
 msgid "Trigger keys:"
 msgstr ""
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:143
+#: ../src/scim_chewing_imengine_setup.cpp:141
 msgid "Select trigger keys"
 msgstr ""
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:145
+#: ../src/scim_chewing_imengine_setup.cpp:143
 msgid ""
 "The key events to switch Chewing input mode. Click on the button on the "
 "right to edit it."
 msgstr ""
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:158
+#: ../src/scim_chewing_imengine_setup.cpp:156
 msgid "Chewing CHI/ENG keys:"
 msgstr ""
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:160
+#: ../src/scim_chewing_imengine_setup.cpp:158
 msgid "Select CHI/ENG keys"
 msgstr ""
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:162
+#: ../src/scim_chewing_imengine_setup.cpp:160
 msgid ""
 "The key events to switch English and Chinese mode. Click on the button on "
 "the right to edit it."
@@ -87,36 +101,28 @@ msgstr ""
 #. gtk_widget_show (__widget_use_capslock);
 #. gtk_box_pack_start (GTK_BOX (vbox), __widget_use_capslock, FALSE, FALSE, 4);
 #. gtk_container_set_border_width (GTK_CONTAINER (__widget_use_capslock), 4);
-#: ../src/scim_chewing_imengine_setup.cpp:222
-msgid "Use _Dvorak keyboard"
-msgstr ""
-
-#: ../src/scim_chewing_imengine_setup.cpp:227
+#: ../src/scim_chewing_imengine_setup.cpp:220
 msgid "Add _Phrase forward"
 msgstr ""
 
-#: ../src/scim_chewing_imengine_setup.cpp:256
-msgid "Whether to use dvorak keyboard or not."
-msgstr ""
-
-#: ../src/scim_chewing_imengine_setup.cpp:259
+#: ../src/scim_chewing_imengine_setup.cpp:246
 msgid "Whether to add Phrase forward or not."
 msgstr ""
 
-#: ../src/scim_chewing_imengine_setup.cpp:319
+#: ../src/scim_chewing_imengine_setup.cpp:306
 msgid "Use keyboard type:"
 msgstr ""
 
-#: ../src/scim_chewing_imengine_setup.cpp:330
+#: ../src/scim_chewing_imengine_setup.cpp:317
 msgid "Change the default keyboard layout type"
 msgstr ""
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:373
+#: ../src/scim_chewing_imengine_setup.cpp:360
 msgid "Options"
 msgstr ""
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:384
+#: ../src/scim_chewing_imengine_setup.cpp:371
 msgid "Keyboard"
 msgstr ""

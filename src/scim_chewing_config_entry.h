@@ -29,9 +29,6 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY \
 	"/IMEngine/Cheiwng/ChiEngKey"
 
-#define SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK \
-	"/IMEngine/Chewing/UseDvorak"
-
 #define SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK                "/IMEngine/Chewing/UseCapslock"
 #define SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT      "/IMEngine/Chewing/ShowCandidateComment"
 //#define SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY                 "/IMEngine/Chewing/TriggerKey"

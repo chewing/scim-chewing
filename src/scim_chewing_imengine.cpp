@@ -105,8 +105,11 @@ ChewingIMEngineFactory::ChewingIMEngineFactory( const ConfigPointer& config )
 	: m_config( config ),
 	  m_valid( false )
 {
+	reload_config( config );
 	set_languages( "zh_TW,zh_HK,zh_SG" );
 	m_valid = init();
+	m_reload_signal_connection = m_config->signal_connect_reload (
+			slot (this, &ChewingIMEngineFactory::reload_config));
 }
 
 bool ChewingIMEngineFactory::init()
@@ -134,8 +137,30 @@ bool ChewingIMEngineFactory::init()
 	return true;
 }
 
+void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
+{
+	String str;
+	// Load Chi/Eng mode keys
+	str = m_config->read(
+			String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
+			String ("Shift+Shift_L+KeyRelease") + 
+			String ("Shift+Shift_R+KeyRelease"));
+	scim_string_to_key_list ( m_chi_eng_keys, str );
+
+	// Load keyboard type
+	m_default_KeyboardType = m_config->read (
+			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
+			String( "KB_DEFAULT" ));
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
+	m_add_phrase_forward = m_config->read(
+			String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
+			false);
+}
+
 ChewingIMEngineFactory::~ChewingIMEngineFactory()
 {
+	m_reload_signal_connection.disconnect ();
 }
 
 WideString ChewingIMEngineFactory::get_name() const
@@ -160,12 +185,28 @@ WideString ChewingIMEngineFactory::get_authors() const
 
 WideString ChewingIMEngineFactory::get_credits() const
 {
-	return utf8_mbstowcs( _( "Here should put some credits" ) );
+	return WideString();
 }
 
 WideString ChewingIMEngineFactory::get_help() const
 {
-	return utf8_mbstowcs( _( "Here should put some help" ) );
+	String help;
+	String chi_eng_mode_switch;
+
+	scim_key_list_to_string( chi_eng_mode_switch, m_chi_eng_keys );
+
+
+	help =	String( _( "Hot Keys:" ) ) +
+		String( "\n\n  " ) + chi_eng_mode_switch + String( ":\n" ) +
+		String( _( "    Switch between English/Chinese mode." ) ) +
+		String( _( "\n\n  Space:\n"
+			   "    Use space key to select candidate phrases."
+			   "\n\n  Tab:\n"
+			   "    Use tab key to dispart or connect a phrase."
+			   "\n\n  Ctrl + [number]:\n"
+			   "    Use ctrl + number key to add a user defined phrase." ) );
+
+	return utf8_mbstowcs( help );
 }
 
 IMEngineInstancePointer ChewingIMEngineFactory::create_instance(
@@ -195,7 +236,6 @@ ChewingIMEngineInstance::ChewingIMEngineInstance(
 	  m_factory( factory )
 {
 	reload_config( m_factory->m_config );
-
 	m_iconv.set_encoding( LIBCHEWING_ENCODING );
 	m_lookup_table.init();
 
@@ -207,51 +247,25 @@ ChewingIMEngineInstance::ChewingIMEngineInstance(
 void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 {
 	char default_selectionKeys[] = "1234567890";
-	String default_KeyboardType = m_factory->m_config->read (
-			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
-			String( "KB_DEFAULT" ));
-	String str;
 
-	/* Configure Keyboard Type */
-	cf.kb_type = KBStr2Num(
-		(char *) m_factory->m_config->read( String(
-			  SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
-			default_KeyboardType ).c_str() );
-	
-	/*
-	 * XXX: The legacy code doesn't make sense, and will be removed in
-	 * 0.3.x version of libchewing.
-	 */
-	cf.inp_cname = (char *) strdup( "Chewing" );
-	cf.inp_ename = (char *) strdup( "Chewing" );
+	// Reset all data.
+	reset();
 
-	InitChewing( &da, &cf );
 	config.selectAreaLen = SCIM_CHEWING_SELECTION_KEYS_NUM * 5 + 5;
 	config.maxChiSymbolLen = 16;
 
 	/* Configure selection keys definition */
-	m_factory->m_config->read(
-			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
-			default_selectionKeys );
+	// XXX: need to support configure 
+	//m_factory->m_config->read(
+	//		String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
+	//		default_selectionKeys );
 	default_selectionKeys[ SCIM_CHEWING_SELECTION_KEYS_NUM ] = '\0';
 	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; i++ ) {
 		config.selKey[ i ] = default_selectionKeys[ i ];
 	}
 
-
-	// add Chi/Eng toggle key
-	str = m_factory->m_config->read(
-			String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY),
-			String ("Shift+Shift_L+KeyRelease") + 
-			String ("Shift+Shift_R+KeyRelease"));
-	scim_string_to_key_list (m_chi_eng_keys, str);
-
-	/* Configure the direction for user's phrase addition */
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
-	str = m_factory->m_config->read(
-			String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
-			String ("false"));
-	config.bAddPhraseForward = (str == "false") ? 1 : 0;
+	config.bAddPhraseForward = m_factory->m_add_phrase_forward ? 0 : 1;
 
 	SetConfig( &da, &config );
 }
@@ -265,7 +279,7 @@ ChewingIMEngineInstance::~ChewingIMEngineInstance()
 bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 {
 
-	if (match_key_event(m_chi_eng_keys, key)) {
+	if ( match_key_event( m_factory->m_chi_eng_keys, key ) ) {
 		m_prev_key = key;
 		OnKeyCapslock( &da, &gOut );
 		refresh_status_property();
@@ -281,9 +295,9 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 		return true;
 
 	if (
-		key.mask == SCIM_KEY_NullMask || 
-		key.mask == SCIM_KEY_ShiftMask || 
-		key.mask == SCIM_KEY_CapsLockMask ) {
+		key.mask == SCIM_KEY_NullMask && 
+		key.mask != SCIM_KEY_ShiftMask &&
+		key.mask != SCIM_KEY_ControlMask ) {
 		switch ( key.code ) {
 			case SCIM_KEY_Left:
 				OnKeyLeft( &da, &gOut );
@@ -322,23 +336,37 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 				OnKeyTab( &da, &gOut );
 				break;
 			default:
-				SCIM_DEBUG_IMENGINE( 1 ) << "OnKeyDefault: " << key.get_ascii_code() << "\n";
 				OnKeyDefault(
 					&da, 
 					key.get_ascii_code(), 
 					&gOut );
+				break;
 		}
-		return commit( &gOut );
 	}
-	if ( key.mask == SCIM_KEY_ControlMask ) {
+	else if ( key.mask == SCIM_KEY_ShiftMask ) {
+		switch ( key.code ) {
+			case SCIM_KEY_Left:
+				OnKeyShiftLeft( &da, &gOut );
+				break;
+			case SCIM_KEY_Right:
+				OnKeyShiftRight( &da, &gOut );
+				break;
+			default:
+				OnKeyDefault(
+					&da,
+					key.get_ascii_code(),
+					&gOut );
+				break;
+		}
+	}
+	else if ( key.mask == SCIM_KEY_ControlMask ) {
 		if ( 
 			key.get_ascii_code() <= '9' && 
 			key.get_ascii_code() >= '0' ) {
 			OnKeyCtrlNum( &da, key.get_ascii_code(), &gOut );
-			return commit( &gOut );
 		}
 	}
-	return false;
+	return commit( &gOut );
 }
 
 void ChewingIMEngineInstance::move_preedit_caret( unsigned int pos )
@@ -347,6 +375,11 @@ void ChewingIMEngineInstance::move_preedit_caret( unsigned int pos )
 
 void ChewingIMEngineInstance::select_candidate ( unsigned int index )
 {
+	OnKeyDefault(
+		&da, 
+		'1' + index, 
+		&gOut );
+	commit( &gOut );
 }
 
 void ChewingIMEngineInstance::update_lookup_table_page_size(
@@ -369,6 +402,18 @@ void ChewingIMEngineInstance::lookup_table_page_down()
 
 void ChewingIMEngineInstance::reset()
 {
+	/* Configure Keyboard Type */
+	cf.kb_type = KBStr2Num(
+			(char *) m_factory->m_default_KeyboardType.c_str() );
+
+	/*
+	 * XXX: The legacy code doesn't make sense, and will be removed in
+	 * 0.3.x version of libchewing.
+	 */
+	cf.inp_cname = (char *) strdup( "Chewing" );
+	cf.inp_ename = (char *) strdup( "Chewing" );
+
+	InitChewing( &da, &cf );
 }
 
 void ChewingIMEngineInstance::focus_in()
@@ -395,7 +440,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		for ( int i = 0; i < pgo->nCommitStr; i++ ) {
 			m_iconv.convert(
 					m_converted_string, 
-					(char *) pgo->commitStr[ i ].s, 2 );
+					(char *) pgo->commitStr[ i ].s,
+					strlen((char *)pgo->commitStr[ i ].s) );
 			m_commit_string += m_converted_string;
 		}
 		commit_string( m_commit_string );
@@ -406,7 +452,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	for ( int i = 0; i < pgo->chiSymbolCursor; i++ ) {
 		m_iconv.convert( 
 			m_converted_string, 
-			(char *) pgo->chiSymbolBuf[ i ].s, 2 );
+			(char *) pgo->chiSymbolBuf[ i ].s,
+			strlen((char *)pgo->chiSymbolBuf[ i ].s) );
 		m_preedit_string += m_converted_string;
 	}
 	// zuin string
@@ -414,24 +461,32 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		if ( pgo->zuinBuf[ i ].s[ 0 ] != '\0' ) {
 			 m_iconv.convert(
 				m_converted_string, 
-				(char *) pgo->zuinBuf[ i ].s, 2 );
+				(char *) pgo->zuinBuf[ i ].s,
+				strlen((char *)pgo->zuinBuf[ i ].s) );
 			 m_preedit_string += m_converted_string;
 		}
 	}
 	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
 		m_iconv.convert( 
 			m_converted_string, 
-			(char *) pgo->chiSymbolBuf[ i ].s, 2 );
+			(char *) pgo->chiSymbolBuf[ i ].s,
+			strlen((char *)pgo->chiSymbolBuf[ i ].s) );
 		m_preedit_string += m_converted_string;
 	}
 
 	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
-		if ( pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from > 1 )
+		if ( pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from > 1 ) {
 			attr.push_back(Attribute(
 						pgo->dispInterval[ i ].from,
 						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
 						SCIM_ATTR_DECORATE,
 						SCIM_ATTR_DECORATE_UNDERLINE));
+			attr.push_back(Attribute(
+						pgo->dispInterval[ i ].from,
+						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
+						SCIM_ATTR_FOREGROUND,
+						i % 2 ? SCIM_RGB_COLOR_BLUE(128): SCIM_RGB_COLOR_BLUE(255) ));
+		}
 	}
 	// cursor decoration
 	attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
@@ -462,7 +517,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		for ( int i = 0; i < pgo->showMsgLen; i++ ) {
 			m_iconv.convert(
 				m_converted_string,
-				(char *) pgo->showMsg[ i ].s, 2 );
+				(char *) pgo->showMsg[ i ].s,
+				strlen((char *)pgo->showMsg[ i ].s) );
 			m_aux_string += m_converted_string;
 		}
 		update_aux_string( m_aux_string );

@@ -117,7 +117,6 @@ struct KeyboardConfigData {
 
 // Internal data declaration.
 // static bool __config_use_capslock          = true;
-static bool __config_use_dvorak            = false;
 static bool __config_add_phrase_forward = false;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
@@ -125,7 +124,6 @@ static String __config_kb_type_data;
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
-static GtkWidget    * __widget_use_dvorak            = 0;
 static GtkWidget    * __widget_add_phrase_forward = 0;
 static GtkWidget    * __widget_kb_type = 0;
 static GList *kb_type_list = 0;
@@ -219,11 +217,6 @@ static GtkWidget *create_options_page()
 //	gtk_box_pack_start (GTK_BOX (vbox), __widget_use_capslock, FALSE, FALSE, 4);
 //	gtk_container_set_border_width (GTK_CONTAINER (__widget_use_capslock), 4);
 
-	__widget_use_dvorak = gtk_check_button_new_with_mnemonic (_("Use _Dvorak keyboard"));
-	gtk_widget_show (__widget_use_dvorak);
-	gtk_box_pack_start (GTK_BOX (vbox), __widget_use_dvorak, FALSE, FALSE, 4);
-	gtk_container_set_border_width (GTK_CONTAINER (__widget_use_dvorak), 4);
-
 	__widget_add_phrase_forward = gtk_check_button_new_with_mnemonic (_("Add _Phrase forward"));
 	gtk_widget_show (__widget_add_phrase_forward);
 	gtk_box_pack_start (GTK_BOX (vbox), __widget_add_phrase_forward, FALSE, FALSE, 4);
@@ -238,9 +231,6 @@ static GtkWidget *create_options_page()
 //	g_signal_connect ((gpointer) __widget_use_capslock, "toggled",
 //			G_CALLBACK (on_default_toggle_button_toggled),
 //			&__config_use_capslock);
-	g_signal_connect ((gpointer) __widget_use_dvorak, "toggled",
-			G_CALLBACK (on_default_toggle_button_toggled),
-			&__config_use_dvorak);
 	g_signal_connect ((gpointer) __widget_add_phrase_forward, "toggled",
 			G_CALLBACK (on_default_toggle_button_toggled),
 			&__config_add_phrase_forward);
@@ -251,9 +241,6 @@ static GtkWidget *create_options_page()
 	// Set all tooltips.
 //	gtk_tooltips_set_tip (__widget_tooltips, __widget_use_capslock,
 //			_("Whether to use Caps Lock key for changing chewing output mode to Jamo or not."), NULL);
-
-	gtk_tooltips_set_tip (__widget_tooltips, __widget_use_dvorak,
-			_("Whether to use dvorak keyboard or not."), NULL);
 
 	gtk_tooltips_set_tip (__widget_tooltips, __widget_add_phrase_forward,
 			_("Whether to add Phrase forward or not."), NULL);
@@ -403,12 +390,6 @@ void setup_widget_value()
 //				__config_use_capslock);
 //	}
 
-	if (__widget_use_dvorak) {
-		gtk_toggle_button_set_active (
-				GTK_TOGGLE_BUTTON (__widget_use_dvorak),
-				__config_use_dvorak);
-	}
-
 	if (__widget_add_phrase_forward) {
 		gtk_toggle_button_set_active (
 				GTK_TOGGLE_BUTTON (__widget_add_phrase_forward),
@@ -439,9 +420,6 @@ void load_config( const ConfigPointer &config )
 //		__config_use_capslock =
 //			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK),
 //					__config_use_capslock);
-		__config_use_dvorak =
-			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK),
-					__config_use_dvorak);
 		__config_add_phrase_forward =
 			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
 					__config_add_phrase_forward);
@@ -469,8 +447,6 @@ void save_config( const ConfigPointer &config )
 	if (!config.null ()) {
 //		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK),
 //				__config_use_capslock);
-		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK),
-				__config_use_dvorak);
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
 				__config_add_phrase_forward);
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),

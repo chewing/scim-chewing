@@ -51,10 +51,17 @@ public:
 		const String& encoding, int id = -1 );
 	bool valid() const { return m_valid; }
 	ConfigPointer m_config;
+
 private:
 	bool init();
 	bool m_valid;
+	void reload_config( const ConfigPointer &scim_config );
 	Connection m_reload_signal_connection;
+
+	KeyEventList m_chi_eng_keys;
+	String m_default_KeyboardType;
+	bool m_add_phrase_forward;
+
 	friend class ChewingIMEngineInstance;
 };
 
@@ -91,7 +98,6 @@ private:
 	WideString m_preedit_string;
 	WideString m_commit_string;
 	WideString m_aux_string;
-	KeyEventList m_chi_eng_keys;
 	KeyEvent m_prev_key;
 	ChewingIMEngineFactory *m_factory;
 	ChewingLookupTable m_lookup_table;

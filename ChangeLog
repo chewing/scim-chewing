@@ -1,3 +1,24 @@
+2005-02-24  Kanru Chen  <koster@debian.org.tw>
+
+	* src/scim_chewing_config_entry.h,
+	src/scim_chewing_imengine_setup.cpp:
+	Remove unused SCIM_CONFIG_IMENGINE_CHEWING_USE_DVORAK
+
+	* src/scim_chewing_imengine.cpp,
+	src/scim_chewing_imengine.h:
+	New function: ChewingIMEngineFactory::reload_config,
+	reorder initialize sequence, save config data in Factory.
+	After scim-setup, changes can immediately be reloaded.
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineFactory::get_help):
+	Fill help messages.
+	(ChewingIMEngineInstance::select_candidate):
+	Now we can use mouse to select the candidate.
+	(ChewingIMEngineInstance::commit):
+	Pass correct length to iconv. (fix rt#7503)
+	Use different foreground color to highlight phrases.
+
 2005-02-21  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp
