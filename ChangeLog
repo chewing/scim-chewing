@@ -1,3 +1,12 @@
+2005-02-24  Jim Huang  <jserv@kaffe.org>
+
+	* src/scim_chewing_imengine_setup.cpp:
+	Handle the keyboard mapping configuration with translated
+	message.
+
+	* po/zh_TW.po:
+	Updated with keyboard mapping message.
+
 2005-02-24  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_config_entry.h,

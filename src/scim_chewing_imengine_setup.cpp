@@ -120,6 +120,7 @@ struct KeyboardConfigData {
 static bool __config_add_phrase_forward = false;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
+static String __config_kb_type_data_translated;
 
 static bool __have_changed                 = false;
 
@@ -251,6 +252,36 @@ static GtkWidget *create_options_page()
 	return vbox;
 }
 
+struct _builtin_keymap {
+	char *entry;
+	String translated_name;
+} builtin_keymaps[] = {
+		{ 
+			"KB_DEFAULT",
+			String( _( "Default Keyboard" ) ) },
+		{       
+			"KB_HSU",
+			String( _( "Hsu's Keyboard" ) ) },
+		{       
+			"KB_GIN_YEIH",
+			String( _( "Gin-Yieh Keyboard" ) ) },
+		{
+			"KB_ET",
+			String( _( "ETen Keyboard" ) ) },
+		{
+			"KB_ET26",
+			String( _( "ETen 26-key Keyboard" ) ) },
+		{
+			"KB_DVORAK",
+			String( _( "Dvorak Keyboard" ) ) },
+		{
+			"KB_DVORAK_HSU",
+			String( _( "Dvorak Keyboard with Hsu's support" ) ) },
+		{
+			"KB_HANYU_PINYING",
+			String( _( "Han-Yu PinYin Keyboard" ) ) }
+};
+
 static GtkWidget *create_keyboard_page()
 {
 	GtkWidget *table;
@@ -290,15 +321,16 @@ static GtkWidget *create_keyboard_page()
 	// Setup KB_TYPE combo box
 	__widget_kb_type = gtk_combo_new();
 	gtk_widget_show (__widget_kb_type);
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DEFAULT");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_HSU");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_IBM");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_GIN_YIEH");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_ET");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_ET26");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DVORAK");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DVORAK_HSU");
-	kb_type_list = g_list_append(kb_type_list, (void*)"KB_HANYU_PINYING");
+
+	for (
+		int i = 0; 
+		i < (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)); 
+		i++) {
+		kb_type_list = g_list_append(
+				kb_type_list,
+				(void *) builtin_keymaps[ i ].translated_name.c_str() );
+	}
+	
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_kb_type), kb_type_list);
 	g_list_free(kb_type_list);
 	gtk_combo_set_use_arrows (GTK_COMBO (__widget_kb_type), TRUE);
@@ -315,9 +347,11 @@ static GtkWidget *create_keyboard_page()
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_kb_type)->entry,
 			_("Change the default keyboard layout type"), NULL);
-	g_signal_connect ((gpointer) GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry), "changed",
-			G_CALLBACK (on_default_editable_changed),
-			&(__config_kb_type_data));
+	g_signal_connect(
+		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_kb_type)->entry), 
+		"changed",
+		G_CALLBACK (on_default_editable_changed),
+		&(__config_kb_type_data_translated));
 	i++;
 
 	for (i = 0; __config_keyboards [i].key; ++ i) {
@@ -409,9 +443,20 @@ void setup_widget_value()
 					__config_keyboards [i].data.c_str ());
 		}
 	}
+
+	int index_keymap = (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)) - 1;
+	for ( ; index_keymap >= 0;  index_keymap--) {
+		if ( __config_kb_type_data == builtin_keymaps[index_keymap].entry ) {
+			break;
+		}
+	}
+	if (index_keymap < 0)
+		index_keymap = 0;
+	
 	gtk_entry_set_text (
-			GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry),
-			(char*)__config_kb_type_data.c_str());
+			GTK_ENTRY(GTK_COMBO(__widget_kb_type)->entry),
+			builtin_keymaps[index_keymap].translated_name.c_str()
+	);
 }
 
 void load_config( const ConfigPointer &config )
@@ -449,6 +494,19 @@ void save_config( const ConfigPointer &config )
 //				__config_use_capslock);
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
 				__config_add_phrase_forward);
+	        
+		int index_keymap = 
+			(sizeof(builtin_keymaps) / sizeof(_builtin_keymap)) - 1;
+		for ( ; index_keymap >= 0;  index_keymap--) {
+			if (__config_kb_type_data_translated == 
+				builtin_keymaps[index_keymap].translated_name ) {
+				break;
+			}
+		}
+		if (index_keymap < 0)
+			index_keymap = 0;
+		__config_kb_type_data = builtin_keymaps[index_keymap].entry;
+
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),
 				__config_kb_type_data);
 //		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),

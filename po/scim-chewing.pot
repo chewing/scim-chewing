@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-24 00:51+0800\n"
+"POT-Creation-Date: 2005-02-24 14:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,34 +64,34 @@ msgid "A Intelligent Chinese Phonetic IMEngine Module."
 msgstr ""
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:139
+#: ../src/scim_chewing_imengine_setup.cpp:140
 msgid "Trigger keys:"
 msgstr ""
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:141
+#: ../src/scim_chewing_imengine_setup.cpp:142
 msgid "Select trigger keys"
 msgstr ""
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:143
+#: ../src/scim_chewing_imengine_setup.cpp:144
 msgid ""
 "The key events to switch Chewing input mode. Click on the button on the "
 "right to edit it."
 msgstr ""
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:156
+#: ../src/scim_chewing_imengine_setup.cpp:157
 msgid "Chewing CHI/ENG keys:"
 msgstr ""
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:158
+#: ../src/scim_chewing_imengine_setup.cpp:159
 msgid "Select CHI/ENG keys"
 msgstr ""
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:160
+#: ../src/scim_chewing_imengine_setup.cpp:161
 msgid ""
 "The key events to switch English and Chinese mode. Click on the button on "
 "the right to edit it."
@@ -101,28 +101,60 @@ msgstr ""
 #. gtk_widget_show (__widget_use_capslock);
 #. gtk_box_pack_start (GTK_BOX (vbox), __widget_use_capslock, FALSE, FALSE, 4);
 #. gtk_container_set_border_width (GTK_CONTAINER (__widget_use_capslock), 4);
-#: ../src/scim_chewing_imengine_setup.cpp:220
+#: ../src/scim_chewing_imengine_setup.cpp:221
 msgid "Add _Phrase forward"
 msgstr ""
 
-#: ../src/scim_chewing_imengine_setup.cpp:246
+#: ../src/scim_chewing_imengine_setup.cpp:247
 msgid "Whether to add Phrase forward or not."
 msgstr ""
 
-#: ../src/scim_chewing_imengine_setup.cpp:306
+#: ../src/scim_chewing_imengine_setup.cpp:261
+msgid "Default Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:264
+msgid "Hsu's Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:267
+msgid "Gin-Yieh Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:270
+msgid "ETen Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:273
+msgid "ETen 26-key Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:276
+msgid "Dvorak Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:279
+msgid "Dvorak Keyboard with Hsu's support"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:282
+msgid "Han-Yu PinYin Keyboard"
+msgstr ""
+
+#: ../src/scim_chewing_imengine_setup.cpp:338
 msgid "Use keyboard type:"
 msgstr ""
 
-#: ../src/scim_chewing_imengine_setup.cpp:317
+#: ../src/scim_chewing_imengine_setup.cpp:349
 msgid "Change the default keyboard layout type"
 msgstr ""
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:360
+#: ../src/scim_chewing_imengine_setup.cpp:394
 msgid "Options"
 msgstr ""
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:371
+#: ../src/scim_chewing_imengine_setup.cpp:405
 msgid "Keyboard"
 msgstr ""
