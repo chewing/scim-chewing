@@ -199,7 +199,9 @@ ChewingIMEngineInstance::ChewingIMEngineInstance(
 void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 {
 	char default_selectionKeys[] = "1234567890";
-	String default_KeyboardType = String( "KB_DEFAULT" );
+	String default_KeyboardType = m_factory->m_config->read (
+			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
+			String( "KB_DEFAULT" ));
 	String str;
 
 	/* Configure Keyboard Type */

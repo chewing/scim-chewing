@@ -120,12 +120,15 @@ struct KeyboardConfigData {
 static bool __config_use_dvorak            = false;
 static bool __config_add_phrase_forward = false;
 // static bool __config_show_candidate_comment= true;
+static String __config_kb_type_data;
 
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
 static GtkWidget    * __widget_use_dvorak            = 0;
 static GtkWidget    * __widget_add_phrase_forward = 0;
+static GtkWidget    * __widget_kb_type = 0;
+static GList *kb_type_list = 0;
 // static GtkWidget    * __widget_show_candidate_comment= 0;
 static GtkTooltips  * __widget_tooltips              = 0;
 
@@ -206,6 +209,7 @@ static GtkWidget *create_keyboard_page();
 static GtkWidget *create_options_page()
 {
 	GtkWidget *vbox;
+
 
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
@@ -295,6 +299,38 @@ static GtkWidget *create_keyboard_page()
 				(GtkAttachOptions) (GTK_FILL), 4, 4);
 		gtk_label_set_mnemonic_widget (GTK_LABEL (label), __config_keyboards[i].button);
 	}
+
+	// Setup KB_TYPE combo box
+	__widget_kb_type = gtk_combo_new();
+	gtk_widget_show (__widget_kb_type);
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DEFAULT");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_HSU");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_IBM");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_GIN_YIEH");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_ET");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_ET26");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DVORAK");
+	kb_type_list = g_list_append(kb_type_list, (void*)"KB_DVORAK_HSU");
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_kb_type), kb_type_list);
+	g_list_free(kb_type_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_kb_type), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry)), FALSE);
+	label = gtk_label_new (_("Use keyboard type:"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_kb_type, 1, 2, i, i+1,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_kb_type)->entry,
+			_("Change the default keyboard layout type"), NULL);
+	g_signal_connect ((gpointer) GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry), "changed",
+			G_CALLBACK (on_default_editable_changed),
+			&(__config_kb_type_data));
+	i++;
 
 	for (i = 0; __config_keyboards [i].key; ++ i) {
 		g_signal_connect ((gpointer) __config_keyboards [i].button, "clicked",
@@ -391,6 +427,9 @@ void setup_widget_value()
 					__config_keyboards [i].data.c_str ());
 		}
 	}
+	gtk_entry_set_text (
+			GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry),
+			(char*)__config_kb_type_data.c_str());
 }
 
 void load_config( const ConfigPointer &config )
@@ -405,6 +444,9 @@ void load_config( const ConfigPointer &config )
 		__config_add_phrase_forward =
 			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
 					__config_add_phrase_forward);
+		__config_kb_type_data = 
+			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),
+					__config_kb_type_data);
 //		__config_show_candidate_comment =
 //			config->read (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
 //					__config_show_candidate_comment);
@@ -430,6 +472,8 @@ void save_config( const ConfigPointer &config )
 				__config_use_dvorak);
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD),
 				__config_add_phrase_forward);
+		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),
+				__config_kb_type_data);
 //		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
 //				__config_show_candidate_comment);
 
