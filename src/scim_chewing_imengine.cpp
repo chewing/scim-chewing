@@ -375,6 +375,7 @@ void ChewingIMEngineInstance::trigger_property( const String& property )
 
 bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 {
+	AttributeList attr;
 	// commit string
 	m_commit_string = WideString();
 	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
@@ -389,7 +390,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	m_preedit_string = WideString();
 	// preedit string
 	// XXX show Interval
-	for ( int i = 0; i < pgo->chiSymbolBufLen; i++ ) {
+	for ( int i = 0; i < pgo->chiSymbolCursor; i++ ) {
 		m_iconv.convert( 
 			m_converted_string, 
 			(char *) pgo->chiSymbolBuf[ i ].s, 2 );
@@ -404,7 +405,26 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 			 m_preedit_string += m_converted_string;
 		}
 	}
-	update_preedit_string( m_preedit_string, AttributeList() );
+	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
+		m_iconv.convert( 
+			m_converted_string, 
+			(char *) pgo->chiSymbolBuf[ i ].s, 2 );
+		m_preedit_string += m_converted_string;
+	}
+
+	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
+		if ( pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from > 1 )
+			attr.push_back(Attribute(
+						pgo->dispInterval[ i ].from,
+						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
+						SCIM_ATTR_DECORATE,
+						SCIM_ATTR_DECORATE_UNDERLINE));
+	}
+	// cursor decoration
+	attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_HIGHLIGHT));
+
+	// update display
+	update_preedit_string( m_preedit_string,attr );
 	update_preedit_caret( pgo->chiSymbolCursor );
 
 	// show preedit string
