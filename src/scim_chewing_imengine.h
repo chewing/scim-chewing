@@ -81,6 +81,11 @@ private:
 	bool commit( ChewingOutput *pgo );
 	void reload_config( const ConfigPointer &scim_config );
 	bool match_key_event( const KeyEventList &keylist, const KeyEvent &key );
+
+	void initialize_all_properties ();
+	void refresh_all_properties ();
+	void refresh_status_property ();
+
 	Connection m_reload_signal_connection;
 	WideString m_converted_string;
 	WideString m_preedit_string;

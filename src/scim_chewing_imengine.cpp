@@ -35,6 +35,8 @@
   #define bind_textdomain_codeset(domain,codeset)
 #endif
 
+#define SCIM_PROP_STATUS                                                     "/IMEngine/Chinese/Chewing/Status"
+
 #include <scim.h>
 #include <chewing/chewing.h>
 
@@ -55,6 +57,10 @@ using namespace scim;
 static IMEngineFactoryPointer _scim_chewing_factory( 0 );
 static ConfigPointer _scim_config( 0 );
 
+static Property _status_property (SCIM_PROP_STATUS, "");
+//static Property _letter_property (SCIM_PROP_LETTER, _("Full/Half Letter"));
+//static Property _punct_property  (SCIM_PROP_PUNCT, _("Full/Half Punct"));
+
 extern "C" {
 	void scim_module_init()
 	{
@@ -67,6 +73,8 @@ extern "C" {
 
 	unsigned int scim_imengine_module_init( const ConfigPointer& config )
 	{
+		_status_property.set_tip (_("The status of the current input method. Click to change it."));
+		_status_property.set_label (_("Eng"));
 		_scim_config = config;
 		return 1;
 	}
@@ -260,6 +268,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	if (match_key_event(m_chi_eng_keys, key)) {
 		m_prev_key = key;
 		OnKeyCapslock( &da, &gOut );
+		refresh_status_property();
 		return commit( &gOut );
 	}
 	m_prev_key = key;
@@ -364,6 +373,7 @@ void ChewingIMEngineInstance::reset()
 
 void ChewingIMEngineInstance::focus_in()
 {
+	initialize_all_properties ();
 }
 
 void ChewingIMEngineInstance::focus_out()
@@ -479,6 +489,30 @@ bool ChewingIMEngineInstance::match_key_event(
 				return true;
 	}
 	return false;
+}
+
+void ChewingIMEngineInstance::initialize_all_properties ()
+{
+	PropertyList proplist;
+	proplist.push_back (_status_property);
+
+	register_properties (proplist);
+	refresh_all_properties ();
+}
+
+void ChewingIMEngineInstance::refresh_all_properties ()
+{
+	refresh_status_property ();
+}
+
+void ChewingIMEngineInstance::refresh_status_property ()
+{
+	if ( GetChiEngMode( &da ) != CHINESE_MODE )
+		_status_property.set_label (_("Eng"));
+	else
+		_status_property.set_label (_("Chi"));
+
+	update_property (_status_property);
 }
 
 ChewingLookupTable::ChewingLookupTable()

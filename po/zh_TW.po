@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scim-chewing 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 14:02+0800\n"
+"POT-Creation-Date: 2005-02-18 15:54+0800\n"
 "PO-Revision-Date: 2004-11-12 02:45+0800\n"
 "Last-Translator: Jim Huang <jserv@kaffe.org>\n"
 "Language-Team: Chewing Developers <chewing@chewing.csie.net>\n"
@@ -14,18 +14,30 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/scim_chewing_imengine.cpp:86
+#: ../src/scim_chewing_imengine.cpp:76
+msgid "The status of the current input method. Click to change it."
+msgstr ""
+
+#: ../src/scim_chewing_imengine.cpp:77 ../src/scim_chewing_imengine.cpp:511
+msgid "Eng"
+msgstr "英"
+
+#: ../src/scim_chewing_imengine.cpp:143
 msgid "Chewing"
 msgstr "新酷音"
 
-#: src/scim_chewing_imengine.cpp:101
+#: ../src/scim_chewing_imengine.cpp:158
 msgid "SCIM-chewing Developers."
 msgstr "SCIM-新酷音開發者"
 
-#: src/scim_chewing_imengine.cpp:106
+#: ../src/scim_chewing_imengine.cpp:163
 msgid "Here should put some credits"
 msgstr ""
 
-#: src/scim_chewing_imengine.cpp:111
+#: ../src/scim_chewing_imengine.cpp:168
 msgid "Here should put some help"
 msgstr ""
+
+#: ../src/scim_chewing_imengine.cpp:513
+msgid "Chi"
+msgstr "中"
