@@ -1,21 +1,17 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(scim-chewing, 0.1.1, chewing@chewing.csie.net)
+
+AC_PREREQ(2.59)
+
+AC_INIT(scim-chewing, 0.2.0, chewing@chewing.csie.net)
 AC_CONFIG_SRCDIR([src/scim_chewing_imengine.h])
+
+AC_SUBST(PACKAGE_VERSION)
 
 # Save this value here, since automake will set cflags and cxxflags later
 cflags_set=${CFLAGS+set}
 cppflags_set=${CPPFLAGS+set}
 
-SCIM_CHEWING_MAJOR_VERSION=0
-SCIM_CHEWING_MINOR_VERSION=1
-SCIM_CHEWING_MICRO_VERSION=1
-
-SCIM_CHEWING_VERSION=$SCIM_CHEWING_MAJOR_VERSION.$SCIM_CHEWING_MINOR_VERSION.$SCIM_CHEWING_MICRO_VERSION
-
-AC_SUBST(SCIM_CHEWING_MAJOR_VERSION)
-AC_SUBST(SCIM_CHEWING_MINOR_VERSION)
-AC_SUBST(SCIM_CHEWING_MICRO_VERSION)
-AC_SUBST(SCIM_CHEWING_VERSION)
+AC_DEFINE_UNQUOTED(SCIM_CHEWING_VERSION, "$PACKAGE_VERSION", [The release version of scim-chewing.])
 
 # Init automake stuff
 AM_INIT_AUTOMAKE
@@ -48,7 +44,7 @@ AC_TYPE_SIZE_T
 # Checks for libraries.
 
 SCIM_VERSION=1.0.0
-CHEWING_VERSION=0.2.4
+CHEWING_VERSION=0.2.6
 
 PKG_CHECK_MODULES(SCIM, [scim >= $SCIM_VERSION])
 

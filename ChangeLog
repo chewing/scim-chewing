@@ -1,3 +1,13 @@
+2005-02-28  Jim Huang  <jserv@kaffe.org>
+
+	* configure.ac:
+	Bump version to 0.2.0.
+	Depends on libchewing 0.2.6 (and above).
+	clean up version definition macros.
+	
+	* scim-chewing.spec.in:
+	Fix package version definition.
+
 2005-02-25  Kanru Chen  <koster@debian.org.tw>
 	
 	* src/scim_chewing_config_entry.h:
