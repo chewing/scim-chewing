@@ -1,0 +1,31 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: scim-chewing 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-17 14:02+0800\n"
+"PO-Revision-Date: 2004-11-12 02:45+0800\n"
+"Last-Translator: Jim Huang <jserv@kaffe.org>\n"
+"Language-Team: Chewing Developers <chewing@chewing.csie.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/scim_chewing_imengine.cpp:86
+msgid "Chewing"
+msgstr "新酷音"
+
+#: src/scim_chewing_imengine.cpp:101
+msgid "SCIM-chewing Developers."
+msgstr "SCIM-新酷音開發者"
+
+#: src/scim_chewing_imengine.cpp:106
+msgid "Here should put some credits"
+msgstr ""
+
+#: src/scim_chewing_imengine.cpp:111
+msgid "Here should put some help"
+msgstr ""

@@ -1,0 +1,31 @@
+2004-12-21  Jim Huang  <jserv@kaffe.org>
+	* configure.ac:
+	Bump version to 0.1.1
+
+2004-12-15  Jim Huang  <jserv@kaffe.org>
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event):
+	Add a workaround against the known issue in OpenOffice with
+	GTK+ im module hanlding key pressed/released events.
+
+2004-12-14  Jim Huang  <jserv@kaffe.org>
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineFactory::init):
+	Replace scim_get_home_dir() with CHEWING_DATADIR (prefix) for
+	consistency.
+	(ChewingIMEngineFactory::validate_encoding),
+	(ChewingIMEngineFactory::validate_locale):
+	Implemented.
+	(ChewingIMEngineInstance::reload_config):
+	Handle evil Null character in C-style string.
+
+2004-12-07  Jim Huang  <jserv@kaffe.org>
+	* src/scim_chewing_imengine.cpp:
+	Remove the implementation of the invalid methods,
+	ChewingIMEngineFactory::validate_encoding and
+	ChewingIMEngineFactory::validate_locale. Just use the ones 
+	derived	from base class according to the advice of James Su.
+
+2004-11-30  Jim Huang  <jserv@kaffe.org>
+	* First working snapshot.
+	* Adapt the codebase from Kanru Chen.

@@ -1,0 +1,104 @@
+%define version @SCIM_CHEWING_VERSION@
+%define release 1mdk
+
+%define libname_orig lib%{name}
+%define libname %mklibname %{name} 0
+
+Name:   	scim-chewing
+Summary:	Scim-chewing is an SCIM IMEngine module for chewing
+Version:	%{version}
+Release:	%{release}
+Group:		System/Internationalization
+License:	GPL
+URL:		http://chewing.csie.net/
+Source0:	%{name}-%{version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
+Requires:	%{libname} = %{version}-%{release}
+Requires:	libchewing >= 0.2.4
+Requires:	scim >= 1.0.1
+BuildRequires:  libchewing-devel >= 0.2.4
+BuildRequires:  scim-devel >= 1.0.1
+BuildRequires:  automake1.8
+
+%description
+Scim-chewing is an SCIM IMEngine module for chewing,
+an intelligent Chinese phonetic input method.
+
+
+%package -n %{libname}
+Summary:	Scim-chewing library.
+Group:		System/Internationalization
+Provides:	%{libname_orig} = %{version}-%{release}
+
+%description -n %{libname}
+scim-chewing library.
+
+
+%package -n %{libname}-devel
+Summary:	Headers of scim-chewing for development.
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	%{libname_orig}-devel = %{version}-%{release}
+
+%description -n %{libname}-devel
+Headers of %{name} for development.
+
+
+%prep
+%setup -q
+cp /usr/share/automake-1.8/mkinstalldirs .
+
+%build
+[[ ! -x configure ]] && ./bootstrap
+%configure2_5x
+%make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%makeinstall_std
+
+%find_lang %{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
+
+
+%files -f %{name}.lang
+%defattr(-,root,root)
+%doc AUTHORS COPYING ChangeLog README
+%{_datadir}/scim/icons/*
+
+%files -n %{libname}
+%defattr(-,root,root)
+%doc COPYING
+%{_libdir}/scim-1.0/IMEngine/*.so
+%{_libdir}/scim-1.0/SetupUI/*.so
+
+%files -n %{libname}-devel
+%defattr(-,root,root)
+%doc COPYING
+%{_libdir}/scim-1.0/IMEngine/*.a
+%{_libdir}/scim-1.0/IMEngine/*.la
+%{_libdir}/scim-1.0/SetupUI/*.a
+%{_libdir}/scim-1.0/SetupUI/*.la
+
+%changelog
+* Wed Dec 22 2004 Shiva Huang <blueshiva@giga.net.tw> 0.1.1-1shiva
+- Update to 0.1.1
+
+* Sat Dec 18 2004 Shiva Huang <blueshiva@giga.net.tw> 0.1.0-2.20041130.2shiva
+- modify Requires/BuildRequires
+- modify URL
+
+* Tue Dec 14 2004 UTUMI Hirosi <utuhiro78@yahoo.co.jp> 0.1.0-2.20041130.1ut
+- modify Requires/BuildRequires
+- add URL
+
+* Thu Dec 02 2004 Shiva Huang <blueshiva@giga.net.tw> 0.1.0-1mdk
+- initial release
+- this spec file is based on scim-anthy, thanks to UTUMI Hirosi <utuhiro78@yahoo.co.jp>
+  and Thierry Vignaud <tvignaud@mandrakesoft.com>
