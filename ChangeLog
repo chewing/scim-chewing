@@ -1,3 +1,9 @@
+2005-03-18  Kanru Chen  <koster@debian.org.tw>
+
+	* scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::commit):
+	Make Zuin output much pretty and readable.
+
 2005-02-28  Jim Huang  <jserv@kaffe.org>
 
 	* configure.ac:

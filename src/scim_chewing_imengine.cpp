@@ -460,15 +460,19 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		m_preedit_string += m_converted_string;
 	}
 	// zuin string
-	for ( int i = 0; i < ZUIN_SIZE; i++ ) {
+	for ( int i = 0, j = 0; i < ZUIN_SIZE; i++ ) {
 		if ( pgo->zuinBuf[ i ].s[ 0 ] != '\0' ) {
 			 m_iconv.convert(
 				m_converted_string, 
 				(char *) pgo->zuinBuf[ i ].s,
 				strlen((char *)pgo->zuinBuf[ i ].s) );
 			 m_preedit_string += m_converted_string;
+                         attr.push_back(Attribute(pgo->chiSymbolCursor + j, 1,
+                                                  SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
+                         j++;
 		}
 	}
+
 	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
 		m_iconv.convert( 
 			m_converted_string, 
@@ -492,7 +496,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		}
 	}
 	// cursor decoration
-	attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
+        if ( pgo->zuinBuf[ 0 ].s[ 0 ] == '\0' )
+          attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
 
 	// update display
 	update_preedit_string( m_preedit_string,attr );
