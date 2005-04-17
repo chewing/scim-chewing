@@ -304,10 +304,8 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	if ( key.is_key_release() )
 		return true;
 
-	if (
-		key.mask == SCIM_KEY_NullMask && 
-		key.mask != SCIM_KEY_ShiftMask &&
-		key.mask != SCIM_KEY_ControlMask ) {
+        std::cerr << "Mask: " << key.mask << " code: " << key.code << std::endl;
+        if ( key.mask == 0 ) {
 		switch ( key.code ) {
 			case SCIM_KEY_Left:
 				OnKeyLeft( &da, &gOut );
@@ -346,11 +344,16 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 				OnKeyTab( &da, &gOut );
 				break;
 			default:
-				OnKeyDefault(
-					&da, 
-					key.get_ascii_code(), 
-					&gOut );
-				break;
+                                if ( (key.code >= SCIM_KEY_a && key.code <= SCIM_KEY_z) ||
+                                      ( key.code >= SCIM_KEY_0 && key.code <= SCIM_KEY_9 )) {
+                                    OnKeyDefault(
+                                            &da, 
+                                            key.get_ascii_code(), 
+                                            &gOut );
+                                    break;
+                                } else {
+                                    return true;
+                                }
 		}
 	}
 	else if ( key.mask == SCIM_KEY_ShiftMask ) {
@@ -371,9 +374,9 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	}
 	else if ( key.mask == SCIM_KEY_ControlMask ) {
 		if ( 
-			key.get_ascii_code() <= '9' && 
-			key.get_ascii_code() >= '0' ) {
-			OnKeyCtrlNum( &da, key.get_ascii_code(), &gOut );
+			key.code <= SCIM_KEY_9 && 
+			key.code >= SCIM_KEY_0 ) {
+			OnKeyCtrlNum( &da, key.code - SCIM_KEY_0, &gOut );
 		}
 	}
 	return commit( &gOut );
@@ -523,6 +526,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	}
 	
 	// show lookup table
+        if ( !pgo->pci )
+            return true;
 	if ( pgo->pci->nPage != 0 ) {
 		m_lookup_table.update( pgo->pci );
 		update_lookup_table( m_lookup_table );

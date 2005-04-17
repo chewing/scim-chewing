@@ -16,8 +16,8 @@ module_LTLIBRARIES = chewing.la
 
 chewing_la_SOURCES  = scim_chewing_imengine.cpp
 
-chewing_la_CFLAGS = @SCIM_CFLAGS@ @SCIM_DEBUG_FLAGS@
-chewing_la_CXXFLAGS = @SCIM_CFLAGS@ @SCIM_DEBUG_FLAGS@
+chewing_la_CFLAGS = @SCIM_CFLAGS@ @SCIM_DEBUG_FLAGS@ @CHEWING_CFLAGS@
+chewing_la_CXXFLAGS = @SCIM_CFLAGS@ @SCIM_DEBUG_FLAGS@ @CHEWING_CFLAGS@
 
 chewing_la_LDFLAGS = \
 	-avoid-version \
