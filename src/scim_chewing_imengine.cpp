@@ -343,24 +343,20 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Tab:
 				OnKeyTab( &da, &gOut );
 				break;
+			case SCIM_KEY_Shift_L:
+			case SCIM_KEY_Shift_R:
+			case SCIM_KEY_Control_L:
+			case SCIM_KEY_Control_R:
+			case SCIM_KEY_Alt_L:
+			case SCIM_KEY_Alt_R:
+				return true;
 			default:
-                                switch ( key.code ) {
-                                    case SCIM_KEY_Shift_L:
-                                    case SCIM_KEY_Shift_R:
-                                    case SCIM_KEY_Control_L:
-                                    case SCIM_KEY_Control_R:
-                                    case SCIM_KEY_Alt_L:
-                                    case SCIM_KEY_Alt_R:
-                                        return true;
-                                    default:
-                                        OnKeyDefault(
-                                                &da, 
-                                                key.get_ascii_code(), 
-                                                &gOut );
-                                        break;
-                                }
-                                break;
-                }
+				OnKeyDefault(
+					&da, 
+					key.get_ascii_code(), 
+					&gOut );
+				break;
+		}
 	}
 	else if ( key.mask == SCIM_KEY_ShiftMask ) {
 		switch ( key.code ) {

@@ -1,6 +1,6 @@
 2005-04-17  Kanru Chen  <koster@debian.org.tw>
 
-	* src/scim_chewing_imengine.c
+	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::process_key_event):
 	Handle key mask to make working under SCIM 1.2.1 .
 	(ChewingIMEngineInstance::commit):
