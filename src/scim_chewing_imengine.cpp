@@ -304,7 +304,6 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	if ( key.is_key_release() )
 		return true;
 
-        std::cerr << "Mask: " << key.mask << " code: " << key.code << std::endl;
         if ( key.mask == 0 ) {
 		switch ( key.code ) {
 			case SCIM_KEY_Left:
@@ -378,7 +377,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 		if ( 
 			key.code <= SCIM_KEY_9 && 
 			key.code >= SCIM_KEY_0 ) {
-			OnKeyCtrlNum( &da, key.code - SCIM_KEY_0, &gOut );
+			OnKeyCtrlNum( &da, key.get_ascii_code(), &gOut );
 		}
 	}
 	return commit( &gOut );

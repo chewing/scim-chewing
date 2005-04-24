@@ -1,3 +1,9 @@
+2005-04-24  Kanru Chen  <koster@debian.org.tw>
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event):
+	Fix CtrlNum failure.
+
 2005-04-17  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp
