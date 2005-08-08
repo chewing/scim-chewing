@@ -1,3 +1,10 @@
+2005-08-08  Jim Huang  <jserv@kaffe.org>
+
+	* configure.ac: Bump version to 0.2.1 .
+	SCIM/Chewing now depends on libchewing 0.2.7 .
+
+	* NEWS: Updated.
+
 2005-04-24  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp
