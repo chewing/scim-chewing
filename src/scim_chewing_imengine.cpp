@@ -284,6 +284,8 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 
 ChewingIMEngineInstance::~ChewingIMEngineInstance()
 {
+	/* New API introduced in libchewing 0.2.7 */
+	TerminateChewing();
 	m_reload_signal_connection.disconnect();
 }
 

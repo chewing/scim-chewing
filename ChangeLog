@@ -1,3 +1,9 @@
+2005-10-10  Jim Huang  <jserv@kaffe.org>
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::~ChewingIMEngineInstance): Add
+	TerminateChewing API call.
+
 2005-08-08  Jim Huang  <jserv@kaffe.org>
 
 	* configure.ac: Bump version to 0.2.1 .
