@@ -28,7 +28,6 @@ class ChewingLookupTable : public LookupTable
 	private:
 		ChoiceInfo *pci;
 		int current_page;
-		IConvert m_iconv;
 };
 
 class ChewingIMEngineFactory : public IMEngineFactoryBase
@@ -93,6 +92,7 @@ private:
 	void initialize_all_properties ();
 	void refresh_all_properties ();
 	void refresh_chieng_property ();
+	void refresh_letter_property ();
 
 	Connection m_reload_signal_connection;
 	WideString m_converted_string;
@@ -102,11 +102,9 @@ private:
 	KeyEvent m_prev_key;
 	ChewingIMEngineFactory *m_factory;
 	ChewingLookupTable m_lookup_table;
-	IConvert m_iconv;
-	ChewingConf cf;
-	ChewingData da;
-	ConfigData config;
-	ChewingOutput gOut;
+	ChewingContext *ctx;
+	ChewingConfigData config;
+    bool have_input;
 };
 
 #endif

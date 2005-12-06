@@ -1,3 +1,11 @@
+2005-12-07  Kanru Chen  <koster@debian.org.tw>
+	
+	* configure.ac: Use SVN HEAD libchewing.
+
+	* src/scim_chewing_imengine.cpp:
+	Add Full/Half shape property.
+	Use new API.
+
 2005-10-10  Jim Huang  <jserv@kaffe.org>
 
 	* src/scim_chewing_imengine.cpp
