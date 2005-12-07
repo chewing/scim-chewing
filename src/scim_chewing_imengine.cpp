@@ -408,7 +408,7 @@ void ChewingIMEngineInstance::update_lookup_table_page_size(
 		unsigned int page_size )
 {
 	//XXX should not directly access data member.
-	ctx->data->config.selectAreaLen = page_size * 5 + 5;
+	ctx->data->config.selectAreaLen = page_size * 2;
 }
 
 void ChewingIMEngineInstance::lookup_table_page_up()
@@ -470,7 +470,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
     m_commit_string = L"";
 	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
 		for ( int i = 0; i < pgo->nCommitStr; i++ ) {
-            m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, 3);
+			m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, MAX_UTF8_SIZE);
             SCIM_DEBUG_IMENGINE( 2 ) << "Commit Add: " <<
                 (char *)pgo->commitStr[ i ].s << "\n";
 		}
@@ -480,14 +480,14 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	// preedit string
 	// XXX show Interval
 	for ( int i = 0; i < pgo->chiSymbolCursor; i++ ) {
-        m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, 3);
+        m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
         SCIM_DEBUG_IMENGINE( 2 ) << "PreEdit Add: " <<
             (char *)pgo->chiSymbolBuf[ i ].s << "\n";
 	}
 	// zuin string
 	for ( int i = 0, j = 0; i < ZUIN_SIZE; i++ ) {
 		if ( pgo->zuinBuf[ i ].s[ 0 ] != '\0' ) {
-             m_preedit_string += utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, 3);
+             m_preedit_string += utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, MAX_UTF8_SIZE);
                          attr.push_back(Attribute(pgo->chiSymbolCursor + j, 1,
                                                   SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
                          j++;
@@ -495,7 +495,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	}
 
 	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
-        m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, 3);
+        m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
 	}
 
 	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
@@ -542,7 +542,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
     m_aux_string = L"";
 	if ( pgo->bShowMsg ) {
 		for ( int i = 0; i < pgo->showMsgLen; i++ ) {
-            m_aux_string += utf8_mbstowcs((char *)pgo->showMsg[ i ].s, 3);
+            m_aux_string += utf8_mbstowcs((char *)pgo->showMsg[ i ].s, MAX_UTF8_SIZE);
 		}
 		update_aux_string( m_aux_string );
 		show_aux_string();
