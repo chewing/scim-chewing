@@ -23,7 +23,7 @@ chewing_la_LDFLAGS = \
 	-avoid-version \
 	-rpath $(moduledir) \
 	-module \
-	@LIBTOOL_EXPORT_OPTIONS@ \
+	$(LIBTOOL_EXPORT_OPTIONS) \
 	@INTLLIBS@ @SCIM_LIBS@ \
 	@CHEWING_LIBS@
 
@@ -46,7 +46,7 @@ chewing_imengine_setup_la_LDFLAGS = \
 	-avoid-version \
 	-rpath $(setupmoduledir) \
 	-module \
-	@LIBTOOL_EXPORT_OPTIONS@ \
+	$(LIBTOOL_EXPORT_OPTIONS) \
 	@SCIM_GTKUTILS_LIBS@ \
 	@INTLLIBS@ \
 	@SCIM_LIBS@
