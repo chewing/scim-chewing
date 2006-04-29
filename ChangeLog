@@ -1,3 +1,9 @@
+2006-04-29  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.cpp
+	(builtin_keymaps): Rename KB_HANYU_PINYING to KB_HANYUPINYIN to fit
+	SVN HEAD libchewing changes.
+
 2006-03-23  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/Makefile.am: Trivial change for libtool symbols.
