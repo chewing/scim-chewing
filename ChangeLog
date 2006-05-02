@@ -14,6 +14,8 @@
 	* po/scim-chewing.pot,
 	po/zh_TW.po: Update gettext message template and zh_TW translation.
 
+	* configure.ac: Bump version to 0.2.91 .
+
 2006-04-29  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.cpp
