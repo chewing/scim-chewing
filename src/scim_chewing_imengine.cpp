@@ -2,7 +2,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2004, 2005
+ * Copyright (c) 2004, 2005, 2006
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -151,6 +151,11 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 			false);
 
+	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
+	m_esc_clean_all_buffer = m_config->read(
+			String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
+			false);
+
 	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
 	m_space_as_selection = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
@@ -275,6 +280,9 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
 	config.bSpaceAsSelection = m_factory->m_space_as_selection ? 1 : 0;
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
+	config.bEscCleanAllBuf = m_factory->m_esc_clean_all_buffer ? 0 : 1;
 
 	//SetConfig( &da, &config );
 	chewing_Configure( ctx, &config );

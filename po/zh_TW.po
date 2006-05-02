@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scim-chewing 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-18 22:45+0800\n"
-"PO-Revision-Date: 2004-02-24 15:45+0800\n"
+"POT-Creation-Date: 2006-05-02 20:07+0800\n"
+"PO-Revision-Date: 2006-05-02 20:15+0800\n"
 "Last-Translator: Jim Huang <jserv@kaffe.org>\n"
 "Language-Team: Chewing Developers <chewing@chewing.csie.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,32 +17,32 @@ msgstr ""
 msgid "The status of the current input method. Click to change it."
 msgstr "目前輸入法的狀態，按一下可更改"
 
-#: ../src/scim_chewing_imengine.cpp:80 ../src/scim_chewing_imengine.cpp:592
+#: ../src/scim_chewing_imengine.cpp:80 ../src/scim_chewing_imengine.cpp:600
 msgid "Eng"
 msgstr "英"
 
-#: ../src/scim_chewing_imengine.cpp:81 ../src/scim_chewing_imengine.cpp:602
+#: ../src/scim_chewing_imengine.cpp:81 ../src/scim_chewing_imengine.cpp:610
 msgid "Half"
 msgstr "半形"
 
-#: ../src/scim_chewing_imengine.cpp:167
+#: ../src/scim_chewing_imengine.cpp:172
 #: ../src/scim_chewing_imengine_setup.cpp:83
 msgid "Chewing"
 msgstr "新酷音"
 
-#: ../src/scim_chewing_imengine.cpp:182
+#: ../src/scim_chewing_imengine.cpp:187
 msgid "Chewing core team <http://chewing.csie.net>"
 msgstr "新酷音發展團隊 <http://chewing.csie.net>"
 
-#: ../src/scim_chewing_imengine.cpp:198
+#: ../src/scim_chewing_imengine.cpp:203
 msgid "Hot Keys:"
 msgstr "快速鍵"
 
-#: ../src/scim_chewing_imengine.cpp:200
+#: ../src/scim_chewing_imengine.cpp:205
 msgid "    Switch between English/Chinese mode."
 msgstr "    在中英模式切換"
 
-#: ../src/scim_chewing_imengine.cpp:201
+#: ../src/scim_chewing_imengine.cpp:206
 msgid ""
 "\n"
 "\n"
@@ -73,11 +73,11 @@ msgstr ""
 "  Ctrl + 0:\n"
 "    使用 Ctrl + 0 可輸入符號。"
 
-#: ../src/scim_chewing_imengine.cpp:594
+#: ../src/scim_chewing_imengine.cpp:602
 msgid "Chi"
 msgstr "中"
 
-#: ../src/scim_chewing_imengine.cpp:604
+#: ../src/scim_chewing_imengine.cpp:612
 msgid "Full"
 msgstr "全形"
 
@@ -86,101 +86,109 @@ msgid "A Intelligent Chinese Phonetic IMEngine Module."
 msgstr "智慧型注音輸入法模組"
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:142
+#: ../src/scim_chewing_imengine_setup.cpp:144
 msgid "Trigger keys:"
 msgstr "切換鍵："
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:144
+#: ../src/scim_chewing_imengine_setup.cpp:146
 msgid "Select trigger keys"
 msgstr "選擇切換鍵"
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:146
+#: ../src/scim_chewing_imengine_setup.cpp:148
 msgid ""
 "The key events to switch Chewing input mode. Click on the button on the "
 "right to edit it."
 msgstr "選擇切換酷音輸入模式的按鍵事件，按右邊的按鈕可更改。"
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:159
+#: ../src/scim_chewing_imengine_setup.cpp:161
 msgid "Chewing CHI/ENG keys:"
 msgstr "酷音中英切換鍵："
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:161
+#: ../src/scim_chewing_imengine_setup.cpp:163
 msgid "Select CHI/ENG keys"
 msgstr "選擇中英切換鍵"
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:163
+#: ../src/scim_chewing_imengine_setup.cpp:165
 msgid ""
 "The key events to switch English and Chinese mode. Click on the button on "
 "the right to edit it."
 msgstr "用以切換中英模式的按鍵，按右邊的按鈕可更改。"
 
-#: ../src/scim_chewing_imengine_setup.cpp:218
+#: ../src/scim_chewing_imengine_setup.cpp:220
 msgid "Add _Phrase forward"
 msgstr "前方加詞 (_P)"
 
-#: ../src/scim_chewing_imengine_setup.cpp:230
+#: ../src/scim_chewing_imengine_setup.cpp:232
 msgid "Whether to add Phrase forward or not."
 msgstr "是否在使用者字詞前方加詞"
 
-#: ../src/scim_chewing_imengine_setup.cpp:233
+#: ../src/scim_chewing_imengine_setup.cpp:235
+msgid "_Esc key to clean all buffer"
+msgstr "_Esc 鍵清除所有的鍵盤緩衝區"
+
+#: ../src/scim_chewing_imengine_setup.cpp:247
+msgid "Assign Esc key to clean all keyboard buffer or not."
+msgstr "指定 Esc 鍵清楚所有按鍵緩衝區與否"
+
+#: ../src/scim_chewing_imengine_setup.cpp:250
 msgid "_SpaceKey as selection key"
 msgstr "使用空白鍵挑選候選字詞 (_S)"
 
-#: ../src/scim_chewing_imengine_setup.cpp:245
+#: ../src/scim_chewing_imengine_setup.cpp:262
 msgid "Whether SpaceKey is used as selection key or not."
 msgstr "決定是否使用空白鍵來挑選候選字詞"
 
-#: ../src/scim_chewing_imengine_setup.cpp:256
+#: ../src/scim_chewing_imengine_setup.cpp:273
 msgid "Default Keyboard"
 msgstr "預設鍵盤"
 
-#: ../src/scim_chewing_imengine_setup.cpp:259
+#: ../src/scim_chewing_imengine_setup.cpp:276
 msgid "Hsu's Keyboard"
 msgstr "許氏鍵盤"
 
-#: ../src/scim_chewing_imengine_setup.cpp:262
+#: ../src/scim_chewing_imengine_setup.cpp:279
 msgid "Gin-Yieh Keyboard"
 msgstr "精業鍵盤"
 
-#: ../src/scim_chewing_imengine_setup.cpp:265
+#: ../src/scim_chewing_imengine_setup.cpp:282
 msgid "ETen Keyboard"
 msgstr "倚天鍵盤"
 
-#: ../src/scim_chewing_imengine_setup.cpp:268
+#: ../src/scim_chewing_imengine_setup.cpp:285
 msgid "ETen 26-key Keyboard"
 msgstr "倚天26鍵"
 
-#: ../src/scim_chewing_imengine_setup.cpp:271
+#: ../src/scim_chewing_imengine_setup.cpp:288
 msgid "Dvorak Keyboard"
 msgstr "Dvorak 鍵盤"
 
-#: ../src/scim_chewing_imengine_setup.cpp:274
+#: ../src/scim_chewing_imengine_setup.cpp:291
 msgid "Dvorak Keyboard with Hsu's support"
 msgstr "Dvorak 鍵盤 + 許氏注音"
 
-#: ../src/scim_chewing_imengine_setup.cpp:277
+#: ../src/scim_chewing_imengine_setup.cpp:294
 msgid "Han-Yu PinYin Keyboard"
 msgstr "漢語拼音"
 
-#: ../src/scim_chewing_imengine_setup.cpp:333
+#: ../src/scim_chewing_imengine_setup.cpp:350
 msgid "Use keyboard type:"
 msgstr "使用鍵盤排列方式："
 
-#: ../src/scim_chewing_imengine_setup.cpp:344
+#: ../src/scim_chewing_imengine_setup.cpp:361
 msgid "Change the default keyboard layout type"
 msgstr "改變預設鍵盤排列方式"
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:389
+#: ../src/scim_chewing_imengine_setup.cpp:406
 msgid "Options"
 msgstr "選項"
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:400
+#: ../src/scim_chewing_imengine_setup.cpp:417
 msgid "Keyboard"
 msgstr "鍵盤"

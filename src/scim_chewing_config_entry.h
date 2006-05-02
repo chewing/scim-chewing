@@ -26,16 +26,20 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION \
 	"/IMEngine/Chewing/SpaceAsSelection"
 
+#define SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER \
+	"/IMEngine/Chewing/EscCleanAllBuffer"
+
 #define SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY \
 	"/IMEngine/Chewing/TriggerKey"
 
 #define SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY \
 	"/IMEngine/Chewing/ChiEngKey"
 
-#define SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK                "/IMEngine/Chewing/UseCapslock"
-#define SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT      "/IMEngine/Chewing/ShowCandidateComment"
-//#define SCIM_CONFIG_IMENGINE_CHEWING_TRIGGER_KEY                 "/IMEngine/Chewing/TriggerKey"
-//#define SCIM_CONFIG_IMENGINE_CHEWING_CHEWING_HANJA_KEY            "/IMEngine/Chewing/HangulHanjaKey"
-//#define SCIM_CONFIG_IMENGINE_CHEWING_MANUAL_MODE_KEY             "/IMEngine/Chewing/ManualModeKey"
+#define SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK \
+	"/IMEngine/Chewing/UseCapslock"
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT \
+	"/IMEngine/Chewing/ShowCandidateComment"
+
 #endif
 

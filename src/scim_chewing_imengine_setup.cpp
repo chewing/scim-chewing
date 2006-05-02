@@ -6,7 +6,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2005
+ * Copyright (c) 2005, 2006
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -118,6 +118,7 @@ struct KeyboardConfigData {
 // Internal data declaration.
 // static bool __config_use_capslock          = true;
 static bool __config_add_phrase_forward = false;
+static bool __config_esc_clean_all_buffer = false;
 static bool __config_space_as_selection = true;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
@@ -127,6 +128,7 @@ static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
 static GtkWidget    * __widget_add_phrase_forward = 0;
+static GtkWidget    * __widget_esc_clean_all_buffer = 0;
 static GtkWidget    * __widget_space_as_selection = 0;
 static GtkWidget    * __widget_kb_type = 0;
 static GList *kb_type_list = 0;
@@ -228,6 +230,21 @@ static GtkWidget *create_options_page()
 	gtk_tooltips_set_tip(
 			__widget_tooltips, __widget_add_phrase_forward,
 			_( "Whether to add Phrase forward or not." ), NULL );
+
+	__widget_esc_clean_all_buffer =
+		gtk_check_button_new_with_mnemonic(_( "_Esc key to clean all buffer" ) );
+	gtk_widget_show( __widget_esc_clean_all_buffer );
+	gtk_box_pack_start( GTK_BOX( vbox ), __widget_esc_clean_all_buffer, FALSE, FALSE, 4 );
+	gtk_container_set_border_width( GTK_CONTAINER( __widget_esc_clean_all_buffer ), 4);
+	
+	g_signal_connect(
+			(gpointer) __widget_esc_clean_all_buffer, "toggled",
+			G_CALLBACK( on_default_toggle_button_toggled ),
+			&__config_esc_clean_all_buffer );
+
+	gtk_tooltips_set_tip(
+			__widget_tooltips, __widget_esc_clean_all_buffer,
+			_( "Assign Esc key to clean all keyboard buffer or not." ), NULL );
 
 	__widget_space_as_selection = 
 		gtk_check_button_new_with_mnemonic( _( "_SpaceKey as selection key" ) );
@@ -455,6 +472,10 @@ void load_config( const ConfigPointer &config )
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 					__config_add_phrase_forward );
 
+		__config_esc_clean_all_buffer =
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
+					__config_esc_clean_all_buffer );
+
 		__config_space_as_selection =
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
 					__config_space_as_selection );
@@ -480,7 +501,10 @@ void save_config( const ConfigPointer &config )
 	if ( ! config.null() ) {
 		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 				__config_add_phrase_forward );
-	       
+
+		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
+				__config_esc_clean_all_buffer );
+
 		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
 				__config_space_as_selection );
 

@@ -1,3 +1,19 @@
+2006-05-02  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.h
+	(ChewingIMEngineFactory::m_esc_clean_all_buffer),
+	src/scim_chewing_imengine.cpp (ChewingIMEngineFactory::reload_conf)
+	(ChewingIMEngineInstance::reload_con):
+	New property: m_esc_clean_all_buffer.
+	Decide to assign Esc key to clean all keyboard buffer or not.
+
+	* src/scim_chewing_imengine_setup.cpp (create_options_page)
+	(load_config) (save_config): Implement UI for configure the above
+	option.
+
+	* po/scim-chewing.pot,
+	po/zh_TW.po: Update gettext message template and zh_TW translation.
+
 2006-04-29  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.cpp
