@@ -1,3 +1,7 @@
+2006-05-06  Jim Huang  <jserv.tw@gmail.com>
+
+	* configure.ac: SCIM-chewing 0.2.91 depends on libchewing 0.2.93 .
+
 2006-05-02  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.h
