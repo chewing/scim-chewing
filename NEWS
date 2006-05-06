@@ -1,3 +1,12 @@
+What's New in SCIM-chewing 0.3.0
+----------------------------------------------------------
+* Support major changes in libchewing 0.3 .
+* Pure UTF-8 based, no more Big5 <-> UTF-8 converting required.
+* Add Full/Half shape property.
+* Better Chewing IM factory/instance handling.
+* Add new option to assign Esc key to clean all keyboard buffer
+  or not.
+
 What's New in SCIM-chewing 0.2.1
 ----------------------------------------------------------
 * Zuin output looks much pretty.
