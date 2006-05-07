@@ -390,8 +390,8 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Page_Down:
 			case SCIM_KEY_End:
 			case SCIM_KEY_Begin:
-			case SCIM_KEY_Prior:
-			case SCIM_KEY_Next:
+			case SCIM_KEY_Insert:
+			case SCIM_KEY_Delete:
 				break;
 			default:
 				/* Workaround */
