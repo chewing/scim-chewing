@@ -384,7 +384,17 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Right:
 				chewing_handle_ShiftRight( ctx );
 				break;
+			/* Workaround with shift */
+			case SCIM_KEY_Home:
+			case SCIM_KEY_Page_Up:
+			case SCIM_KEY_Page_Down:
+			case SCIM_KEY_End:
+			case SCIM_KEY_Begin:
+			case SCIM_KEY_Prior:
+			case SCIM_KEY_Next:
+				break;
 			default:
+				/* Workaround */
 				chewing_handle_Default( ctx, key.get_ascii_code() );
 				break;
 		}
