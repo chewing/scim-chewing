@@ -44,15 +44,6 @@
 #include "scim_chewing_imengine.h"
 #include "scim_chewing_config_entry.h"
 
-/**
- * LIBCHEWING_ENCODING is a new macro introduced in libchewing 0.3.
- * In stable release (0.2.x) doesn't provide this macro, and still
- * uses Big5 as its internal encoding.
- */
-#ifndef LIBCHEWING_ENCODING
-#define LIBCHEWING_ENCODING "BIG5"
-#endif
-
 using namespace scim;
 
 static IMEngineFactoryPointer _scim_chewing_factory( 0 );
@@ -65,6 +56,8 @@ static Property _letter_property (SCIM_PROP_LETTER, "");
 extern "C" {
 	void scim_module_init()
 	{
+		bindtextdomain (GETTEXT_PACKAGE, SCIM_CHEWING_LOCALEDIR);
+		bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
 	}
 
 	void scim_module_exit()
@@ -125,6 +118,14 @@ bool ChewingIMEngineFactory::init()
 	return true;
 }
 
+static char *chewing_preedit_bgcolor[] = {
+	"#A7A7A7",
+	"#C5C5C5",
+	"#A7A7A7",
+	"#F0F0F0",
+	"#AAAAAA"
+};
+
 void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 {
 	String str;
@@ -160,6 +161,19 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 	m_space_as_selection = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
 			true);
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_
+	for (int i = 0; i < 5; i++) {
+		int red, green, blue;
+		char bgcolor_str[64];
+		String str;
+		sprintf(bgcolor_str, "%s_%d", SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_, i);
+		str = m_config->read(
+			String(bgcolor_str),
+			String(chewing_preedit_bgcolor[i] ));
+		sscanf (str.c_str (), "#%02X%02X%02X", &red, &green, &blue);
+		m_preedit_bgcolor[i] = SCIM_RGB_COLOR (red, green, blue);
+	}
 }
 
 ChewingIMEngineFactory::~ChewingIMEngineFactory()
@@ -208,7 +222,8 @@ WideString ChewingIMEngineFactory::get_help() const
 			   "\n\n  Tab:\n"
 			   "    Use tab key to dispart or connect a phrase."
 			   "\n\n  Ctrl + [number]:\n"
-			   "    Use ctrl + number key to add a user-defined phrase. (Here number stands for the length of the user-defined phrase.)"
+			   "    Use ctrl + number key to add a user-defined phrase.\n"
+			   "    (Here number stands for the length of the user-defined phrase.)"
 			   "\n\n  Ctrl + 0:\n"
 			   "    Use Ctrl + 0 to specify symbolic input."
 		) );
@@ -490,7 +505,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
     m_commit_string = L"";
 	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
 		for ( int i = 0; i < pgo->nCommitStr; i++ ) {
-			m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, MAX_UTF8_SIZE);
+			m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, 
+					MAX_UTF8_SIZE);
             SCIM_DEBUG_IMENGINE( 2 ) << "Commit Add: " <<
                 (char *)pgo->commitStr[ i ].s << "\n";
 		}
@@ -500,22 +516,24 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	// preedit string
 	// XXX show Interval
 	for ( int i = 0; i < pgo->chiSymbolCursor; i++ ) {
-        m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
-        SCIM_DEBUG_IMENGINE( 2 ) << "PreEdit Add: " <<
-            (char *)pgo->chiSymbolBuf[ i ].s << "\n";
+		m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
+		SCIM_DEBUG_IMENGINE( 2 ) << "PreEdit Add: " <<
+			(char *)pgo->chiSymbolBuf[ i ].s << "\n";
 	}
 	// zuin string
 	for ( int i = 0, j = 0; i < ZUIN_SIZE; i++ ) {
 		if ( pgo->zuinBuf[ i ].s[ 0 ] != '\0' ) {
-             m_preedit_string += utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, MAX_UTF8_SIZE);
-                         attr.push_back(Attribute(pgo->chiSymbolCursor + j, 1,
-                                                  SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
-                         j++;
+			m_preedit_string += utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, 
+					MAX_UTF8_SIZE);
+			attr.push_back(Attribute(pgo->chiSymbolCursor + j, 1,
+					SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
+			j++;
 		}
 	}
 
 	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
-        m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
+        	m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, 
+				MAX_UTF8_SIZE);
 	}
 
 	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
@@ -528,8 +546,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 			attr.push_back(Attribute(
 						pgo->dispInterval[ i ].from,
 						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
-						SCIM_ATTR_FOREGROUND,
-						i % 2 ? SCIM_RGB_COLOR_BLUE(128): SCIM_RGB_COLOR_BLUE(255) ));
+						SCIM_ATTR_BACKGROUND,
+						m_factory->m_preedit_bgcolor[i%5] ));
 		}
 	}
 	// cursor decoration
@@ -537,7 +555,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
           attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
 
 	// update display
-	update_preedit_string( m_preedit_string,attr );
+	update_preedit_string( m_preedit_string, attr );
 	update_preedit_caret( pgo->chiSymbolCursor );
 
 	// show preedit string

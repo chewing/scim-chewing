@@ -7,6 +7,7 @@ INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/src \
 	-DSCIM_ICONDIR=\"@SCIM_ICONDIR@\" \
+	-DSCIM_CHEWING_LOCALEDIR=\"$(datadir)/locale\" \
 	-DSCIM_CHEWING_ICON_FILE=\"@SCIM_ICONDIR@/scim-chewing.png\"
 
 noinst_HEADERS = scim_chewing_imengine.h scim_chewing_config_entry.h

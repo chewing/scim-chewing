@@ -63,6 +63,9 @@ private:
 	bool m_space_as_selection;
 	bool m_esc_clean_all_buffer;
 
+	/* A series of background colors used in preedit area */
+	unsigned int m_preedit_bgcolor[5];
+
 	friend class ChewingIMEngineInstance;
 };
 

@@ -1,3 +1,24 @@
+2006-05-09  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.h
+	(ChewingIMEngineFactory::m_preedit_bgcolor[]): New property. Used for
+	storing preedit background color indexes.
+
+	* src/Makefile.am: Added SCIM_CHEWING_LOCALEDIR.
+
+	* src/scim_chewing_imengine.cpp
+	(scim_module_init): Bind text domain.
+	(ChewingIMEngineFactory::reload_config): Reload various preedit
+	background color indexes for
+	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ .
+	(ChewingIMEngineFactory::get_help): Tweak help messages.
+
+	* src/scim_chewing_imengine_setup.cpp (scim_module_init): Bind text
+	domain.
+	TODO: use ScimColorButton in SetupUI for customized color indexes.
+
+	* po/zh_TW.po: Updated.
+
 2006-05-08  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.cpp

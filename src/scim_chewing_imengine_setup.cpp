@@ -60,7 +60,7 @@ extern "C" {
 
 	void scim_module_init()
 	{
-		//bindtextdomain( GETTEXT_PACKAGE, SCIM_CHEWING_LOCALEDIR );
+		bindtextdomain( GETTEXT_PACKAGE, SCIM_CHEWING_LOCALEDIR );
 		bind_textdomain_codeset( GETTEXT_PACKAGE, "UTF-8" );
 	}
 
