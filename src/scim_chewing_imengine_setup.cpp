@@ -290,7 +290,7 @@ struct _builtin_keymap {
 			"KB_DVORAK_HSU",
 			String( _( "Dvorak Keyboard with Hsu's support" ) ) },
 		{
-			"KB_HANYUPINYIN",
+			"KB_HANYU_PINYIN",
 			String( _( "Han-Yu PinYin Keyboard" ) ) }
 };
 
