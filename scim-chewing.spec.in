@@ -5,7 +5,7 @@
 %define libname %mklibname %{name} 0
 
 Name:   	scim-chewing
-Summary:	Scim-chewing is an SCIM IMEngine module for chewing
+Summary:	SCIM-chewing is an SCIM IMEngine module for chewing
 Version:	%{version}
 Release:	%{release}
 Group:		System/Internationalization
@@ -14,14 +14,14 @@ URL:		http://chewing.csie.net/
 Source0:	%{name}-%{version}.tar.bz2
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 Requires:	%{libname} = %{version}-%{release}
-Requires:	libchewing >= 0.2.4
+Requires:	libchewing >= @CHEWING_VERSION@
 Requires:	scim >= 1.0.1
-BuildRequires:  libchewing-devel >= 0.2.4
+BuildRequires:  libchewing-devel >= @CHEWING_VERSION@
 BuildRequires:  scim-devel >= 1.0.1
 BuildRequires:  automake1.8
 
 %description
-Scim-chewing is an SCIM IMEngine module for chewing,
+SCIM-chewing is an SCIM IMEngine module for chewing,
 an intelligent Chinese phonetic input method.
 
 

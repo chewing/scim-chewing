@@ -1,5 +1,9 @@
 2006-05-08  Jim Huang  <jserv.tw@gmail.com>
 
+	* scim-chewing.spec.in: Added rules for dependency checks.
+
+2006-05-08  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::trigger_property): Fixlet to Full/Half shape
 	trigger.
@@ -196,6 +200,7 @@
 	New chewing keyboard type - KB_HANYU_PINYING.
 
 2005-02-07  Kanru Chen  <koster@debian.org.tw>
+
 	* src/scim_chewing_imengine.h,
 	src/scim_chewing_imengine.cpp (ChewingIMEngineInstance::commit):
 	Add functionality to show phrase interval using fonts decorated by
@@ -207,21 +212,25 @@
 	New method. Make checking keys more convenient.
 	
 2005-02-06  Kanru Chen  <koster@debian.org.tw>
+
 	* src/scim_chewing_imengine.cpp,
 	src/scim_chewing_imengine_setup.cpp:
 	Initial working SetupUI. Support USER_KB_TYPE entry.
 
 2004-12-21  Jim Huang  <jserv@kaffe.org>
+
 	* configure.ac:
 	Bump version to 0.1.1
 
 2004-12-15  Jim Huang  <jserv@kaffe.org>
+
 	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::process_key_event):
 	Add a workaround against the known issue in OpenOffice with
 	GTK+ im module hanlding key pressed/released events.
 
 2004-12-14  Jim Huang  <jserv@kaffe.org>
+
 	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineFactory::init):
 	Replace scim_get_home_dir() with CHEWING_DATADIR (prefix) for
@@ -233,6 +242,7 @@
 	Handle evil Null character in C-style string.
 
 2004-12-07  Jim Huang  <jserv@kaffe.org>
+
 	* src/scim_chewing_imengine.cpp:
 	Remove the implementation of the invalid methods,
 	ChewingIMEngineFactory::validate_encoding and
@@ -240,5 +250,6 @@
 	derived	from base class according to the advice of James Su.
 
 2004-11-30  Jim Huang  <jserv@kaffe.org>
+
 	* First working snapshot.
 	* Adapt the codebase from Kanru Chen.
