@@ -473,7 +473,7 @@ void ChewingIMEngineInstance::trigger_property( const String& property )
 		chewing_handle_Capslock( ctx );
 		commit( ctx->output );
 	} else if ( property == SCIM_PROP_LETTER ) {
-		chewing_set_ShapeMode( ctx, !chewing_get_ChiEngMode( ctx ) );
+		chewing_set_ShapeMode( ctx, !chewing_get_ShapeMode( ctx ) );
 	}
 	refresh_all_properties ();
 }

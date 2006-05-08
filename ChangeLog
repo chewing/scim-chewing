@@ -1,5 +1,11 @@
 2006-05-08  Jim Huang  <jserv.tw@gmail.com>
 
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::trigger_property): Fixlet to Full/Half shape
+	trigger.
+
+2006-05-08  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_imengine.cpp (_builtin_keymap): Fix typo of
 	Han-Yu PinYin Keyboard.
 
