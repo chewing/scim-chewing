@@ -1,5 +1,10 @@
 2006-05-08  Jim Huang  <jserv.tw@gmail.com>
 
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key): Fixlet to Caps Lock.
+
+2006-05-08  Jim Huang  <jserv.tw@gmail.com>
+
 	* scim-chewing.spec.in: Added rules for dependency checks.
 
 2006-05-08  Jim Huang  <jserv.tw@gmail.com>

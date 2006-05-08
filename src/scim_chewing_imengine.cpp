@@ -357,13 +357,15 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Tab:
 				chewing_handle_Tab( ctx );
 				break;
+			case SCIM_KEY_Caps_Lock:
+				chewing_handle_Capslock( ctx );
+				break;
 			case SCIM_KEY_Shift_L:
 			case SCIM_KEY_Shift_R:
 			case SCIM_KEY_Control_L:
 			case SCIM_KEY_Control_R:
 			case SCIM_KEY_Alt_L:
 			case SCIM_KEY_Alt_R:
-			case SCIM_KEY_Caps_Lock:
                 SCIM_DEBUG_IMENGINE( 2 ) <<
                     "Unused keys, End Process Key\n";
 				return true;
