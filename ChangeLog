@@ -1,11 +1,17 @@
 2006-05-10  Jim Huang  <jserv.tw@gmail.com>
 
+	* configure.ac: Bump version to 0.2.92 .
+
+2006-05-10  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_config_entry.h
 	(SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM): New macro.
 
 	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineFactory::reload_conf): Increment color index.
 	(ChewingIMEngineInstance::commit): Cleanup.
+	NOTE: Only the color setting of preedit area background is
+	implemented.
 
 	* src/scim_chewing_imengine_setup.cpp
 	(create_color_button_page): Cleanup.
