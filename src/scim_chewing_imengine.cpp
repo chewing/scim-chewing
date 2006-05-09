@@ -163,11 +163,11 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 			true);
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM; i++) {
 		int red, green, blue;
 		char bgcolor_str[64];
 		String str;
-		sprintf(bgcolor_str, SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_%d", i);
+		sprintf(bgcolor_str, SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_%d", i + 1);
 		str = m_config->read(
 			String(bgcolor_str),
 			String(chewing_preedit_bgcolor[i] ));
@@ -547,7 +547,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 						pgo->dispInterval[ i ].from,
 						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
 						SCIM_ATTR_BACKGROUND,
-						m_factory->m_preedit_bgcolor[i%5] ));
+	m_factory->m_preedit_bgcolor[i % SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM] ));
 		}
 	}
 	// cursor decoration

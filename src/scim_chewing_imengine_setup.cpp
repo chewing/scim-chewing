@@ -126,7 +126,7 @@ struct ColorConfigData {
 	const char *label;
 	const char *title;
 	void       *widget;
-	bool       changed;
+	bool        changed;
 };
 
 // Internal data declaration.
@@ -206,8 +206,7 @@ static KeyboardConfigData __config_keyboards[] =
 #define FG_COLOR_DEFAULT "#000000"
 #define FG_COLOR ""
 
-static ColorConfigData config_color_common[] =
-{
+static ColorConfigData config_color_common[] = {
     {
         FG_COLOR,
         FG_COLOR_DEFAULT,
@@ -427,7 +426,7 @@ static GtkWidget *create_keyboard_page()
 
 	for (
 		int i = 0; 
-		i < (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)); 
+		i < (int) (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)); 
 		i++) {
 		kb_type_list = g_list_append(
 				kb_type_list,
@@ -483,7 +482,7 @@ static GtkWidget *create_color_button_page()
 	table = gtk_table_new (4, 5, FALSE);
 	gtk_widget_show (table);
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM; i++) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		sprintf(color_button_name_string, 
@@ -493,7 +492,6 @@ static GtkWidget *create_color_button_page()
 		gtk_table_attach (GTK_TABLE (table), hbox, 4, 5, i, i + 1,
 				(GtkAttachOptions) (GTK_FILL),
 				(GtkAttachOptions) (GTK_FILL), 5, 5);
-		gtk_widget_set_sensitive (hbox, TRUE);
 	}
 
 	return table;
@@ -507,7 +505,6 @@ static GtkWidget *create_setup_window()
 		GtkWidget *notebook;
 		GtkWidget *label;
 		GtkWidget *page;
-		GtkWidget *color_button;
 
 		__widget_tooltips = gtk_tooltips_new ();
 
@@ -786,9 +783,16 @@ static GtkWidget *create_color_button (const char *config_key)
 			FALSE, FALSE, 2);
 	gtk_widget_show (GTK_WIDGET (entry->widget));
 
-	if (label)
+	if (label) {
 		gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				GTK_WIDGET (entry->widget));
+#if 0	/* XXX: not functioned. */
+		gtk_tooltips_set_tip(
+			__widget_tooltips,
+			GTK_WIDGET (label),
+			_( entry->title ), NULL);
+#endif
+	}
 
 	return hbox;
 }

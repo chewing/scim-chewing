@@ -41,6 +41,9 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT \
 	"/IMEngine/Chewing/ShowCandidateComment"
 
+/* It's known to be at least 5. */
+#define SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM (5)
+
 #define SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ \
 	"/IMEngine/Chewing/PreeditBackgroundColor"
 

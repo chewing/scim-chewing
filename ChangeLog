@@ -1,5 +1,20 @@
 2006-05-10  Jim Huang  <jserv.tw@gmail.com>
 
+	* src/scim_chewing_config_entry.h
+	(SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM): New macro.
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineFactory::reload_conf): Increment color index.
+	(ChewingIMEngineInstance::commit): Cleanup.
+
+	* src/scim_chewing_imengine_setup.cpp
+	(create_color_button_page): Cleanup.
+	TODO: Enable tooltip in create_color_button.
+
+	* po/zh_TW.po: Improved.
+
+2006-05-10  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_color_button.cpp,
 	src/scim_color_button.h: New files. ScimColorButton implementation.
 
