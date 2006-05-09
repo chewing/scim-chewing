@@ -36,6 +36,7 @@
 #include <scim.h>
 #include <gtk/scimkeyselection.h>
 #include "scim_chewing_config_entry.h"
+#include "scim_color_button.h"
 
 using namespace scim;
 
@@ -115,6 +116,19 @@ struct KeyboardConfigData {
 	String      data;
 };
 
+struct ColorConfigData {
+	const char *fg_key;
+	String      fg_value;
+	String      fg_default_value;
+	const char *bg_key;
+	String      bg_value;
+	String      bg_default_valuel;
+	const char *label;
+	const char *title;
+	void       *widget;
+	bool       changed;
+};
+
 // Internal data declaration.
 // static bool __config_use_capslock          = true;
 static bool __config_add_phrase_forward = false;
@@ -123,7 +137,6 @@ static bool __config_space_as_selection = true;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
 static String __config_kb_type_data_translated;
-
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
@@ -189,6 +202,78 @@ static KeyboardConfigData __config_keyboards[] =
     },
 };
 
+/* XXX: It should be a pair of fg/bg colors */
+#define FG_COLOR_DEFAULT "#000000"
+#define FG_COLOR ""
+
+static ColorConfigData config_color_common[] =
+{
+    {
+        FG_COLOR,
+        FG_COLOR_DEFAULT,
+        FG_COLOR_DEFAULT,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_1",
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_1,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_1,
+        N_("Color #1"),
+        N_("The color of preediting text"),
+        NULL,
+        false
+    },
+
+    {
+        FG_COLOR,
+        FG_COLOR_DEFAULT,
+        FG_COLOR_DEFAULT,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_2",
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_2,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_2,
+        N_("Color #2"),
+        N_("The color of preediting text"),
+        NULL,
+        false
+    },
+
+    {
+        FG_COLOR,
+        FG_COLOR_DEFAULT,
+        FG_COLOR_DEFAULT,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_3",
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_3,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_3,
+        N_("Color #3"),
+        N_("The color of preediting text"),
+        NULL,
+        false
+    },
+
+    {
+        FG_COLOR,
+        FG_COLOR_DEFAULT,
+        FG_COLOR_DEFAULT,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_4",
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_4,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_4,
+        N_("Color #4"),
+        N_("The color of preediting text"),
+        NULL,
+        false
+    },
+
+    {
+        FG_COLOR,
+        FG_COLOR_DEFAULT,
+        FG_COLOR_DEFAULT,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_5",
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_5,
+        SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_5,
+        N_("Color #5"),
+        N_("The color of preediting text"),
+        NULL,
+        false
+    }
+};
+
 // Declaration of internal functions.
 static void on_default_editable_changed(
 		GtkEditable *editable,
@@ -201,6 +286,12 @@ static void on_default_toggle_button_toggled(
 static void on_default_key_selection_clicked(
 		GtkButton *button,
 		gpointer user_data );
+
+static GtkWidget *create_color_button (const char *config_key);
+
+static void on_color_button_changed(
+		ScimColorButton *button,
+		gpointer user_data);
 
 static void setup_widget_value();
 
@@ -383,6 +474,31 @@ static GtkWidget *create_keyboard_page()
 	return table;
 }
 
+static GtkWidget *create_color_button_page()
+{               
+	GtkWidget *widget;
+	GtkWidget *hbox;
+	GtkWidget *table;
+	char color_button_name_string[64] = { 0 };
+	table = gtk_table_new (4, 5, FALSE);
+	gtk_widget_show (table);
+
+	for (int i = 0; i < 5; i++) {
+		hbox = gtk_hbox_new (FALSE, 0);
+		gtk_widget_show (hbox);
+		sprintf(color_button_name_string, 
+			SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_%d", i + 1);
+		widget = create_color_button (color_button_name_string);
+		gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+		gtk_table_attach (GTK_TABLE (table), hbox, 4, 5, i, i + 1,
+				(GtkAttachOptions) (GTK_FILL),
+				(GtkAttachOptions) (GTK_FILL), 5, 5);
+		gtk_widget_set_sensitive (hbox, TRUE);
+	}
+
+	return table;
+}
+
 static GtkWidget *create_setup_window()
 {
 	static GtkWidget *window = 0;
@@ -391,6 +507,7 @@ static GtkWidget *create_setup_window()
 		GtkWidget *notebook;
 		GtkWidget *label;
 		GtkWidget *page;
+		GtkWidget *color_button;
 
 		__widget_tooltips = gtk_tooltips_new ();
 
@@ -415,6 +532,16 @@ static GtkWidget *create_setup_window()
 
 		// Create the label for this note page.
 		label = gtk_label_new (_("Keyboard"));
+		gtk_widget_show (label);
+
+		// Append this page.
+		gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+
+		// Create the third page.
+		page = create_color_button_page ();
+
+		// Create the label for this note page.
+		label = gtk_label_new (_("Decorative Color"));
 		gtk_widget_show (label);
 
 		// Append this page.
@@ -447,6 +574,16 @@ void setup_widget_value()
 			gtk_entry_set_text (
 					GTK_ENTRY (__config_keyboards [i].entry),
 					__config_keyboards [i].data.c_str ());
+		}
+	}
+
+	for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+		ColorConfigData &entry = config_color_common[i];
+		if (entry.widget) {
+			scim_color_button_set_colors (
+				SCIM_COLOR_BUTTON (entry.widget),
+				entry.fg_value, 
+				entry.bg_value);
 		}
 	}
 
@@ -490,6 +627,11 @@ void load_config( const ConfigPointer &config )
 						__config_keyboards[ i ].data);
 		}
 
+		for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+			ColorConfigData &entry = config_color_common[i];
+			entry.bg_value = config->read (String (entry.bg_key), entry.bg_value);
+		}
+
 		setup_widget_value ();
 
 		__have_changed = false;
@@ -529,6 +671,16 @@ void save_config( const ConfigPointer &config )
 			config->write (String (__config_keyboards [i].key),
 					__config_keyboards [i].data);
 		}
+
+		for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+			ColorConfigData &entry = config_color_common[i];
+			if (entry.changed) {
+				entry.bg_value = config->write (String (entry.bg_key),
+						entry.bg_value);
+			}
+			entry.changed = false;
+		}
+
 
 		__have_changed = false;
 	}
@@ -593,3 +745,64 @@ static void on_default_key_selection_clicked(
 		gtk_widget_destroy( dialog );
 	}
 }
+
+static ColorConfigData *find_color_config_entry (const char *config_key)
+{
+	if (!config_key)
+		return NULL;
+
+	for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+		ColorConfigData *entry = &config_color_common[i];
+		if (entry->fg_key && !strcmp (entry->bg_key, config_key))
+			return entry;
+	}
+
+	return NULL;
+}
+
+static GtkWidget *create_color_button (const char *config_key)
+{
+	ColorConfigData *entry = find_color_config_entry (config_key);
+	if (!entry)
+		return NULL;
+
+	GtkWidget *hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+	gtk_widget_show (hbox);
+
+	GtkWidget *label = NULL;
+	if (entry->label) {
+		label = gtk_label_new_with_mnemonic (_(entry->label));
+		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+		gtk_widget_show (label);
+	}
+
+	entry->widget = scim_color_button_new ();
+	gtk_widget_set_size_request (GTK_WIDGET (entry->widget), 32, 24);
+	g_signal_connect (G_OBJECT (entry->widget), "color-changed",
+			G_CALLBACK (on_color_button_changed),
+			entry);
+	gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (entry->widget),
+			FALSE, FALSE, 2);
+	gtk_widget_show (GTK_WIDGET (entry->widget));
+
+	if (label)
+		gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+				GTK_WIDGET (entry->widget));
+
+	return hbox;
+}
+
+static void on_color_button_changed(
+	ScimColorButton *button,
+	gpointer user_data)
+{
+	ColorConfigData *entry = static_cast <ColorConfigData*> (user_data);
+
+	if (entry->widget) {
+		scim_color_button_get_colors (button, &entry->fg_value, &entry->bg_value);
+		entry->changed = true;
+		__have_changed = true;
+	}
+}
+

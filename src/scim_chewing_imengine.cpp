@@ -119,11 +119,11 @@ bool ChewingIMEngineFactory::init()
 }
 
 static char *chewing_preedit_bgcolor[] = {
-	"#A7A7A7",
-	"#C5C5C5",
-	"#A7A7A7",
-	"#F0F0F0",
-	"#AAAAAA"
+	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_1,
+	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_2,
+	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_3,
+	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_4,
+	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_5
 };
 
 void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
@@ -167,7 +167,7 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 		int red, green, blue;
 		char bgcolor_str[64];
 		String str;
-		sprintf(bgcolor_str, "%s_%d", SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_, i);
+		sprintf(bgcolor_str, SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_%d", i);
 		str = m_config->read(
 			String(bgcolor_str),
 			String(chewing_preedit_bgcolor[i] ));

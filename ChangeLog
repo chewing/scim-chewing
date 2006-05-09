@@ -1,3 +1,29 @@
+2006-05-10  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_color_button.cpp,
+	src/scim_color_button.h: New files. ScimColorButton implementation.
+
+	* src/Makefile.am: Ditto.
+
+	* src/scim_chewing_config_entry.h
+	(SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_[1-5]): Default
+	color index for preedit area background.
+
+	* src/scim_chewing_imengine.cpp (chewing_preedit_bgcolor): Fill with
+	default values.
+
+	* src/scim_chewing_imengine_setup.cpp
+	(config_color_common): New member for color index storage.
+	(create_color_button) (on_color_button_changed)
+	(find_color_config_entry): New function to handling color buttons.
+	(create_setup_window): Added decorative color page.
+	(setup_widget_value) (load_config) (save_config): Use ColorConfigData.
+
+	* data/scim-chewing-swap-colors.png: New file. Indicate color
+	swapping.
+
+	* data/Makefile.am: Ditto.
+
 2006-05-09  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.h
