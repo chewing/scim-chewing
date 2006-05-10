@@ -4,6 +4,7 @@ What's New in SCIM-chewing 0.3.0
 * Pure UTF-8 based, no more Big5 <-> UTF-8 converting required.
 * Add Full/Half shape property.
 * Better Chewing IM factory/instance handling.
+* UI enhancements to preedit area with colorized decorations.
 * Add new option to assign Esc key to clean all keyboard buffer
   or not.
 

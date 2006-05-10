@@ -401,6 +401,10 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Right:
 				chewing_handle_ShiftRight( ctx );
 				break;
+			case SCIM_KEY_space:
+				chewing_set_ShapeMode( ctx, !chewing_get_ShapeMode( ctx ) );
+				refresh_letter_property();
+				break;
 			/* Workaround with shift */
 			case SCIM_KEY_Home:
 			case SCIM_KEY_Page_Up:

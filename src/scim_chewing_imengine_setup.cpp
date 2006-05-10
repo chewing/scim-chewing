@@ -530,8 +530,6 @@ static GtkWidget *create_setup_window()
 		// Create the label for this note page.
 		label = gtk_label_new (_("Keyboard"));
 		gtk_widget_show (label);
-
-		// Append this page.
 		gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
 
 		// Create the third page.
@@ -540,8 +538,6 @@ static GtkWidget *create_setup_window()
 		// Create the label for this note page.
 		label = gtk_label_new (_("Decorative Color"));
 		gtk_widget_show (label);
-
-		// Append this page.
 		gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
 
 		window = notebook;
@@ -786,6 +782,7 @@ static GtkWidget *create_color_button (const char *config_key)
 	if (label) {
 		gtk_label_set_mnemonic_widget (GTK_LABEL (label),
 				GTK_WIDGET (entry->widget));
+
 #if 0	/* XXX: not functioned. */
 		gtk_tooltips_set_tip(
 			__widget_tooltips,
