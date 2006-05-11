@@ -58,7 +58,8 @@ private:
 	Connection m_reload_signal_connection;
 
 	KeyEventList m_chi_eng_keys;
-	String m_default_KeyboardType;
+	String m_KeyboardType;
+	String m_selection_keys;
 	bool m_add_phrase_forward;
 	bool m_space_as_selection;
 	bool m_esc_clean_all_buffer;

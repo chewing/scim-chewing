@@ -143,9 +143,14 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 	// Load keyboard type
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "Load keyboard type\n";
-	m_default_KeyboardType = m_config->read (
+	m_KeyboardType = m_config->read (
 			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
 			String( "KB_DEFAULT" ));
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS
+	m_selection_keys = m_config->read(
+                	String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
+                	String( SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS ) );
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
 	m_add_phrase_forward = m_config->read(
@@ -270,8 +275,6 @@ ChewingIMEngineInstance::ChewingIMEngineInstance(
 
 void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 {
-	char default_selectionKeys[] = "1234567890";
-
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "IMEngine Instance ReloadConfig\n";
 	// Reset all data.
@@ -279,16 +282,6 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 
 	config.selectAreaLen = SCIM_CHEWING_SELECTION_KEYS_NUM * 2;
 	config.maxChiSymbolLen = 16;
-
-	/* Configure selection keys definition */
-	// XXX: need to support configure 
-	//m_factory->m_config->read(
-	//		String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
-	//		default_selectionKeys );
-	default_selectionKeys[ SCIM_CHEWING_SELECTION_KEYS_NUM ] = '\0';
-	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; i++ ) {
-		config.selKey[ i ] = default_selectionKeys[ i ];
-	}
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
 	config.bAddPhraseForward = m_factory->m_add_phrase_forward ? 0 : 1;
@@ -467,7 +460,15 @@ void ChewingIMEngineInstance::reset()
 	chewing_Reset( ctx );
 	/* Configure Keyboard Type */
 	chewing_set_KBType( ctx, chewing_KBStr2Num( 
-				(char *) m_factory->m_default_KeyboardType.c_str() ));
+				(char *) m_factory->m_KeyboardType.c_str() ));
+	
+	/* Configure selection keys definition */
+	for (int i = 0;
+			m_factory->m_selection_keys[i] &&
+			i < SCIM_CHEWING_SELECTION_KEYS_NUM; i++) {
+		config.selKey[i] = m_factory->m_selection_keys[i];
+	}
+
 }
 
 void ChewingIMEngineInstance::focus_in()

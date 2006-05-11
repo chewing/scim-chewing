@@ -1,3 +1,25 @@
+2006-05-12  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.h
+	(m_default_KeyboardType): Rename to m_KeyboardType for better
+	readability.
+	(m_selection_keys): New member for selection keys.
+
+	* src/scim_chewing_config_entry.h
+	(SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS): New macro. Default
+	selection keys.
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineFactory::reload_conf)
+	(ChewingIMEngineInstance::reload_config)
+	(ChewingIMEngineInstance::reset),
+	src/scim_chewing_imengine_setup.cpp
+	(create_keyboard_page) (create_keyboard_page) (setup_widget_value)
+	(load_config) (save_config): Implement customized selection keys, such
+	as "123...", "asdf...", etc.
+
+	* po/zh_TW.po: Updated.
+
 2006-05-11  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.cpp

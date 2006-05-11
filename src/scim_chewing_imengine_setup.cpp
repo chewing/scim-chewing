@@ -137,6 +137,8 @@ static bool __config_space_as_selection = true;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
 static String __config_kb_type_data_translated;
+static String __config_selKey_type_data;
+static String __config_selKey_type_data_named;
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
@@ -145,6 +147,8 @@ static GtkWidget    * __widget_esc_clean_all_buffer = 0;
 static GtkWidget    * __widget_space_as_selection = 0;
 static GtkWidget    * __widget_kb_type = 0;
 static GList *kb_type_list = 0;
+static GtkWidget    * __widget_selKey_type = 0;
+static GList *selKey_type_list = 0;
 // static GtkWidget    * __widget_show_candidate_comment= 0;
 static GtkTooltips  * __widget_tooltips              = 0;
 
@@ -384,16 +388,32 @@ struct _builtin_keymap {
 			String( _( "Han-Yu PinYin Keyboard" ) ) }
 };
 
+struct _builtin_selectmap {
+	char *entry;
+	int max_num;
+	char *name;
+} builtin_selectmaps[] = {
+	{ SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS,
+	  10,
+	  "123..." },
+	{ "asdfghjkl",
+	  9,
+	  "asdf..." },
+	{ "zxcvbnm",
+	  7,    
+	  "zxcvb..",
+	}
+};      
+
 static GtkWidget *create_keyboard_page()
 {
 	GtkWidget *table;
 	GtkWidget *label;
 
-	int i;
-
-	table = gtk_table_new (3, 3, FALSE);
+	table = gtk_table_new (3, 4, FALSE);
 	gtk_widget_show (table);
 
+	int i;
 	// Create keyboard setting.
 	for (i = 0; __config_keyboards [i].key; ++ i) {
 		label = gtk_label_new (NULL);
@@ -425,7 +445,7 @@ static GtkWidget *create_keyboard_page()
 	gtk_widget_show (__widget_kb_type);
 
 	for (
-		int i = 0; 
+		i = 0; 
 		i < (int) (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)); 
 		i++) {
 		kb_type_list = g_list_append(
@@ -454,8 +474,43 @@ static GtkWidget *create_keyboard_page()
 		"changed",
 		G_CALLBACK (on_default_editable_changed),
 		&(__config_kb_type_data_translated));
-	i++;
 
+	// Setup selKey combo box
+	__widget_selKey_type = gtk_combo_new();
+	gtk_widget_show (__widget_selKey_type);
+
+	for (
+		i = 0; 
+		i < (int) (sizeof(builtin_selectmaps) / sizeof(_builtin_selectmap)); 
+		i++) {
+		selKey_type_list = g_list_append(
+				selKey_type_list,
+				(void *) builtin_selectmaps[ i ].name );
+	}
+	
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_type), selKey_type_list);
+	g_list_free(selKey_type_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_selKey_type), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_selKey_type)->entry)), FALSE);
+	label = gtk_label_new (_("Customized Selection Keys:"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_selKey_type, 1, 2, i, i+1,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_type)->entry,
+			_("Change the default selection keys"), NULL);
+	g_signal_connect(
+		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry), 
+		"changed",
+		G_CALLBACK (on_default_editable_changed),
+		&(__config_selKey_type_data_named));
+
+	// keyboard: trigger keys
 	for (i = 0; __config_keyboards [i].key; ++ i) {
 		g_signal_connect ((gpointer) __config_keyboards [i].button, "clicked",
 				G_CALLBACK (on_default_key_selection_clicked),
@@ -580,6 +635,7 @@ void setup_widget_value()
 		}
 	}
 
+	/* KB_TYPE */
 	int index_keymap = (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)) - 1;
 	for ( ; index_keymap >= 0;  index_keymap--) {
 		if ( __config_kb_type_data == builtin_keymaps[index_keymap].entry ) {
@@ -592,6 +648,21 @@ void setup_widget_value()
 	gtk_entry_set_text (
 			GTK_ENTRY(GTK_COMBO(__widget_kb_type)->entry),
 			builtin_keymaps[index_keymap].translated_name.c_str()
+	);
+
+	/* selKey */
+	int index_selectmap = (sizeof(builtin_selectmaps) / sizeof(_builtin_selectmap)) - 1;
+	for ( ; index_selectmap >= 0;  index_selectmap--) {
+		if ( __config_selKey_type_data == builtin_selectmaps[index_selectmap].entry ) {
+			break;
+		}
+	}
+	if (index_selectmap < 0)
+		index_selectmap = 0;
+
+	gtk_entry_set_text (
+		GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry),
+		builtin_selectmaps[index_selectmap].name
 	);
 }
 
@@ -613,6 +684,10 @@ void load_config( const ConfigPointer &config )
 		__config_kb_type_data = 
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
 					__config_kb_type_data);
+
+		__config_selKey_type_data =
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
+					__config_selKey_type_data);
 
 		for (int i = 0; __config_keyboards[ i ].key; ++ i) {
 			__config_keyboards[ i ].data =
@@ -643,6 +718,7 @@ void save_config( const ConfigPointer &config )
 		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION ),
 				__config_space_as_selection );
 
+		// SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE
 		int index_keymap = 
 			(sizeof(builtin_keymaps) / sizeof(_builtin_keymap)) - 1;
 		for ( ; index_keymap >= 0;  index_keymap--) {
@@ -657,6 +733,23 @@ void save_config( const ConfigPointer &config )
 
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),
 				__config_kb_type_data);
+
+		// SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS
+		int index_selectmap =
+			(sizeof(builtin_selectmaps) / sizeof(_builtin_selectmap)) - 1;
+		for ( ; index_selectmap >= 0; index_selectmap--) {
+			if (__config_selKey_type_data_named ==
+				builtin_selectmaps[index_selectmap].name ) {
+				break;
+			}
+		}
+		if (index_selectmap < 0)
+			index_selectmap = 0;
+		__config_selKey_type_data = builtin_selectmaps[index_selectmap].entry;
+
+		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS),
+				__config_selKey_type_data);
+
 //		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
 //				__config_show_candidate_comment);
 
