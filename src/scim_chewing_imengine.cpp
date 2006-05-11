@@ -402,6 +402,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 				chewing_handle_ShiftRight( ctx );
 				break;
 			case SCIM_KEY_space:
+				chewing_handle_ShiftSpace( ctx );
 				chewing_set_ShapeMode( ctx, !chewing_get_ShapeMode( ctx ) );
 				refresh_letter_property();
 				break;
@@ -415,7 +416,6 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Delete:
 				break;
 			default:
-				/* Workaround */
 				chewing_handle_Default( ctx, key.get_ascii_code() );
 				break;
 		}

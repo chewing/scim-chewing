@@ -1,7 +1,13 @@
+2006-05-11  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key): Fixlet to use
+	chewing_handle_ShiftSpace.
+
 2006-05-10  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.cpp
-	(ChewingIMEngineInstance::process_key): Trigger Full/Half shape via
+	(ChewingIMEngineInstance::process_key): Toggle Full/Half shape via
 	shift-space.
 
 2006-05-10  Jim Huang  <jserv.tw@gmail.com>
