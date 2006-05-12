@@ -463,11 +463,12 @@ void ChewingIMEngineInstance::reset()
 				(char *) m_factory->m_KeyboardType.c_str() ));
 	
 	/* Configure selection keys definition */
-	for (int i = 0;
-			m_factory->m_selection_keys[i] &&
-			i < SCIM_CHEWING_SELECTION_KEYS_NUM; i++) {
+	int i = 0;
+	for (; m_factory->m_selection_keys[i] &&
+	       i <= SCIM_CHEWING_SELECTION_KEYS_NUM; i++) {
 		config.selKey[i] = m_factory->m_selection_keys[i];
 	}
+	config.selKey[i] = '\0';
 
 }
 
@@ -507,7 +508,7 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "IMEngine Instance Commit\n";
 	// commit string
-    m_commit_string = L"";
+	m_commit_string = L"";
 	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
 		for ( int i = 0; i < pgo->nCommitStr; i++ ) {
 			m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, 
@@ -543,21 +544,27 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 
 	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
 		if ( pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from > 1 ) {
-			attr.push_back(Attribute(
-						pgo->dispInterval[ i ].from,
-						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
-						SCIM_ATTR_DECORATE,
-						SCIM_ATTR_DECORATE_UNDERLINE));
-			attr.push_back(Attribute(
-						pgo->dispInterval[ i ].from,
-						pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
-						SCIM_ATTR_BACKGROUND,
+			attr.push_back(
+				Attribute(
+					pgo->dispInterval[ i ].from,
+					pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
+					SCIM_ATTR_DECORATE,
+					SCIM_ATTR_DECORATE_UNDERLINE));
+			attr.push_back(
+				Attribute(
+					pgo->dispInterval[ i ].from,
+					pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
+					SCIM_ATTR_BACKGROUND,
 	m_factory->m_preedit_bgcolor[i % SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM] ));
 		}
 	}
 	// cursor decoration
-        if ( pgo->zuinBuf[ 0 ].s[ 0 ] == '\0' )
-          attr.push_back(Attribute(pgo->chiSymbolCursor, 1, SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
+	if ( pgo->zuinBuf[ 0 ].s[ 0 ] == '\0' )
+		attr.push_back(
+			Attribute(
+				pgo->chiSymbolCursor, 
+				1, 
+				SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
 
 	// update display
 	update_preedit_string( m_preedit_string, attr );
@@ -566,7 +573,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	// show preedit string
 	if ( m_preedit_string.empty() ) {
 		hide_preedit_string();
-	} else {
+	}
+	else {
 		show_preedit_string();
 	}
 	
@@ -577,12 +585,13 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		m_lookup_table.update( pgo->pci );
 		update_lookup_table( m_lookup_table );
 		show_lookup_table();
-	} else {
+	}
+	else {
 		hide_lookup_table();
 	}
 	
 	// show aux string
-    m_aux_string = L"";
+	m_aux_string = L"";
 	if ( pgo->bShowMsg ) {
 		for ( int i = 0; i < pgo->showMsgLen; i++ ) {
             m_aux_string += utf8_mbstowcs((char *)pgo->showMsg[ i ].s, MAX_UTF8_SIZE);
@@ -590,7 +599,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 		update_aux_string( m_aux_string );
 		show_aux_string();
 		pgo->showMsgLen = 0;
-	} else {
+	}
+	else {
 		hide_aux_string();
 	}
 	if ( pgo->keystrokeRtn & KEYSTROKE_ABSORB )
@@ -605,7 +615,7 @@ bool ChewingIMEngineInstance::match_key_event(
 		const KeyEvent &key )
 {
 	KeyEventList::const_iterator kit;
-	for( kit = keylist.begin(); kit != keylist.end(); ++kit ) {
+	for (kit = keylist.begin(); kit != keylist.end(); ++kit) {
 		if (key.code == kit->code && key.mask == kit->mask)
 			if (key.is_key_press() || m_prev_key.code == key.code)
 				return true;
@@ -662,8 +672,9 @@ WideString ChewingLookupTable::get_candidate( int index ) const
 {
 	WideString m_converted_string;
 	int no = pci->pageNo * pci->nChoicePerPage;
-    m_converted_string = utf8_mbstowcs((char *) pci->totalChoiceStr[ no + index ],
-									(int) strlen( (char *) pci->totalChoiceStr[ no + index ] ));
+	m_converted_string = utf8_mbstowcs(
+			(char *) pci->totalChoiceStr[ no + index ],
+			(int) strlen( (char *) pci->totalChoiceStr[ no + index ] ));
 	return m_converted_string;
 }
 
@@ -688,7 +699,7 @@ void ChewingLookupTable::init()
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "LookupTable Init\n";
 	char buf[ 2 ] = { 0, 0 };
-	for ( int i = 0; i < (SCIM_CHEWING_SELECTION_KEYS_NUM); ++i ) {
+	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; ++i ) {
 		buf[ 0 ] = '1' + i;
 		labels.push_back( utf8_mbstowcs( buf ) );
 	}

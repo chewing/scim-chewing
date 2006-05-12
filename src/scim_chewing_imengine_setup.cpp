@@ -138,7 +138,6 @@ static bool __config_space_as_selection = true;
 static String __config_kb_type_data;
 static String __config_kb_type_data_translated;
 static String __config_selKey_type_data;
-static String __config_selKey_type_data_named;
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
@@ -388,21 +387,13 @@ struct _builtin_keymap {
 			String( _( "Han-Yu PinYin Keyboard" ) ) }
 };
 
-struct _builtin_selectmap {
-	char *entry;
-	int max_num;
-	char *name;
-} builtin_selectmaps[] = {
-	{ SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS,
-	  10,
-	  "123..." },
-	{ "asdfghjkl",
-	  9,
-	  "asdf..." },
-	{ "zxcvbnm",
-	  7,    
-	  "zxcvb..",
-	}
+static char *builtin_selectkeys[] = {
+	SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS,
+	"asdfghjkl;",
+	"asdfzxcv89",
+	"asdfjkl789",
+	"aoeuhtn789",
+	"1234qweras",
 };      
 
 static GtkWidget *create_keyboard_page()
@@ -479,13 +470,12 @@ static GtkWidget *create_keyboard_page()
 	__widget_selKey_type = gtk_combo_new();
 	gtk_widget_show (__widget_selKey_type);
 
-	for (
-		i = 0; 
-		i < (int) (sizeof(builtin_selectmaps) / sizeof(_builtin_selectmap)); 
-		i++) {
+	for (i = 0; 
+	     i < (sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0])); 
+	     i++) {
 		selKey_type_list = g_list_append(
 				selKey_type_list,
-				(void *) builtin_selectmaps[ i ].name );
+				(void *) builtin_selectkeys[ i ] );
 	}
 	
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_type), selKey_type_list);
@@ -508,7 +498,7 @@ static GtkWidget *create_keyboard_page()
 		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry), 
 		"changed",
 		G_CALLBACK (on_default_editable_changed),
-		&(__config_selKey_type_data_named));
+		&(__config_selKey_type_data));
 
 	// keyboard: trigger keys
 	for (i = 0; __config_keyboards [i].key; ++ i) {
@@ -651,18 +641,19 @@ void setup_widget_value()
 	);
 
 	/* selKey */
-	int index_selectmap = (sizeof(builtin_selectmaps) / sizeof(_builtin_selectmap)) - 1;
-	for ( ; index_selectmap >= 0;  index_selectmap--) {
-		if ( __config_selKey_type_data == builtin_selectmaps[index_selectmap].entry ) {
+	int index_selectkeys = sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0]) - 1;
+	for ( ; index_selectkeys >= 0;  index_selectkeys--) {
+		if ( __config_selKey_type_data ==
+		     builtin_selectkeys[index_selectkeys]) {
 			break;
 		}
 	}
-	if (index_selectmap < 0)
-		index_selectmap = 0;
-
+	if (index_selectkeys < 0)
+		index_selectkeys = 0;
+	
 	gtk_entry_set_text (
 		GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry),
-		builtin_selectmaps[index_selectmap].name
+		builtin_selectkeys[index_selectkeys]
 	);
 }
 
@@ -735,17 +726,18 @@ void save_config( const ConfigPointer &config )
 				__config_kb_type_data);
 
 		// SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS
-		int index_selectmap =
-			(sizeof(builtin_selectmaps) / sizeof(_builtin_selectmap)) - 1;
-		for ( ; index_selectmap >= 0; index_selectmap--) {
-			if (__config_selKey_type_data_named ==
-				builtin_selectmaps[index_selectmap].name ) {
+		int index_selectkeys =
+			sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0]) - 1;
+		for ( ; index_selectkeys >= 0; index_selectkeys--) {
+			if (__config_selKey_type_data.c_str(),
+			    builtin_selectkeys[index_selectkeys]) {
 				break;
 			}
 		}
-		if (index_selectmap < 0)
-			index_selectmap = 0;
-		__config_selKey_type_data = builtin_selectmaps[index_selectmap].entry;
+		if (index_selectkeys < 0)
+			index_selectkeys = 0;
+		__config_selKey_type_data =
+			builtin_selectkeys[index_selectkeys];
 
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS),
 				__config_selKey_type_data);

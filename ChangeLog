@@ -1,5 +1,15 @@
 2006-05-12  Jim Huang  <jserv.tw@gmail.com>
 
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::reset): Added suffix '\0'.
+
+	* src/scim_chewing_imengine_setup.cpp
+	(_builtin_selectmap): Reduced to char *builtin_selectkeys.
+	(create_keyboard_page) (setup_widget_value) (save_config): Use
+	fixed-length selection keys.
+
+2006-05-12  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_imengine.h
 	(m_default_KeyboardType): Rename to m_KeyboardType for better
 	readability.
