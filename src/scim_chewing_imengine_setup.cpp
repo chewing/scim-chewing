@@ -729,7 +729,7 @@ void save_config( const ConfigPointer &config )
 		int index_selectkeys =
 			sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0]) - 1;
 		for ( ; index_selectkeys >= 0; index_selectkeys--) {
-			if (__config_selKey_type_data.c_str(),
+			if (__config_selKey_type_data ==
 			    builtin_selectkeys[index_selectkeys]) {
 				break;
 			}
