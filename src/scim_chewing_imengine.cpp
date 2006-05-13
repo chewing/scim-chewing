@@ -266,7 +266,7 @@ ChewingIMEngineInstance::ChewingIMEngineInstance(
         "Create IMEngineInstance\n";
 	ctx = chewing_new();
 	reload_config( m_factory->m_config );
-	m_lookup_table.init();
+	m_lookup_table.init( m_factory->m_selection_keys );
 
 	m_reload_signal_connection =
 		m_factory->m_config->signal_connect_reload(
@@ -469,7 +469,7 @@ void ChewingIMEngineInstance::reset()
 		config.selKey[i] = m_factory->m_selection_keys[i];
 	}
 	config.selKey[i] = '\0';
-
+	m_lookup_table.init( m_factory->m_selection_keys );
 }
 
 void ChewingIMEngineInstance::focus_in()
@@ -692,7 +692,7 @@ void ChewingLookupTable::clear()
 {
 }
 
-void ChewingLookupTable::init()
+void ChewingLookupTable::init(String selection_keys)
 {
 	std::vector< WideString > labels;
     
@@ -700,11 +700,9 @@ void ChewingLookupTable::init()
         "LookupTable Init\n";
 	char buf[ 2 ] = { 0, 0 };
 	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; ++i ) {
-		buf[ 0 ] = '1' + i;
+		buf[ 0 ] = selection_keys[i];
 		labels.push_back( utf8_mbstowcs( buf ) );
 	}
-	buf[ 0 ] = '0';
-	labels.push_back( utf8_mbstowcs( buf ) );
 	set_candidate_labels( labels );
 }
 

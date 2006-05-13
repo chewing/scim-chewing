@@ -23,7 +23,7 @@ class ChewingLookupTable : public LookupTable
 		virtual AttributeList get_attributes ( int index ) const;
 		virtual unsigned int number_of_candidates() const;
 		virtual void clear();
-		void init();
+		void init( String s );
 		void update( ChoiceInfo *ci );
 	private:
 		ChoiceInfo *pci;
