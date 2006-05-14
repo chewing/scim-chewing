@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(scim-chewing, 0.2.92, chewing@chewing.csie.net)
+AC_INIT(scim-chewing, 0.2.92, chewing-devel@googlegroups.com)
 AC_CONFIG_SRCDIR([src/scim_chewing_imengine.h])
 
 AC_SUBST(PACKAGE_VERSION)
