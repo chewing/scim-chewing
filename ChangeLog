@@ -1,5 +1,10 @@
 2006-05-15  Jim Huang  <jserv.tw@gmail.com>
 
+	* configure.ac: Bump version to 0.3.0 (final).
+	SCIM-chewing 0.3.x depends on libchewing 0.3.x series.
+
+2006-05-15  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_imengine.h
 	(m_selection_keys_num): New member for the number of selection keys.
 
