@@ -23,7 +23,7 @@ class ChewingLookupTable : public LookupTable
 		virtual AttributeList get_attributes ( int index ) const;
 		virtual unsigned int number_of_candidates() const;
 		virtual void clear();
-		void init( String s );
+		void init( String s, int num );
 		void update( ChoiceInfo *ci );
 	private:
 		ChoiceInfo *pci;
@@ -60,6 +60,7 @@ private:
 	KeyEventList m_chi_eng_keys;
 	String m_KeyboardType;
 	String m_selection_keys;
+	int m_selection_keys_num;
 	bool m_add_phrase_forward;
 	bool m_space_as_selection;
 	bool m_esc_clean_all_buffer;

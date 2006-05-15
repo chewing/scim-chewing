@@ -35,8 +35,13 @@
   #define bind_textdomain_codeset(domain,codeset)
 #endif
 
-#define SCIM_PROP_CHIENG                                                     "/IMEngine/Chinese/Chewing/ChiEngMode"
-#define SCIM_PROP_LETTER                                                     "/IMEngine/Chinese/Chewing/FullHalfLetter"
+#define SCIM_PROP_CHIENG \
+	"/IMEngine/Chinese/Chewing/ChiEngMode"
+#define SCIM_PROP_LETTER \
+	"/IMEngine/Chinese/Chewing/FullHalfLetter"
+
+#define SCIM_CHEWING_SELECTION_KEYS_NUM_DEF 9
+static int _selection_keys_num;
 
 #include <scim.h>
 #include <chewing/chewing.h>
@@ -152,6 +157,11 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
                 	String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
                 	String( SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS ) );
 
+	// SCIM_CHEWING_SELECTION_KEYS_NUM
+	m_selection_keys_num = _selection_keys_num = m_config->read(
+			String( SCIM_CHEWING_SELECTION_KEYS_NUM ),
+			9);
+
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
 	m_add_phrase_forward = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
@@ -266,7 +276,8 @@ ChewingIMEngineInstance::ChewingIMEngineInstance(
         "Create IMEngineInstance\n";
 	ctx = chewing_new();
 	reload_config( m_factory->m_config );
-	m_lookup_table.init( m_factory->m_selection_keys );
+	m_lookup_table.init( m_factory->m_selection_keys,
+			     m_factory->m_selection_keys_num );
 
 	m_reload_signal_connection =
 		m_factory->m_config->signal_connect_reload(
@@ -280,7 +291,8 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	// Reset all data.
 	reset();
 
-	config.selectAreaLen = SCIM_CHEWING_SELECTION_KEYS_NUM * 2;
+	config.selectAreaLen = m_factory->m_selection_keys_num * 2;
+
 	config.maxChiSymbolLen = 16;
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
@@ -441,6 +453,7 @@ void ChewingIMEngineInstance::update_lookup_table_page_size(
 {
 	//XXX should not directly access data member.
 	ctx->data->config.selectAreaLen = page_size * 2;
+	m_lookup_table.set_page_size (page_size);
 }
 
 void ChewingIMEngineInstance::lookup_table_page_up()
@@ -465,11 +478,12 @@ void ChewingIMEngineInstance::reset()
 	/* Configure selection keys definition */
 	int i = 0;
 	for (; m_factory->m_selection_keys[i] &&
-	       i <= SCIM_CHEWING_SELECTION_KEYS_NUM; i++) {
+	       i <= m_factory->m_selection_keys_num; i++) {
 		config.selKey[i] = m_factory->m_selection_keys[i];
 	}
 	config.selKey[i] = '\0';
-	m_lookup_table.init( m_factory->m_selection_keys );
+	m_lookup_table.init( m_factory->m_selection_keys,
+	                     m_factory->m_selection_keys_num );
 }
 
 void ChewingIMEngineInstance::focus_in()
@@ -660,7 +674,7 @@ void ChewingIMEngineInstance::refresh_letter_property ()
 }
 
 ChewingLookupTable::ChewingLookupTable()
-	: LookupTable( SCIM_CHEWING_SELECTION_KEYS_NUM )
+	: LookupTable( _selection_keys_num )
 {
 }
 
@@ -692,14 +706,14 @@ void ChewingLookupTable::clear()
 {
 }
 
-void ChewingLookupTable::init(String selection_keys)
+void ChewingLookupTable::init(String selection_keys, int selection_keys_num)
 {
 	std::vector< WideString > labels;
     
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "LookupTable Init\n";
 	char buf[ 2 ] = { 0, 0 };
-	for ( int i = 0; i < SCIM_CHEWING_SELECTION_KEYS_NUM; ++i ) {
+	for ( int i = 0; i < selection_keys_num; ++i ) {
 		buf[ 0 ] = selection_keys[i];
 		labels.push_back( utf8_mbstowcs( buf ) );
 	}

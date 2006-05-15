@@ -1,5 +1,30 @@
 2006-05-15  Jim Huang  <jserv.tw@gmail.com>
 
+	* src/scim_chewing_imengine.h
+	(m_selection_keys_num): New member for the number of selection keys.
+
+	* src/scim_chewing_config_entry.h
+	(SCIM_CHEWING_SELECTION_KEYS_NUM): Put key entry name instead of
+	hard-coded constant.
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineFactory::reload_conf)
+	(ChewingIMEngineInstance::ChewingIMEngine)
+	(ChewingIMEngineInstance::reload_config)
+	(ChewingIMEngineInstance::update_lookup_table_page_size)
+	(ChewingIMEngineInstance::reset)
+	(ChewingLookupTable::ChewingLookupTable) (ChewingLookupTable::init):
+	Continue the previous work from Kanru Chen to be more complete.
+
+	* src/scim_chewing_imengine_setup.cpp
+	(create_keyboard_page) (create_keyboard_page) (setup_widget_value)
+	(load_config) (save_config): Likewise.
+	Complete SetupUI for customized selection keys and number.
+
+	* po/zh_TW.po: Updated.
+
+2006-05-15  Jim Huang  <jserv.tw@gmail.com>
+
 	* configure.ac: Fill chewing-devel@googlegroups.com as contact
 	address.
 	

@@ -1,5 +1,5 @@
 /** @file scim_chewing_imengine_setup.cpp
- * implementation of Setup Module of chewing imengine module.
+ * implementation of SetupUI Module of chewing imengine module.
  */
 
 /*
@@ -138,6 +138,7 @@ static bool __config_space_as_selection = true;
 static String __config_kb_type_data;
 static String __config_kb_type_data_translated;
 static String __config_selKey_type_data;
+static String __config_selKey_num_data;
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
@@ -147,7 +148,9 @@ static GtkWidget    * __widget_space_as_selection = 0;
 static GtkWidget    * __widget_kb_type = 0;
 static GList *kb_type_list = 0;
 static GtkWidget    * __widget_selKey_type = 0;
+static GtkWidget    * __widget_selKey_num = 0;
 static GList *selKey_type_list = 0;
+static GList *selKey_num_list = 0;
 // static GtkWidget    * __widget_show_candidate_comment= 0;
 static GtkTooltips  * __widget_tooltips              = 0;
 
@@ -394,14 +397,22 @@ static char *builtin_selectkeys[] = {
 	"asdfjkl789",
 	"aoeuhtn789",
 	"1234qweras",
-};      
+};
+
+static char *builtin_selectkeys_num[] = {
+	"9",
+	"8",
+	"7",
+	"6",
+	"5"
+};
 
 static GtkWidget *create_keyboard_page()
 {
 	GtkWidget *table;
 	GtkWidget *label;
 
-	table = gtk_table_new (3, 4, FALSE);
+	table = gtk_table_new (4, 5, FALSE);
 	gtk_widget_show (table);
 
 	int i;
@@ -499,6 +510,40 @@ static GtkWidget *create_keyboard_page()
 		"changed",
 		G_CALLBACK (on_default_editable_changed),
 		&(__config_selKey_type_data));
+
+	// Setup selKey_num combo box
+	__widget_selKey_num = gtk_combo_new();
+	gtk_widget_show (__widget_selKey_num);
+
+	for (i = 0; 
+	     i < (sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0])); 
+	     i++) {
+		selKey_num_list = g_list_append(
+				selKey_num_list,
+				(void *) builtin_selectkeys_num[ i ] );
+	}
+	
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_num), selKey_num_list);
+	g_list_free(selKey_num_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_selKey_num), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_selKey_num)->entry)), FALSE);
+	label = gtk_label_new (_("Number of Selection Keys :"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_selKey_num, 1, 2, i, i+1,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_num)->entry,
+			_("Change the default number of selection keys"), NULL);
+	g_signal_connect(
+		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_num)->entry), 
+		"changed",
+		G_CALLBACK (on_default_editable_changed),
+		&(__config_selKey_num_data));
 
 	// keyboard: trigger keys
 	for (i = 0; __config_keyboards [i].key; ++ i) {
@@ -655,6 +700,23 @@ void setup_widget_value()
 		GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry),
 		builtin_selectkeys[index_selectkeys]
 	);
+
+	/* selKey_num */
+	int index_selectkeys_num =
+		sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0]) - 1;
+	for ( ; index_selectkeys_num >= 0;  index_selectkeys_num--) {
+		if ( __config_selKey_num_data ==
+			builtin_selectkeys_num[index_selectkeys_num]) {
+			break;
+		}
+	}
+	if (index_selectkeys_num < 0)
+		index_selectkeys_num = 0;
+	
+	gtk_entry_set_text (
+		GTK_ENTRY(GTK_COMBO(__widget_selKey_num)->entry),
+		builtin_selectkeys_num[index_selectkeys_num]
+	);
 }
 
 void load_config( const ConfigPointer &config )
@@ -679,6 +741,10 @@ void load_config( const ConfigPointer &config )
 		__config_selKey_type_data =
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
 					__config_selKey_type_data);
+
+		__config_selKey_num_data =
+			config->read( String( SCIM_CHEWING_SELECTION_KEYS_NUM ),
+					__config_selKey_num_data);
 
 		for (int i = 0; __config_keyboards[ i ].key; ++ i) {
 			__config_keyboards[ i ].data =
@@ -741,6 +807,23 @@ void save_config( const ConfigPointer &config )
 
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS),
 				__config_selKey_type_data);
+
+		// SCIM_CHEWING_SELECTION_KEYS_NUM
+		int index_selectkeys_num =
+			sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0]) - 1;
+		for ( ; index_selectkeys_num >= 0; index_selectkeys_num--) {
+			if (__config_selKey_num_data ==
+			    builtin_selectkeys_num[index_selectkeys_num]) {
+				break;
+			}
+		}
+		if (index_selectkeys_num < 0)
+			index_selectkeys_num = 0;
+		__config_selKey_num_data =
+			builtin_selectkeys_num[index_selectkeys_num];
+
+		config->write (String (SCIM_CHEWING_SELECTION_KEYS_NUM),
+		               __config_selKey_num_data);
 
 //		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
 //				__config_show_candidate_comment);
