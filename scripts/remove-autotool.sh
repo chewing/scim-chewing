@@ -18,6 +18,7 @@ rm -rf \
 	aclocal.m4 \
 	config.sub \
 	config.guess \
+	config.status.lineno \
 	configure \
 	install-sh \
 	autom4te.cache \

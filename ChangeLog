@@ -1,3 +1,8 @@
+2006-05-16  Kanru Chen  <koster@debian.org.tw>
+
+	* scrpits/remove-autotool.sh: Add config.status.lineno to removing
+	list.
+
 2006-05-15  Jim Huang  <jserv.tw@gmail.com>
 
 	* configure.ac: Bump version to 0.3.0 (final).
