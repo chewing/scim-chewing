@@ -339,7 +339,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 		return true;
     }
 
-        if ( key.mask == 0 ) {
+	if ( key.mask == 0 ) {
 		switch ( key.code ) {
 			case SCIM_KEY_Left:
 				chewing_handle_Left( ctx );
@@ -430,7 +430,12 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			key.code <= SCIM_KEY_9 && 
 			key.code >= SCIM_KEY_0 ) {
 			chewing_handle_CtrlNum( ctx, key.get_ascii_code() );
+		} else {
+			return false;
 		}
+	}
+	else {
+		return false;
 	}
 	have_input = true;
     SCIM_DEBUG_IMENGINE( 2 ) <<
