@@ -660,7 +660,8 @@ void setup_widget_value()
 		}
 	}
 
-	for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+	for (unsigned int i = 0;
+	     i < (sizeof(config_color_common) / sizeof((config_color_common)[0])); i++) {
 		ColorConfigData &entry = config_color_common[i];
 		if (entry.widget) {
 			scim_color_button_set_colors (
@@ -752,7 +753,8 @@ void load_config( const ConfigPointer &config )
 						__config_keyboards[ i ].data);
 		}
 
-		for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+		for (unsigned int i = 0;
+		     i < (sizeof(config_color_common) / sizeof((config_color_common)[0])); i++) {
 			ColorConfigData &entry = config_color_common[i];
 			entry.bg_value = config->read (String (entry.bg_key), entry.bg_value);
 		}
@@ -833,7 +835,8 @@ void save_config( const ConfigPointer &config )
 					__config_keyboards [i].data);
 		}
 
-		for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+		for (unsigned int i = 0;
+		     i < (sizeof(config_color_common) / sizeof((config_color_common)[0])); i++) {
 			ColorConfigData &entry = config_color_common[i];
 			if (entry.changed) {
 				entry.bg_value = config->write (String (entry.bg_key),
@@ -912,7 +915,8 @@ static ColorConfigData *find_color_config_entry (const char *config_key)
 	if (!config_key)
 		return NULL;
 
-	for (unsigned int i = 0; config_color_common[i].bg_key; i++) {
+	for (unsigned int i = 0;
+	     i < (sizeof(config_color_common) / sizeof((config_color_common)[0])); i++) {
 		ColorConfigData *entry = &config_color_common[i];
 		if (entry->fg_key && !strcmp (entry->bg_key, config_key))
 			return entry;

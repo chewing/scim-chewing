@@ -1,3 +1,12 @@
+2006-05-21  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine_setup.cpp
+	(setup_widget_value) (load_config) (save_config)
+	(find_color_config_entry): Fixlet.
+	There's no "end marker"	where the bg_key is False. This of course 
+	causes invalid memory access thus crashing "scim-setup".
+	Patched by Scott Tsai <scottt.tw@gmail.com>.
+
 2006-05-18  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scimm_chewing_imengine.cpp
