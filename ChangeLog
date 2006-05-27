@@ -1,3 +1,9 @@
+2006-05-28  Kanru Chen  <koster@debian.org.tw>
+
+	* configure.ac: Add IT_PROG_INTLTOOL which will include intltool.m4.
+	* autogen.sh: Reordering the scripts. Call aclocal after libtoolize and
+	intltoolize.
+
 2006-05-21  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cpp

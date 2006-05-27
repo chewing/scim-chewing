@@ -33,6 +33,9 @@ AC_PROG_LIBTOOL
 #AC_LIB_LTDL
 AC_SUBST(LIBTOOL_DEPS)
 
+# Init intltool
+IT_PROG_INTLTOOL
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
