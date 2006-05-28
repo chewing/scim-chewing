@@ -16,7 +16,7 @@
 2006-05-18  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scimm_chewing_imengine.cpp
-	(ChewingIMEngineInstance::process_key_event): Pass unknow input key event.
+	(ChewingIMEngineInstance::process_key_event): Pass unknown input key event.
 
 2006-05-16  Kanru Chen  <koster@debian.org.tw>
 
