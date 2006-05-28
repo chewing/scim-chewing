@@ -18,7 +18,7 @@ AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER([config.h])
 
 # Init gettext
-ALL_LINGUAS="zh_TW"
+#ALL_LINGUAS="zh_TW"
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION(0.14.1)
 
@@ -34,7 +34,7 @@ AC_PROG_LIBTOOL
 AC_SUBST(LIBTOOL_DEPS)
 
 # Init intltool
-IT_PROG_INTLTOOL
+IT_PROG_INTLTOOL([0.35.0])
 
 # Checks for programs.
 AC_PROG_CXX

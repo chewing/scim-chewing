@@ -1,8 +1,10 @@
 2006-05-28  Kanru Chen  <koster@debian.org.tw>
 
 	* configure.ac: Add IT_PROG_INTLTOOL which will include intltool.m4.
+	Require intltool version 0.35.0 to use LINGUAS file.
 	* autogen.sh: Reordering the scripts. Call aclocal after libtoolize and
 	intltoolize.
+	* po/LINGUAS: New file.
 
 2006-05-21  Jim Huang  <jserv.tw@gmail.com>
 
