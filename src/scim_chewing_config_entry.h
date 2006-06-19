@@ -45,6 +45,13 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT \
 	"/IMEngine/Chewing/ShowCandidateComment"
 
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_PINYIN_METHD \
+	"/IMEngine/Chewing/PinYinMethod"
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_EXTERNAL_PINYIN_PATH \
+	"/IMEngine/Chewing/ExternalPinYinPath"
+
 /* It's known to be at least 5. */
 #define SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM (5)
 

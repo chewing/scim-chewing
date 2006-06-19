@@ -59,6 +59,8 @@ private:
 
 	KeyEventList m_chi_eng_keys;
 	String m_KeyboardType;
+	int m_PinYinType;
+	String m_ExternPinYinPath;
 	String m_selection_keys;
 	int m_selection_keys_num;
 	bool m_add_phrase_forward;

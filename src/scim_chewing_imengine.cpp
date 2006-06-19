@@ -149,13 +149,22 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "Load keyboard type\n";
 	m_KeyboardType = m_config->read (
-			String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
-			String( "KB_DEFAULT" ));
+		String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
+		String( "KB_DEFAULT" ));
+
+	// Load PinYin method Type
+	m_PinYinType = m_config->read (
+		String( SCIM_CONFIG_IMENGINE_CHEWING_PINYIN_METHD),
+		PINYIN_HANYU);
+
+	m_ExternPinYinPath = m_config->read (
+		String( SCIM_CONFIG_IMENGINE_CHEWING_EXTERNAL_PINYIN_PATH),
+		String(""));
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS
 	m_selection_keys = m_config->read(
-                	String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
-                	String( SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS ) );
+		String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
+		String( SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS ) );
 
 	// SCIM_CHEWING_SELECTION_KEYS_NUM
 	m_selection_keys_num = _selection_keys_num = m_config->read(
@@ -166,7 +175,7 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 	m_add_phrase_forward = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 			false);
-
+	
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
 	m_esc_clean_all_buffer = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
@@ -476,6 +485,14 @@ void ChewingIMEngineInstance::lookup_table_page_down()
 void ChewingIMEngineInstance::reset()
 {
 	chewing_Reset( ctx );
+
+	/* Configure PinYin input method.
+	   if the PinYin method type is a built-in type,
+	   the second parameter will be ignored.
+	 */
+	chewing_set_PinYinMethod(static_cast<PinYinMethodType>(m_factory->m_PinYinType),
+		m_factory->m_ExternPinYinPath.c_str());
+	
 	/* Configure Keyboard Type */
 	chewing_set_KBType( ctx, chewing_KBStr2Num( 
 				(char *) m_factory->m_KeyboardType.c_str() ));
