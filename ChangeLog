@@ -1,3 +1,10 @@
+2006-08-15  Kanru Chen  <koster@debian.org.tw>
+
+	* src/scim_chewing_imengine.cpp
+	  (ChewingIMEngineInstance::focus_out):
+	  Add chewing_handle_Esc() after committing to clear rest pre-edit
+	  buffer.
+
 2006-06-19  Jeff Chen  <wiz.chen@gamil.com>
 
 	* po/zh_TW.po: Updated.

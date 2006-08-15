@@ -520,8 +520,9 @@ void ChewingIMEngineInstance::focus_out()
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "Focus Out\n";
     if (have_input == true) {
-		chewing_handle_Enter( ctx );
+        chewing_handle_Enter( ctx );
         commit( ctx->output );
+        chewing_handle_Esc( ctx );
         have_input = false;
     }
 }
