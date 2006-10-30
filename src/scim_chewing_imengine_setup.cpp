@@ -749,6 +749,13 @@ void setup_widget_value()
 				GTK_TOGGLE_BUTTON( __widget_space_as_selection ),
 				__config_space_as_selection );
 	}
+
+	if ( __widget_esc_clean_all_buffer ) {
+		gtk_toggle_button_set_active(
+				GTK_TOGGLE_BUTTON( __widget_esc_clean_all_buffer ),
+				__config_esc_clean_all_buffer );
+	}
+
 	
 	for (int i = 0; __config_keyboards [i].key; ++ i) {
 		if (__config_keyboards [i].entry) {

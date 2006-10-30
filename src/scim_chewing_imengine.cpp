@@ -311,7 +311,7 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	config.bSpaceAsSelection = m_factory->m_space_as_selection ? 1 : 0;
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
-	config.bEscCleanAllBuf = m_factory->m_esc_clean_all_buffer ? 0 : 1;
+	config.bEscCleanAllBuf = m_factory->m_esc_clean_all_buffer ? 1 : 0;
 
 	//SetConfig( &da, &config );
 	chewing_Configure( ctx, &config );

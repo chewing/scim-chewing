@@ -1,5 +1,17 @@
 2006-10-30  Caius Chance  <cchance@redhat.com>
 
+	* src/scim_chewing_imengine.cpp
+	  (ChewingIMEngineInstance::reload_config)
+	  Esc key to clean all buffer couldn't be disabled.
+	  ((Esc clear all buffer was not functioning and setup page wasn't
+	   reflecting changes.)
+
+	* src/scim_chewing_imengine_setup.cpp
+	  (setup_widget_value):
+	  As Above
+
+2006-10-30  Caius Chance  <cchance@redhat.com>
+
 	* src/scim_chewing_imengine_setup.cpp
 	  (__config_keyboards[]):
 	  Fixed trigger key "Control-Space".
