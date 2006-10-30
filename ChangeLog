@@ -1,3 +1,10 @@
+2006-10-30  Caius Chance  <cchance@redhat.com>
+
+	* src/scim_chewing_imengine_setup.cpp
+	  (__config_keyboards[]):
+	  Fixed trigger key "Control-Space".
+          (It was recognised as "Space" because it was written "Ctrl-Space".)
+
 2006-08-15  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp

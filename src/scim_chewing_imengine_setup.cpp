@@ -177,7 +177,7 @@ static KeyboardConfigData __config_keyboards[] =
         // button
         NULL,
         // data
-        "Ctrl+space"
+        "Control+space"
     },
     {
         // key
