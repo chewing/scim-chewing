@@ -506,6 +506,10 @@ void ChewingIMEngineInstance::reset()
 	config.selKey[i] = '\0';
 	m_lookup_table.init( m_factory->m_selection_keys,
 	                     m_factory->m_selection_keys_num );
+
+	/* Re-focus to clear preedit, to avoid gedit crash when select-all. */
+	focus_out();
+	focus_in();
 }
 
 void ChewingIMEngineInstance::focus_in()
