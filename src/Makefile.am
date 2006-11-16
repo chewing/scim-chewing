@@ -15,7 +15,10 @@ noinst_HEADERS = scim_chewing_imengine.h scim_chewing_config_entry.h
 moduledir = @SCIM_MODULEDIR@/IMEngine
 module_LTLIBRARIES = chewing.la
 
-chewing_la_SOURCES  = scim_chewing_imengine.cpp
+chewing_la_SOURCES  = \
+	scim_chewing_config_entry.h \
+	scim_chewing_imengine.h \
+	scim_chewing_imengine.cpp
 
 chewing_la_CFLAGS = @SCIM_CFLAGS@ @SCIM_DEBUG_FLAGS@ @CHEWING_CFLAGS@
 chewing_la_CXXFLAGS = @SCIM_CFLAGS@ @SCIM_DEBUG_FLAGS@ @CHEWING_CFLAGS@
@@ -36,6 +39,8 @@ setupmoduledir = @SCIM_MODULEDIR@/SetupUI
 setupmodule_LTLIBRARIES = $(SETUP_MODULE)
 
 chewing_imengine_setup_la_SOURCES = \
+	scim_chewing_config_entry.h \
+	scim_color_button.h \
 	scim_color_button.cpp \
 	scim_chewing_imengine_setup.cpp
 

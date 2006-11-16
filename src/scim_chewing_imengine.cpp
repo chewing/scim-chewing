@@ -300,7 +300,7 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	// Reset all data.
 	reset();
 
-	config.selectAreaLen = m_factory->m_selection_keys_num * 2;
+	config.candPerPage = m_factory->m_selection_keys_num * 2;
 
 	config.maxChiSymbolLen = 16;
 
@@ -440,6 +440,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			key.code >= SCIM_KEY_0 ) {
 			chewing_handle_CtrlNum( ctx, key.get_ascii_code() );
 		} else {
+			// chewing_handle_CtrlOption( ctx, key.get_ascii_code() );
 			return false;
 		}
 	}
@@ -466,7 +467,7 @@ void ChewingIMEngineInstance::update_lookup_table_page_size(
 		unsigned int page_size )
 {
 	//XXX should not directly access data member.
-	ctx->data->config.selectAreaLen = page_size * 2;
+	ctx->data->config.candPerPage = page_size * 2;
 	m_lookup_table.set_page_size (page_size);
 }
 
