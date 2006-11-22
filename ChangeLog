@@ -1,3 +1,14 @@
+2006-11-22  Caius Chance  <cchance@redhat.com>
+
+        Release Page Up / Page Down key event to running applications.
+        (Fixed Page Up / Page Down key doesn't work when Chewing is activated.)
+
+        * src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event): Add redirection of 
+	SCIM_KEY_Page_Up() and SCIM_KEY_Page_Down() to libchewing's
+	chewing_handle_PageUp() and chewing_handle_PageDown(), which eventually
+	pass page up and page down key event to running applications.
+
 2006-11-16  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/Makefile.am: Added scim_chewing_config_entry.h and

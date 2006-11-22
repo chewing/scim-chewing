@@ -389,6 +389,12 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Caps_Lock:
 				chewing_handle_Capslock( ctx );
 				break;
+			case SCIM_KEY_Page_Up:
+				chewing_handle_PageUp( ctx );
+				break;
+			case SCIM_KEY_Page_Down:
+				chewing_handle_PageDown( ctx );
+				break;
 			case SCIM_KEY_Shift_L:
 			case SCIM_KEY_Shift_R:
 			case SCIM_KEY_Control_L:
