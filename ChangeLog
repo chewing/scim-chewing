@@ -1,3 +1,14 @@
+2007-05-22  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_color_button.cpp,
+	src/scim_color_button.h,
+	src/scim_chewing_imengine_setup.cpp:
+	s/ScimColorButton/ScimChewingColorButton/g .
+	To avoid setup GUI modules not able to initialize due to naming
+	pollution.  Reported by Yong Sun <Yong.Sun@Sun.COM>.
+
+	* po/zh_TW.po: Fix translation item of "Han-Yu PinYin Keyboard".
+
 2006-11-22  Caius Chance  <cchance@redhat.com>
 
         Release Page Up / Page Down key event to running applications.
@@ -27,8 +38,8 @@
 2006-11-09  Caius Chance  <cchance@redhat.com>
 
 	* src/scim_chewing_imengine.cpp
-	  (ChewingIMEngineInstance::reset):
-	  Re-focus to clear preedit, to avoid gedit crash when select-all.
+	(ChewingIMEngineInstance::reset):
+	Re-focus to clear preedit, to avoid gedit crash when select-all.
 
 2006-10-30  Caius Chance  <cchance@redhat.com>
 
@@ -66,15 +77,15 @@
 	Add new configurations to scim repository.
 	  
 	* src/scim_chewing_imengine.cpp 
-	  (ChewingIMEngineFactory::reload_config)
-	  (ChewingIMEngineInstance::reset),
+	(ChewingIMEngineFactory::reload_config)
+	(ChewingIMEngineInstance::reset),
 	src/scim_chewing_imengine_setup.cpp
-	  (create_pinyin_config_page)
-	  (create_setup_window)
-	  (load_config) (save_config) (set_pinyin_typ)
-	  (on_builtin_pinyin_method_changed)
-	  (on_builtin_pinyin_method_toggled)
-	  (on_external_pinyin_method_changed):
+	(create_pinyin_config_page)
+	(create_setup_window)
+	(load_config) (save_config) (set_pinyin_typ)
+	(on_builtin_pinyin_method_changed)
+	(on_builtin_pinyin_method_toggled)
+	(on_external_pinyin_method_changed):
 	Add selectable PinYin method support.
 	  
 2006-05-30  Kanru Chen  <koster@debian.org.tw>

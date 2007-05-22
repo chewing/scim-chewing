@@ -30,17 +30,17 @@
 using namespace scim;
 
 #define SCIM_TYPE_COLOR_BUTTON            (scim_color_button_get_type ())
-#define SCIM_COLOR_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCIM_TYPE_COLOR_BUTTON, ScimColorButton))
-#define SCIM_COLOR_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCIM_TYPE_COLOR_BUTTON, ScimColorButtonClass))
+#define SCIM_COLOR_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCIM_TYPE_COLOR_BUTTON, ScimChewingColorButton))
+#define SCIM_COLOR_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCIM_TYPE_COLOR_BUTTON, ScimChewingColorButtonClass))
 #define SCIM_IS_COLOR_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCIM_TYPE_COLOR_BUTTON))
 #define SCIM_IS_COLOR_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SCIM_TYPE_COLOR_BUTTON))
-#define SCIM_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SCIM_TYPE_COLOR_BUTTON, ScimColorButtonClass))
+#define SCIM_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), SCIM_TYPE_COLOR_BUTTON, ScimChewingColorButtonClass))
 
 
-typedef struct _ScimColorButtonClass ScimColorButtonClass;
-typedef struct _ScimColorButton ScimColorButton;
+typedef struct _ScimChewingColorButtonClass ScimChewingColorButtonClass;
+typedef struct _ScimChewingColorButton ScimChewingColorButton;
 
-struct _ScimColorButton
+struct _ScimChewingColorButton
 {
   GtkDrawingArea   parent_instance;
 
@@ -57,13 +57,13 @@ struct _ScimColorButton
   GdkColor	   bg_color;
 };
 
-struct _ScimColorButtonClass
+struct _ScimChewingColorButtonClass
 {
   GtkDrawingAreaClass  parent_class;
 
   /*  signals  */
 
-  void (* color_changed) (ScimColorButton  *button);
+  void (* color_changed) (ScimChewingColorButton  *button);
 };
 
 
@@ -71,10 +71,10 @@ GType       scim_color_button_get_type    (void) G_GNUC_CONST;
 
 GtkWidget * scim_color_button_new         (void);
 
-gboolean    scim_color_button_get_colors  (ScimColorButton *button,
+gboolean    scim_color_button_get_colors  (ScimChewingColorButton *button,
 					   String *fg_value,
 					   String *bg_value);
-gboolean    scim_color_button_set_colors  (ScimColorButton *button,
+gboolean    scim_color_button_set_colors  (ScimChewingColorButton *button,
 					   const String &fg_value,
 					   const String &bg_value);
 

@@ -65,8 +65,8 @@ typedef enum
 #define WIDGET_WIDTH 32
 #define WIDGET_HEIGHT 32
 
-static void     scim_color_button_class_init (ScimColorButtonClass *klass);
-static void     scim_color_button_init       (ScimColorButton      *object);
+static void     scim_color_button_class_init (ScimChewingColorButtonClass *klass);
+static void     scim_color_button_init       (ScimChewingColorButton      *object);
 
 static void     scim_color_button_destroy         (GtkObject      *object);
 static gboolean scim_color_button_expose          (GtkWidget      *widget,
@@ -88,19 +88,19 @@ scim_color_button_get_type (void)
 
     if (!type) {
         static const GTypeInfo info = {
-            sizeof (ScimColorButtonClass),
+            sizeof (ScimChewingColorButtonClass),
             NULL,           /* base_init */
             NULL,           /* base_finalize */
             (GClassInitFunc) scim_color_button_class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof (ScimColorButton),
+            sizeof (ScimChewingColorButton),
             0,              /* n_preallocs */
             (GInstanceInitFunc) scim_color_button_init,
         };
 
         type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                       "ScimColorButton",
+                                       "ScimChewingColorButton",
                                        &info, (GTypeFlags) 0);
     }
 
@@ -108,7 +108,7 @@ scim_color_button_get_type (void)
 }
 
 static void
-scim_color_button_class_init (ScimColorButtonClass *klass)
+scim_color_button_class_init (ScimChewingColorButtonClass *klass)
 {
     GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
     GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
@@ -119,7 +119,7 @@ scim_color_button_class_init (ScimColorButtonClass *klass)
       g_signal_new ("color-changed",
   		  G_TYPE_FROM_CLASS (klass),
   		  G_SIGNAL_RUN_FIRST,
-  		  G_STRUCT_OFFSET (ScimColorButtonClass, color_changed),
+  		  G_STRUCT_OFFSET (ScimChewingColorButtonClass, color_changed),
   		  NULL, NULL,
   		  g_cclosure_marshal_VOID__VOID,
   		  G_TYPE_NONE, 0);
@@ -132,7 +132,7 @@ scim_color_button_class_init (ScimColorButtonClass *klass)
 }
 
 static void
-scim_color_button_init (ScimColorButton *object)
+scim_color_button_init (ScimChewingColorButton *object)
 {
     /*set default color */ 
     gdk_color_parse ("#000000", &object->fg_color);
@@ -147,7 +147,7 @@ scim_color_button_init (ScimColorButton *object)
 static void
 scim_color_button_destroy (GtkObject *object)
 {
-    ScimColorButton *button = SCIM_COLOR_BUTTON (object);
+    ScimChewingColorButton *button = SCIM_COLOR_BUTTON (object);
 
     if (button->render_buf) {
         g_free (button->render_buf);
@@ -164,7 +164,7 @@ scim_color_button_destroy (GtkObject *object)
 }
 
 static void
-scim_color_button_draw_rect (ScimColorButton *button,
+scim_color_button_draw_rect (ScimChewingColorButton *button,
                              GdkDrawable    *drawable,
                              GdkGC          *gc,
                              gint            x,
@@ -217,7 +217,7 @@ static gboolean
 scim_color_button_expose (GtkWidget      *widget,
                           GdkEventExpose *eevent)
 {
-    ScimColorButton *button = SCIM_COLOR_BUTTON (widget);
+    ScimChewingColorButton *button = SCIM_COLOR_BUTTON (widget);
     gint            width, height;
     gint            swap_w = 0, swap_h = 0;
     gint            rect_w, rect_h;
@@ -295,7 +295,7 @@ scim_color_button_expose (GtkWidget      *widget,
 }
 
 static FgBgTarget
-scim_color_button_target (ScimColorButton *button,
+scim_color_button_target (ScimChewingColorButton *button,
                           gint            x,
                           gint            y)
 {
@@ -320,7 +320,7 @@ scim_color_button_target (ScimColorButton *button,
 }
 
 static void
-scim_color_button_open_color_dialog (ScimColorButton *button, gboolean fg)
+scim_color_button_open_color_dialog (ScimChewingColorButton *button, gboolean fg)
 {
     GtkWidget *dialog;
     const gchar *title;
@@ -353,7 +353,7 @@ scim_color_button_open_color_dialog (ScimColorButton *button, gboolean fg)
 }
 
 static void
-scim_color_button_swap_color (ScimColorButton *button)
+scim_color_button_swap_color (ScimChewingColorButton *button)
 {
     GdkColor tmp;
     tmp.red   = button->fg_color.red;
@@ -374,7 +374,7 @@ static gboolean
 scim_color_button_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-    ScimColorButton *button = SCIM_COLOR_BUTTON (widget);
+    ScimChewingColorButton *button = SCIM_COLOR_BUTTON (widget);
     if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS) {
         FgBgTarget target = scim_color_button_target (button,
                                                       (gint) bevent->x, (gint) bevent->y);
@@ -412,7 +412,7 @@ static gboolean
 scim_color_button_button_release (GtkWidget      *widget,
                                   GdkEventButton *bevent)
 {
-    ScimColorButton *button = SCIM_COLOR_BUTTON (widget);
+    ScimChewingColorButton *button = SCIM_COLOR_BUTTON (widget);
   
     if (bevent->button == 1) {
         FgBgTarget target = scim_color_button_target (button,
@@ -449,7 +449,7 @@ scim_color_button_new (void)
 }
 
 gboolean
-scim_color_button_get_colors (ScimColorButton *button,
+scim_color_button_get_colors (ScimChewingColorButton *button,
                               String *fg_value,
                               String *bg_value)
 {
@@ -472,7 +472,7 @@ scim_color_button_get_colors (ScimColorButton *button,
 }
 
 gboolean
-scim_color_button_set_colors (ScimColorButton *button,
+scim_color_button_set_colors (ScimChewingColorButton *button,
                               const String &fg_value,
                               const String &bg_value)
 {

@@ -246,10 +246,13 @@ WideString ChewingIMEngineFactory::get_help() const
 			   "\n\n  Tab:\n"
 			   "    Use tab key to dispart or connect a phrase."
 			   "\n\n  Ctrl + [number]:\n"
-			   "    Use ctrl + number key to add a user-defined phrase.\n"
+			   "    Use Ctrl + number key to add a user-defined phrase.\n"
 			   "    (Here number stands for the length of the user-defined phrase.)"
 			   "\n\n  Ctrl + 0:\n"
 			   "    Use Ctrl + 0 to specify symbolic input."
+			   "\n\n j / k:\n"
+			   "    While selecting candidate phrases, it could invoke \n"
+			   "    switching between the previous and the next one."
 		) );
 
 	return utf8_mbstowcs( help );

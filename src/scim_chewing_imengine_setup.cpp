@@ -301,7 +301,7 @@ static void on_default_key_selection_clicked(
 static GtkWidget *create_color_button (const char *config_key);
 
 static void on_color_button_changed(
-	ScimColorButton *button,
+	ScimChewingColorButton *button,
 	gpointer user_data );
 
 static void on_builtin_pinyin_method_changed(
@@ -1094,7 +1094,7 @@ static GtkWidget *create_color_button (const char *config_key)
 }
 
 static void on_color_button_changed(
-	ScimColorButton *button,
+	ScimChewingColorButton *button,
 	gpointer user_data)
 {
 	ColorConfigData *entry = static_cast <ColorConfigData*> (user_data);

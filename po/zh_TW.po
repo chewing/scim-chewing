@@ -202,7 +202,7 @@ msgstr "Dvorak 鍵盤 + 許氏注音"
 
 #: ../src/scim_chewing_imengine_setup.cpp:409
 msgid "Han-Yu PinYin Keyboard"
-msgstr "漢語拼音"
+msgstr "漢語拼音排列"
 
 #: ../src/scim_chewing_imengine_setup.cpp:413
 msgid "Han-Yu PinYin"
