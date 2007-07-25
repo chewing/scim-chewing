@@ -1,3 +1,10 @@
+2007-07-25  Jim Huang  <jserv.tw@gmail.com>
+
+	* po/nl.po: New file.  Nederlands translation contributed by
+	onald Stroethoff <stroet43@zonnet.nl>.
+
+	* po/LINGUAS: Likewise.
+
 2007-05-22  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_color_button.cpp,
