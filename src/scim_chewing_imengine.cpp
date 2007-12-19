@@ -631,15 +631,26 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	
 	// show lookup table
         if ( !pgo->pci )
-            return true;
-	if ( pgo->pci->nPage != 0 ) {
-		m_lookup_table.update( pgo->pci );
-		update_lookup_table( m_lookup_table );
-		show_lookup_table();
-	}
-	else {
-		hide_lookup_table();
-	}
+                return true;
+        if ( pgo->pci->nPage != 0 ) {
+                m_lookup_table.update( pgo->pci );
+                show_lookup_table();
+
+                if ( ( pgo->pci->nTotalChoice % pgo->pci->nChoicePerPage
+                != 0 ) && pgo->pci->pageNo == pgo->pci->nPage - 1 ) {
+                        m_lookup_table.set_page_size(
+                                pgo->pci->nTotalChoice %
+                                        pgo->pci->nChoicePerPage );
+                } else {
+                        m_lookup_table.set_page_size(
+                                pgo->pci->nChoicePerPage );
+                }
+
+                update_lookup_table( m_lookup_table );
+        }
+        else {
+                hide_lookup_table();
+        }
 	
 	// show aux string
 	m_aux_string = L"";

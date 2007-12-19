@@ -1,3 +1,10 @@
+2007-12-20  Caius Chance  <cchance@redhat.com>
+
+	* src/scim_chewing_imengine.cpp:
+	Last candidate on lookup table is not a valid candidate.
+	( Refit lookup table page size for last lookup page. i.e.
+	m_lookup_table.set_page_size([last_page_candidate_amount]) )
+
 2007-07-25  Jim Huang  <jserv.tw@gmail.com>
 
 	* po/nl.po: New file.  Nederlands translation contributed by
