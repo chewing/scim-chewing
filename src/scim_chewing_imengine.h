@@ -101,6 +101,7 @@ private:
 	void refresh_all_properties ();
 	void refresh_chieng_property ();
 	void refresh_letter_property ();
+	void refresh_kbtype_property ();
 
 	Connection m_reload_signal_connection;
 	WideString m_converted_string;
