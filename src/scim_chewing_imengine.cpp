@@ -123,7 +123,7 @@ bool ChewingIMEngineFactory::init()
 	char prefix[] = CHEWING_DATADIR;
 	char hash_postfix[] = "/.chewing/";
 
-	chewing_Init(prefix, (char *)(scim_get_home_dir()  hash_postfix).c_str() );
+	chewing_Init(prefix, (char *)(scim_get_home_dir() + hash_postfix).c_str() );
 	return true;
 }
 
@@ -145,7 +145,7 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
         "Load Chi/Eng mode keys\n";
 	str = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY ),
-			String( "ShiftShift_LKeyRelease" )  
+			String( "ShiftShift_LKeyRelease" ) +
 			String( "ShiftShift_RKeyRelease" ) );
 	scim_string_to_key_list( m_chi_eng_keys, str );
 
@@ -191,11 +191,11 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 			true);
 
 	// SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_
-	for (int i = 0; i < SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM; i) {
+	for (int i = 0; i < SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM; i++) {
 		int red, green, blue;
 		char bgcolor_str[64];
 		String str;
-		sprintf(bgcolor_str, SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_%d", i  1);
+		sprintf(bgcolor_str, SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_ "_%d", i + 1);
 		str = m_config->read(
 			String(bgcolor_str),
 			String(chewing_preedit_bgcolor[i] ));
@@ -242,18 +242,18 @@ WideString ChewingIMEngineFactory::get_help() const
 	scim_key_list_to_string( chi_eng_mode_switch, m_chi_eng_keys );
 
 
-	help =	String( _( "Hot Keys:" ) ) 
+	help =	String( _( "Hot Keys:" ) ) +
 		String( "\n\n  " )  chi_eng_mode_switch  String( ":\n" ) 
 		String( _( "    Switch between English/Chinese mode." ) ) 
 		String( _( "\n\n  Space:\n"
 			   "    Use space key to select candidate phrases."
 			   "\n\n  Tab:\n"
 			   "    Use tab key to dispart or connect a phrase."
-			   "\n\n  Ctrl  [number]:\n"
-			   "    Use Ctrl  number key to add a user-defined phrase.\n"
+			   "\n\n  Ctrl + [number]:\n"
+			   "    Use Ctrl + number key to add a user-defined phrase.\n"
 			   "    (Here number stands for the length of the user-defined phrase.)"
-			   "\n\n  Ctrl  0:\n"
-			   "    Use Ctrl  0 to specify symbolic input."
+			   "\n\n  Ctrl + 0:\n"
+			   "    Use Ctrl + 0 to specify symbolic input."
 			   "\n\n j / k:\n"
 			   "    While selecting candidate phrases, it could invoke \n"
 			   "    switching between the previous and the next one."
@@ -347,7 +347,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 
 	/* 
 	 * This is a workaround against the known issue in OpenOffice with 
-	 * GTK im module hanlding key pressed/released events.
+	 * GTK+ im module hanlding key pressed/released events.
 	 */
 	if ( key.is_key_release() ) {
         SCIM_DEBUG_IMENGINE( 2 ) <<
@@ -472,7 +472,7 @@ void ChewingIMEngineInstance::move_preedit_caret( unsigned int pos )
 
 void ChewingIMEngineInstance::select_candidate ( unsigned int index )
 {
-	chewing_handle_Default( ctx, '1'  index );
+	chewing_handle_Default( ctx, '1' + index );
 	commit( ctx->output );
 }
 
@@ -514,7 +514,7 @@ void ChewingIMEngineInstance::reset()
 	/* Configure selection keys definition */
 	int i = 0;
 	for (; m_factory->m_selection_keys[i] &&
-	       i <= m_factory->m_selection_keys_num; i) {
+	       i <= m_factory->m_selection_keys_num; i++) {
 		config.selKey[i] = m_factory->m_selection_keys[i];
 	}
 	config.selKey[i] = '\0';
@@ -571,8 +571,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	// commit string
 	m_commit_string = L"";
 	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
-		for ( int i = 0; i < pgo->nCommitStr; i ) {
-			m_commit_string = utf8_mbstowcs((char *)pgo->commitStr[ i ].s, 
+		for ( int i = 0; i < pgo->nCommitStr; i++ ) {
+			m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, 
 					MAX_UTF8_SIZE);
             SCIM_DEBUG_IMENGINE( 2 ) << "Commit Add: " <<
                 (char *)pgo->commitStr[ i ].s << "\n";
@@ -582,28 +582,28 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	m_preedit_string = L"";
 	// preedit string
 	// XXX show Interval
-	for ( int i = 0; i < pgo->chiSymbolCursor; i ) {
-		m_preedit_string = utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
+	for ( int i = 0; i < pgo->chiSymbolCursor; i++ ) {
+		m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
 		SCIM_DEBUG_IMENGINE( 2 ) << "PreEdit Add: " <<
 			(char *)pgo->chiSymbolBuf[ i ].s << "\n";
 	}
 	// zuin string
-	for ( int i = 0, j = 0; i < ZUIN_SIZE; i ) {
+	for ( int i = 0, j = 0; i < ZUIN_SIZE; i++ ) {
 		if ( pgo->zuinBuf[ i ].s[ 0 ] != '\0' ) {
-			m_preedit_string = utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, 
+			m_preedit_string += utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, 
 					MAX_UTF8_SIZE);
-			attr.push_back(Attribute(pgo->chiSymbolCursor  j, 1,
+			attr.push_back(Attribute(pgo->chiSymbolCursor + j, 1,
 					SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
-			j;
+			j++;
 		}
 	}
 
-	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i ) {
-        	m_preedit_string = utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, 
+	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
+        	m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, 
 				MAX_UTF8_SIZE);
 	}
 
-	for ( int i = 0; i < pgo->nDispInterval; i ) {
+	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
 		if ( pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from > 1 ) {
 			attr.push_back(
 				Attribute(
@@ -665,8 +665,8 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	// show aux string
 	m_aux_string = L"";
 	if ( pgo->bShowMsg ) {
-		for ( int i = 0; i < pgo->showMsgLen; i ) {
-            m_aux_string = utf8_mbstowcs((char *)pgo->showMsg[ i ].s, MAX_UTF8_SIZE);
+		for ( int i = 0; i < pgo->showMsgLen; i++ ) {
+            m_aux_string += utf8_mbstowcs((char *)pgo->showMsg[ i ].s, MAX_UTF8_SIZE);
 		}
 		update_aux_string( m_aux_string );
 		show_aux_string();
@@ -686,7 +686,7 @@ bool ChewingIMEngineInstance::match_key_event(
 		const KeyEventList &keylist,
 		const KeyEvent &key )
 {
-	KeyEventList::const_iterator kit;
+	KeyEventList::const_iterator ++kit;
 	for (kit = keylist.begin(); kit != keylist.end(); kit) {
 		if (key.code == kit->code && key.mask == kit->mask)
 			if (key.is_key_press() || m_prev_key.code == key.code)
@@ -786,8 +786,8 @@ WideString ChewingLookupTable::get_candidate( int index ) const
 	WideString m_converted_string;
 	int no = pci->pageNo * pci->nChoicePerPage;
 	m_converted_string = utf8_mbstowcs(
-			(char *) pci->totalChoiceStr[ no  index ],
-			(int) strlen( (char *) pci->totalChoiceStr[ no  index ] ));
+			(char *) pci->totalChoiceStr[ no + index ],
+			(int) strlen( (char *) pci->totalChoiceStr[ no + index ] ));
 	return m_converted_string;
 }
 
@@ -812,7 +812,7 @@ void ChewingLookupTable::init(String selection_keys, int selection_keys_num)
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "LookupTable Init\n";
 	char buf[ 2 ] = { 0, 0 };
-	for ( int i = 0; i < selection_keys_num; i ) {
+	for ( int i = 0; i < selection_keys_num; ++i ) {
 		buf[ 0 ] = selection_keys[i];
 		labels.push_back( utf8_mbstowcs( buf ) );
 	}
