@@ -728,31 +728,31 @@ void ChewingIMEngineInstance::refresh_kbtype_property ()
 	/* look forward to be evoluted into drop-down list */
 	switch ( chewing_get_KBType( ctx ) )
 	{
-		case DEFAULT_KBTYPE:
+		case KB_DEFAULT:
 			_kbtype_property.set_label (_("Default"));
 			break;
-		case HSU_KBTYPE:
+		case KB_HSU:
 			_kbtype_property.set_label (_("Hsu's"));
 			break;
-		case IBM_KBTYPE:
+		case KB_IBM:
 			_kbtype_property.set_label (_("IBM"));
 			break;
-		case GINYIEH_KBTYPE:
+		case KB_GINYIEH:
 			_kbtype_property.set_label (_("Gin-Yieh"));
 			break;
-		case ETEN_KBTYPE:
+		case KB_ETEN:
 			_kbtype_property.set_label (_("ETen"));
 			break;
-		case ETEN26_KBTYPE:
+		case KB_ETEN26:
 			_kbtype_property.set_label (_("ETen 26-key"));
 			break;
-		case DVORAK_KBTYPE:
+		case KB_DVORAK:
 			_kbtype_property.set_label (_("Dvorak"));
 			break;
-		case DVORAKHSU_KBTYPE:
+		case KB_DVORAKHSU:
 			_kbtype_property.set_label (_("Dvorak Hsu's"));
 			break;
-		case HANYU_KBTYPE:
+		case KB_HANYU:
 			_kbtype_property.set_label (_("Han-Yu"));
 			break;
 		default:
