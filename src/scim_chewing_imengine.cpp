@@ -127,7 +127,7 @@ bool ChewingIMEngineFactory::init()
 	return true;
 }
 
-static char *chewing_preedit_bgcolor[] = {
+static const char *chewing_preedit_bgcolor[] = {
 	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_1,
 	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_2,
 	SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_3,
@@ -243,8 +243,8 @@ WideString ChewingIMEngineFactory::get_help() const
 
 
 	help =	String( _( "Hot Keys:" ) ) +
-		String( "\n\n  " )  chi_eng_mode_switch  String( ":\n" ) 
-		String( _( "    Switch between English/Chinese mode." ) ) 
+		String( "\n\n  " ) +  chi_eng_mode_switch +  String( ":\n" ) +
+		String( _( "    Switch between English/Chinese mode." ) ) +
 		String( _( "\n\n  Space:\n"
 			   "    Use space key to select candidate phrases."
 			   "\n\n  Tab:\n"
@@ -554,10 +554,10 @@ void ChewingIMEngineInstance::trigger_property( const String& property )
 		chewing_set_ShapeMode( ctx, !chewing_get_ShapeMode( ctx ) );
 	} else if ( property == SCIM_PROP_KBTYPE ) {
 		/* loop through the keyboard type array */
-		if ( chewing_get_KBType( ctx ) == LAST_KBTYPE )
- 	                chewing_set_KBType( ctx, FIRST_KBTYPE );
+		if ( chewing_get_KBType( ctx ) == KB_TYPE_NUM - 1 )
+ 	                chewing_set_KBType( ctx, KB_DEFAULT );
 		else
-			chewing_set_KBType( ctx, chewing_get_KBType( ctx )  1 );
+			chewing_set_KBType( ctx, chewing_get_KBType( ctx ) + 1 );
 	}
 	refresh_all_properties ();
 }
@@ -686,8 +686,8 @@ bool ChewingIMEngineInstance::match_key_event(
 		const KeyEventList &keylist,
 		const KeyEvent &key )
 {
-	KeyEventList::const_iterator ++kit;
-	for (kit = keylist.begin(); kit != keylist.end(); kit) {
+	KeyEventList::const_iterator kit;
+	for (kit = keylist.begin(); kit != keylist.end(); ++kit) {
 		if (key.code == kit->code && key.mask == kit->mask)
 			if (key.is_key_press() || m_prev_key.code == key.code)
 				return true;
@@ -737,22 +737,22 @@ void ChewingIMEngineInstance::refresh_kbtype_property ()
 		case KB_IBM:
 			_kbtype_property.set_label (_("IBM"));
 			break;
-		case KB_GINYIEH:
+		case KB_GIN_YIEH:
 			_kbtype_property.set_label (_("Gin-Yieh"));
 			break;
-		case KB_ETEN:
+		case KB_ET:
 			_kbtype_property.set_label (_("ETen"));
 			break;
-		case KB_ETEN26:
+		case KB_ET26:
 			_kbtype_property.set_label (_("ETen 26-key"));
 			break;
 		case KB_DVORAK:
 			_kbtype_property.set_label (_("Dvorak"));
 			break;
-		case KB_DVORAKHSU:
+		case KB_DVORAK_HSU:
 			_kbtype_property.set_label (_("Dvorak Hsu's"));
 			break;
-		case KB_HANYU:
+		case KB_HANYU_PINYIN:
 			_kbtype_property.set_label (_("Han-Yu"));
 			break;
 		default:

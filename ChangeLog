@@ -1,3 +1,15 @@
+2008-02-03  Jeff Chen <wiz.chen@gmail.com>
+	* src/scim_chewing_imengine.cpp:
+	(ChewingIMEngineInstance::trigger_property)
+	(ChewingIMEngineInstance::refresh_kbtype_property)
+	Correct some keyboard types
+
+	(ChewingIMEngineInstance::match_key_event)
+	Correct the missing increase operator.
+
+	(ChewingIMEngineFactory::get_help)
+	Add missing plus operators.
+
 2008-01-16  Kanru Chen <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp:
