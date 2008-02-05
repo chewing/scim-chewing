@@ -177,7 +177,7 @@ static KeyboardConfigData __config_keyboards[] =
         // button
         NULL,
         // data
-        "Control+space"
+        "Ctrl+space"
     },
     {
         // key
@@ -380,7 +380,7 @@ static GtkWidget *create_options_page()
 }
 
 struct _builtin_keymap {
-	char *entry;
+	const char *entry;
 	String translated_name;
 } builtin_keymaps[] = {
 		{ 
@@ -414,7 +414,7 @@ String _builtin_pinyin_map[] = {
 };
 	
 
-static char *builtin_selectkeys[] = {
+static const char *builtin_selectkeys[] = {
 	SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS,
 	"asdfghjkl;",
 	"asdfzxcv89",
@@ -423,7 +423,7 @@ static char *builtin_selectkeys[] = {
 	"1234qweras",
 };
 
-static char *builtin_selectkeys_num[] = {
+static const char *builtin_selectkeys_num[] = {
 	"9",
 	"8",
 	"7",

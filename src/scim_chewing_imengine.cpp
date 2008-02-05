@@ -145,8 +145,8 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
         "Load Chi/Eng mode keys\n";
 	str = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY ),
-			String( "ShiftShift_LKeyRelease" ) +
-			String( "ShiftShift_RKeyRelease" ) );
+			String( "Shift+Shift_L+KeyRelease" ) +
+			String( "Shift+Shift_R+KeyRelease" ) );
 	scim_string_to_key_list( m_chi_eng_keys, str );
 
 	// Load keyboard type
@@ -535,14 +535,14 @@ void ChewingIMEngineInstance::focus_in()
 
 void ChewingIMEngineInstance::focus_out()
 {
-    SCIM_DEBUG_IMENGINE( 2 ) <<
-        "Focus Out\n";
-    if (have_input == true) {
-        chewing_handle_Enter( ctx );
-        commit( ctx->output );
-        chewing_handle_Esc( ctx );
-        have_input = false;
-    }
+	SCIM_DEBUG_IMENGINE( 2 ) <<
+		"Focus Out\n";
+	if (have_input == true) {
+		chewing_handle_Enter( ctx );
+		commit( ctx->output );
+		chewing_handle_Esc( ctx ); 
+		have_input = false;
+	}
 }
 
 void ChewingIMEngineInstance::trigger_property( const String& property )
@@ -642,25 +642,24 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	// show lookup table
         if ( !pgo->pci )
                 return true;
-        if ( pgo->pci->nPage != 0 ) {
-                m_lookup_table.update( pgo->pci );
-                show_lookup_table();
+	if ( pgo->pci->nPage != 0 ) {
+		m_lookup_table.update( pgo->pci );
+		show_lookup_table();
 
-                if ( ( pgo->pci->nTotalChoice % pgo->pci->nChoicePerPage
-                != 0 ) && pgo->pci->pageNo == pgo->pci->nPage - 1 ) {
-                        m_lookup_table.set_page_size(
-                                pgo->pci->nTotalChoice %
-                                        pgo->pci->nChoicePerPage );
-                } else {
-                        m_lookup_table.set_page_size(
-                                pgo->pci->nChoicePerPage );
-                }
-
-                update_lookup_table( m_lookup_table );
-        }
-        else {
-                hide_lookup_table();
-        }
+		if ( ( pgo->pci->nTotalChoice % pgo->pci->nChoicePerPage
+					!= 0 ) && pgo->pci->pageNo == pgo->pci->nPage - 1 ) {
+			m_lookup_table.set_page_size(
+					pgo->pci->nTotalChoice %
+					pgo->pci->nChoicePerPage );
+		} else {
+			m_lookup_table.set_page_size(
+					pgo->pci->nChoicePerPage );
+		}
+		update_lookup_table( m_lookup_table );
+	}
+	else {
+		hide_lookup_table();
+	}
 	
 	// show aux string
 	m_aux_string = L"";
