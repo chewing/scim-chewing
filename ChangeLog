@@ -1,3 +1,9 @@
+2008-03-22  Kanru Chen <koster@debian.org.tw>
+
+	* src/scim_chewing_imengine.cpp,
+	src/scim_chewing_imengine_setup.cpp:
+	Adapting g++-4.3 compatibility patch from Cyril Brulebois.
+
 2008-02-05  Jeff Chen <wiz.chen@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cpp

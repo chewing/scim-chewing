@@ -39,6 +39,8 @@
 #include "scim_chewing_config_entry.h"
 #include "scim_color_button.h"
 
+#include <cstring>
+
 using namespace scim;
 
 #define scim_module_init chewing_imengine_setup_LTX_scim_module_init

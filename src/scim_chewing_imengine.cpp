@@ -51,6 +51,8 @@ static int _selection_keys_num;
 #include "scim_chewing_imengine.h"
 #include "scim_chewing_config_entry.h"
 
+#include <cstring>
+
 using namespace scim;
 
 static IMEngineFactoryPointer _scim_chewing_factory( 0 );
