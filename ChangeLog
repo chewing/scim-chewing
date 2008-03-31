@@ -1,3 +1,9 @@
+2008-04-01  Jeff Chen <wiz.chen@gmail.com>
+
+	* src/scim_chewing_imengine_setup.cpp:
+	The maximum value of SelectionKeysNum should be 10.
+	Fix wrong layout parameters in keyboard page.
+
 2008-03-22  Kanru Chen <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp,

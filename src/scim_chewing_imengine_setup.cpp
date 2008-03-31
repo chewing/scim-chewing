@@ -426,6 +426,7 @@ static const char *builtin_selectkeys[] = {
 };
 
 static const char *builtin_selectkeys_num[] = {
+	"10",
 	"9",
 	"8",
 	"7",
@@ -489,10 +490,10 @@ static GtkWidget *create_keyboard_page()
 	gtk_widget_show (label);
 	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
 	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 			(GtkAttachOptions) (GTK_FILL),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_kb_type, 1, 2, i, i+1,
+	gtk_table_attach (GTK_TABLE (table), __widget_kb_type, 1, 2, 4, 5,
 			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_kb_type)->entry,
@@ -523,10 +524,10 @@ static GtkWidget *create_keyboard_page()
 	gtk_widget_show (label);
 	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
 	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 			(GtkAttachOptions) (GTK_FILL),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_selKey_type, 1, 2, i, i+1,
+	gtk_table_attach (GTK_TABLE (table), __widget_selKey_type, 1, 2, 3, 4,
 			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_type)->entry,
@@ -557,10 +558,10 @@ static GtkWidget *create_keyboard_page()
 	gtk_widget_show (label);
 	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
 	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 			(GtkAttachOptions) (GTK_FILL),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_selKey_num, 1, 2, i, i+1,
+	gtk_table_attach (GTK_TABLE (table), __widget_selKey_num, 1, 2, 2, 3,
 			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_num)->entry,
