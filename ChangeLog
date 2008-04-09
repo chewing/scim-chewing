@@ -1,3 +1,10 @@
+2008-04-09  Caius Chance <cchance@redhat.com>
+
+	* src/scim_chewing_imengine.cpp:
+	Fixes texts pasting to preedit buffer (graphically only) in KDE4/Qt4.
+	(Paste of texts will be ignored and cursor will be moved to the end of 
+	 preedit buffer.)
+
 2008-04-01  Jeff Chen <wiz.chen@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cpp:

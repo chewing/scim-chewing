@@ -453,7 +453,11 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 		if ( 
 			key.code <= SCIM_KEY_9 && 
 			key.code >= SCIM_KEY_0 ) {
-			chewing_handle_CtrlNum( ctx, key.get_ascii_code() );
+				chewing_handle_CtrlNum( ctx, key.get_ascii_code() );
+		} else if (
+			key.code == SCIM_KEY_v ||
+			key.code == SCIM_KEY_V ) {
+				chewing_handle_Right( ctx );
 		} else {
 			// chewing_handle_CtrlOption( ctx, key.get_ascii_code() );
 			return false;
