@@ -35,7 +35,7 @@
   #define bind_textdomain_codeset(domain,codeset)
 #endif
 
-#define SCIM_PROP_CHIENG \
+#define SCIM_PROP_CHI_ENG_MODE \
 	"/IMEngine/Chinese/Chewing/ChiEngMode"
 #define SCIM_PROP_LETTER \
 	"/IMEngine/Chinese/Chewing/FullHalfLetter"
@@ -58,7 +58,7 @@ using namespace scim;
 static IMEngineFactoryPointer _scim_chewing_factory( 0 );
 static ConfigPointer _scim_config( 0 );
 
-static Property _chieng_property (SCIM_PROP_CHIENG, "");
+static Property _chieng_property (SCIM_PROP_CHI_ENG_MODE, "");
 static Property _letter_property (SCIM_PROP_LETTER, "");
 static Property _kbtype_property (SCIM_PROP_KBTYPE, "");
 //static Property _punct_property  (SCIM_PROP_PUNCT, _("Full/Half Punct"));
@@ -142,7 +142,15 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 	String str;
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "ReloadConfig\n";
+
 	// Load Chi/Eng mode keys
+    SCIM_DEBUG_IMENGINE( 2 ) <<
+        "Load input mode\n";
+        m_input_mode = m_config->read (
+			String( SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_MODE ),
+			String( "Chi" ));
+
+	// Load keyboard type
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "Load Chi/Eng mode keys\n";
 	str = m_config->read(
@@ -151,7 +159,7 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 			String( "Shift+Shift_R+KeyRelease" ) );
 	scim_string_to_key_list( m_chi_eng_keys, str );
 
-	// Load keyboard type
+	// Load input mode
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "Load keyboard type\n";
 	m_KeyboardType = m_config->read (
@@ -340,9 +348,9 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 
 	if ( match_key_event( m_factory->m_chi_eng_keys, key ) ) {
 		m_prev_key = key;
-		trigger_property( SCIM_PROP_CHIENG );
+		trigger_property( SCIM_PROP_CHI_ENG_MODE );
 		SCIM_DEBUG_IMENGINE( 2 ) <<
-			"Matcg Chi/Eng Key, End Process\n";
+			"Match Chi/Eng Key, End Process\n";
 		return true;
 	}
 	m_prev_key = key;
@@ -516,7 +524,15 @@ void ChewingIMEngineInstance::reset()
 	/* Configure Keyboard Type */
 	chewing_set_KBType( ctx, chewing_KBStr2Num( 
 				(char *) m_factory->m_KeyboardType.c_str() ));
-	
+
+	/* Configure Chinese/English Input Mode */
+	int chieng_mode_flag;
+	if ( m_factory->m_input_mode == "Chi" )
+		chieng_mode_flag = 1;
+	else
+		chieng_mode_flag = 0;
+	chewing_set_ChiEngMode( ctx, chieng_mode_flag );
+
 	/* Configure selection keys definition */
 	int i = 0;
 	for (; m_factory->m_selection_keys[i] &&
@@ -553,9 +569,9 @@ void ChewingIMEngineInstance::focus_out()
 
 void ChewingIMEngineInstance::trigger_property( const String& property )
 {
-	if ( property == SCIM_PROP_CHIENG ) {
-		chewing_handle_Capslock( ctx );
+	if ( property == SCIM_PROP_CHI_ENG_MODE ) {
 		commit( ctx->output );
+		chewing_set_ChiEngMode( ctx, !chewing_get_ChiEngMode ( ctx ) );
 	} else if ( property == SCIM_PROP_LETTER ) {
 		chewing_set_ShapeMode( ctx, !chewing_get_ShapeMode( ctx ) );
 	} else if ( property == SCIM_PROP_KBTYPE ) {

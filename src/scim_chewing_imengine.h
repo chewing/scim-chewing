@@ -62,6 +62,7 @@ private:
 	int m_PinYinType;
 	String m_ExternPinYinPath;
 	String m_selection_keys;
+	String m_input_mode;
 	int m_selection_keys_num;
 	bool m_add_phrase_forward;
 	bool m_space_as_selection;

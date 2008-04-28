@@ -144,6 +144,7 @@ static int __config_pinyin_type_data = 0;
 static String __config_external_pinyin_path;
 static String __config_selKey_type_data;
 static String __config_selKey_num_data;
+static String __config_chieng_mode_data;
 static bool __have_changed                 = false;
 
 // static GtkWidget    * __widget_use_capslock          = 0;
@@ -157,8 +158,10 @@ static GtkWidget    * __file_btn = 0;
 static GList *kb_type_list = 0;
 static GtkWidget    * __widget_selKey_type = 0;
 static GtkWidget    * __widget_selKey_num = 0;
+static GtkWidget    * __widget_chieng_mode = 0;
 static GList *selKey_type_list = 0;
 static GList *selKey_num_list = 0;
+static GList *chieng_mode_list = 0;
 // static GtkWidget    * __widget_show_candidate_comment= 0;
 static GtkTooltips  * __widget_tooltips              = 0;
 
@@ -434,12 +437,17 @@ static const char *builtin_selectkeys_num[] = {
 	"5"
 };
 
+static const char *builtin_chieng_mode[] = {
+	"Chi",
+	"Eng"
+};
+
 static GtkWidget *create_keyboard_page()
 {
 	GtkWidget *table;
 	GtkWidget *label;
 
-	table = gtk_table_new (4, 5, FALSE);
+	table = gtk_table_new (5, 5, FALSE);
 	gtk_widget_show (table);
 
 	int i;
@@ -503,6 +511,40 @@ static GtkWidget *create_keyboard_page()
 		"changed",
 		G_CALLBACK (on_default_editable_changed),
 		&(__config_kb_type_data_translated));
+
+	// Setup chieng_mode combo box
+	__widget_chieng_mode = gtk_combo_new();
+	gtk_widget_show (__widget_chieng_mode);
+
+	for (i = 0; 
+	     i < (sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0])); 
+	     i++) {
+		chieng_mode_list = g_list_append(
+				chieng_mode_list,
+				(void *) builtin_chieng_mode[ i ] );
+	}
+	
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_chieng_mode), chieng_mode_list);
+	g_list_free(chieng_mode_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_chieng_mode), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_chieng_mode)->entry)), FALSE);
+	label = gtk_label_new (_("Initial trigger Chinese/English mode:"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_chieng_mode, 1, 2, i, i+1,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_chieng_mode)->entry,
+			_("Change the default Chinese/English mode on every trigger"), NULL);
+	g_signal_connect(
+		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry), 
+		"changed",
+		G_CALLBACK (on_default_editable_changed),
+		&(__config_chieng_mode_data));
 
 	// Setup selKey combo box
 	__widget_selKey_type = gtk_combo_new();
@@ -826,6 +868,23 @@ void setup_widget_value()
 		GTK_ENTRY(GTK_COMBO(__widget_selKey_num)->entry),
 		builtin_selectkeys_num[index_selectkeys_num]
 	);
+
+	/* chieng_mode */
+	int index_chieng_mode =
+		sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0]) - 1;
+	for ( ; index_chieng_mode >= 0;  index_chieng_mode--) {
+		if ( __config_chieng_mode_data ==
+			builtin_chieng_mode[index_chieng_mode]) {
+			break;
+		}
+	}
+	if (index_chieng_mode < 0)
+		index_chieng_mode = 0;
+	
+	gtk_entry_set_text (
+		GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry),
+		builtin_chieng_mode[index_chieng_mode]
+	);
 }
 
 void load_config( const ConfigPointer &config )
@@ -870,6 +929,11 @@ void load_config( const ConfigPointer &config )
 		__config_selKey_num_data =
 			config->read( String( SCIM_CHEWING_SELECTION_KEYS_NUM ),
 					__config_selKey_num_data);
+
+		__config_chieng_mode_data =
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_MODE ),
+					__config_chieng_mode_data);
+
 
 		for (int i = 0; __config_keyboards[ i ].key; ++ i) {
 			__config_keyboards[ i ].data =
@@ -957,8 +1021,21 @@ void save_config( const ConfigPointer &config )
 		config->write (String (SCIM_CHEWING_SELECTION_KEYS_NUM),
 		               __config_selKey_num_data);
 
-//		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_SHOW_CANDIDATE_COMMENT),
-//				__config_show_candidate_comment);
+		// SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_MODE
+		int index_chieng_mode =
+			sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0]) - 1;
+		for ( ; index_chieng_mode >= 0; index_chieng_mode--) {
+			if (__config_chieng_mode_data ==
+			    builtin_chieng_mode[index_chieng_mode]) {
+				break;
+			}
+		}
+		if (index_chieng_mode < 0)
+			index_chieng_mode = 0;
+		__config_chieng_mode_data =
+			builtin_chieng_mode[index_chieng_mode];
+
+		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_MODE)		               , __config_chieng_mode_data);
 
 		for (int i = 0; __config_keyboards [i].key; ++ i) {
 			config->write (String (__config_keyboards [i].key),

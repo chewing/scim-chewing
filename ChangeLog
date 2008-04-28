@@ -1,3 +1,13 @@
+2008-04-28  Caius Chance <cchance@redhat.com>
+
+	* src/scim_chewing_config_entry.h,
+	  src/scim_chewing_imengine.cpp,
+	  src/scim_chewing_imengine.h,
+	  src/scim_chewing_imengine_setup.cpp:
+	Added Chinese/English mode fast switch on toolbar.
+	Added Chinese/English mode initial preference in setup menus.
+	Minor refactorization.
+
 2008-04-09  Caius Chance <cchance@redhat.com>
 
 	* src/scim_chewing_imengine.cpp:
