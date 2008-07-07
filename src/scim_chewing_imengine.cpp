@@ -317,7 +317,7 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	// Reset all data.
 	reset();
 
-	config.candPerPage = m_factory->m_selection_keys_num * 2;
+	config.candPerPage = m_factory->m_selection_keys_num;
 
 	config.maxChiSymbolLen = 16;
 
@@ -494,7 +494,7 @@ void ChewingIMEngineInstance::update_lookup_table_page_size(
 		unsigned int page_size )
 {
 	//XXX should not directly access data member.
-	ctx->data->config.candPerPage = page_size * 2;
+	ctx->data->config.candPerPage = page_size;
 	m_lookup_table.set_page_size (page_size);
 }
 
