@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(scim-chewing, 0.3.2.901, chewing-devel@googlegroups.com)
+AC_INIT(scim-chewing, 0.3.1.902, chewing-devel@googlegroups.com)
 AC_CONFIG_SRCDIR([src/scim_chewing_imengine.h])
 
 AC_SUBST(PACKAGE_VERSION)
@@ -47,7 +47,7 @@ AC_TYPE_SIZE_T
 # Checks for libraries.
 
 SCIM_VERSION=1.0.0
-CHEWING_VERSION=0.3.0.901
+CHEWING_VERSION=0.3.0.902
 
 PKG_CHECK_MODULES(SCIM, [scim >= $SCIM_VERSION])
 
