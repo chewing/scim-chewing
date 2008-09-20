@@ -14,61 +14,60 @@
 	* src/scim_chewing_imengine.cpp:
 	Corret candidate number setting.
 
-2008-04-28  Caius Chance <cchance@redhat.com>
+2008-04-28  Caius Chance  <cchance@redhat.com>
 
 	* src/scim_chewing_config_entry.h,
-	  src/scim_chewing_imengine.cpp,
-	  src/scim_chewing_imengine.h,
-	  src/scim_chewing_imengine_setup.cpp:
+	src/scim_chewing_imengine.cpp,
+	src/scim_chewing_imengine.h,
+	src/scim_chewing_imengine_setup.cpp:
 	Added Chinese/English mode fast switch on toolbar.
 	Added Chinese/English mode initial preference in setup menus.
 	Minor refactorization.
 
-2008-04-09  Caius Chance <cchance@redhat.com>
+2008-04-09  Caius Chance  <cchance@redhat.com>
 
 	* src/scim_chewing_imengine.cpp:
 	Fixes texts pasting to preedit buffer (graphically only) in KDE4/Qt4.
 	(Paste of texts will be ignored and cursor will be moved to the end of 
 	 preedit buffer.)
 
-2008-04-01  Jeff Chen <wiz.chen@gmail.com>
+2008-04-01  Jeff Chen  <wiz.chen@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cpp:
 	The maximum value of SelectionKeysNum should be 10.
 	Fix wrong layout parameters in keyboard page.
 
-2008-03-22  Kanru Chen <koster@debian.org.tw>
+2008-03-22  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp,
 	src/scim_chewing_imengine_setup.cpp:
 	Adapting g++-4.3 compatibility patch from Cyril Brulebois.
 
-2008-02-05  Jeff Chen <wiz.chen@gmail.com>
+2008-02-05  Jeff Chen  <wiz.chen@gmail.com>
 
-	* src/scim_chewing_imengine_setup.cpp
-	Use const char* for string literal
+	* src/scim_chewing_imengine_setup.cpp:
+	Use const char* for string literal.
 
-	* src/scim_chewing_imengine.cpp
+	* src/scim_chewing_imengine.cpp:
 	Typo fixed.
 
-2008-02-03  Jeff Chen <wiz.chen@gmail.com>
-	* src/scim_chewing_imengine.cpp:
+2008-02-03  Jeff Chen  <wiz.chen@gmail.com>
+
+	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::trigger_property)
-	(ChewingIMEngineInstance::refresh_kbtype_property)
+	(ChewingIMEngineInstance::refresh_kbtype_property):
 	Correct some keyboard types
-
-	(ChewingIMEngineInstance::match_key_event)
+	(ChewingIMEngineInstance::match_key_event):
 	Correct the missing increase operator.
-
-	(ChewingIMEngineFactory::get_help)
+	(ChewingIMEngineFactory::get_help):
 	Add missing plus operators.
 
-2008-01-16  Kanru Chen <koster@debian.org.tw>
+2008-01-16  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp:
 	Use the KB_* definition from zuin.h.
 
-2008-01-16  Kanru Chen <koster@debian.org.tw>
+2008-01-16  Kanru Chen  <koster@debian.org.tw>
 
 	* src/scim_chewing_imengine.cpp:
 	Fix the missing plusses.
@@ -78,9 +77,9 @@
 	* src/scim_chewing_imengine.cpp:
 	* src/scim_chewing_imengine.h:
 	Keyboard layout toggle button on toolbar.
-	( Added a button for keyboard type change. It won't save to config 
+	(Added a button for keyboard type change. It won't save to config 
 	but just for input a character occasionally if such combination keys
-	are suddenly forgotten. )
+	are suddenly forgotten.)
 
 2007-12-20  Caius Chance  <cchance@redhat.com>
 
@@ -92,7 +91,7 @@
 2007-07-25  Jim Huang  <jserv.tw@gmail.com>
 
 	* po/nl.po: New file.  Nederlands translation contributed by
-	onald Stroethoff <stroet43@zonnet.nl>.
+	Ronald Stroethoff <stroet43@zonnet.nl>.
 
 	* po/LINGUAS: Likewise.
 
