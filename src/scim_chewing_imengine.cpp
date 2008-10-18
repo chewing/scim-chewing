@@ -46,7 +46,7 @@
 static int _selection_keys_num;
 
 #include <scim.h>
-#include <chewing/chewing.h>
+#include <chewing.h>
 
 #include "scim_chewing_imengine.h"
 #include "scim_chewing_config_entry.h"
@@ -692,9 +692,9 @@ bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 		hide_aux_string();
 	}
 
-	if( chewing_keystroke_CheckAbsorb( ctx ) );
+	if( chewing_keystroke_CheckAbsorb( ctx ) )
 		return true;
-	if( chewing_keystroke_CheckIgnore( ctx ) );
+	if( chewing_keystroke_CheckIgnore( ctx ) )
 		return false;
 	return true;
 }
