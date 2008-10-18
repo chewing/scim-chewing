@@ -1,3 +1,8 @@
+2008-10-18  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine_setup.cpp (create_keyboard_page)
+	(create_pinyin_config_page): Eliminate compilation warnings.
+
 2008-10-18  Jeff Chen  <wiz.chen@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cpp:

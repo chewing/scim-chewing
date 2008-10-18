@@ -6,7 +6,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2005, 2006
+ * Copyright (c) 2005, 2006, 2008
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -456,7 +456,7 @@ static GtkWidget *create_keyboard_page()
 	table = gtk_table_new (6, 3, FALSE);
 	gtk_widget_show (table);
 
-	int i;
+	size_t i;
 	// Create keyboard setting.
 	for (i = 0; __config_keyboards [i].key; ++ i) {
 		label = gtk_label_new (NULL);
@@ -537,8 +537,8 @@ static GtkWidget *create_keyboard_page()
 	gtk_widget_show (__widget_selKey_num);
 
 	for (i = 0; 
-			i < (sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0])); 
-			i++) {
+	     i < (sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0])); 
+	     i++) {
 		selKey_num_list = g_list_append(
 				selKey_num_list,
 				(void *) builtin_selectkeys_num[ i ] );
@@ -571,8 +571,8 @@ static GtkWidget *create_keyboard_page()
 	gtk_widget_show (__widget_selKey_type);
 
 	for (i = 0;
-			i < (sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0]));
-			i++) {
+	     i < (sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0]));
+	     i++) {
 		selKey_type_list = g_list_append(
 				selKey_type_list,
 				(void *) builtin_selectkeys[ i ] );
@@ -604,10 +604,9 @@ static GtkWidget *create_keyboard_page()
 	__widget_kb_type = gtk_combo_new();
 	gtk_widget_show (__widget_kb_type);
 
-	for (
-			i = 0;
-			i < (int) (sizeof(builtin_keymaps) / sizeof(_builtin_keymap));
-			i++) {
+	for (i = 0;
+	     i < (int) (sizeof(builtin_keymaps) / sizeof(_builtin_keymap));
+	     i++) {
 		kb_type_list = g_list_append(
 				kb_type_list,
 				(void *) builtin_keymaps[ i ].translated_name.c_str() );
@@ -665,18 +664,15 @@ static GtkWidget *create_color_button_page()
 static GtkWidget *create_pinyin_config_page()
 {
 	GtkWidget *table;
-	GtkWidget *label;
 
 	table = gtk_table_new (4, 5, FALSE);
-
-	int i = 0;
 
 	// Setup KB_TYPE combo box
 	GtkWidget* widget_pinyin_type = gtk_combo_new();
 	gtk_widget_show (widget_pinyin_type);
 	GList* pinyin_type_list = NULL;
 
-	for (int i = 0; i < (int) sizeof(_builtin_pinyin_map)/sizeof(_builtin_pinyin_map[0]); ++i) {
+	for (size_t i = 0; i < sizeof(_builtin_pinyin_map)/sizeof(_builtin_pinyin_map[0]); ++i) {
 		pinyin_type_list = g_list_append(
 			pinyin_type_list, (void*) _builtin_pinyin_map[i].c_str());
 	}
@@ -1194,7 +1190,7 @@ static void on_color_button_changed(
 
 static void set_pinyin_type(const String& str)
 {
-	for (int i = 0; i < (int) sizeof(_builtin_pinyin_map)/sizeof(_builtin_pinyin_map[0]); ++i) {
+	for (size_t i = 0; i < sizeof(_builtin_pinyin_map)/sizeof(_builtin_pinyin_map[0]); ++i) {
 		if ( str == _builtin_pinyin_map[i] ) {
 			__config_pinyin_type_data = i;
 			__have_changed = true;
