@@ -394,6 +394,9 @@ struct _builtin_keymap {
 		{       
 			"KB_HSU",
 			String( _( "Hsu's Keyboard" ) ) },
+		{
+			"KB_IBM",
+			String( _( "IBM Keyboard" ) ) },
 		{       
 			"KB_GIN_YEIH",
 			String( _( "Gin-Yieh Keyboard" ) ) },
@@ -409,6 +412,9 @@ struct _builtin_keymap {
 		{
 			"KB_DVORAK_HSU",
 			String( _( "Dvorak Keyboard with Hsu's support" ) ) },
+		{
+			"KB_DACHEN_CP26",
+			String( _( "DACHEN_CP26 Keyboard") ) },
 		{
 			"KB_HANYU_PINYIN",
 			String( _( "Han-Yu PinYin Keyboard" ) ) }
@@ -447,7 +453,7 @@ static GtkWidget *create_keyboard_page()
 	GtkWidget *table;
 	GtkWidget *label;
 
-	table = gtk_table_new (5, 5, FALSE);
+	table = gtk_table_new (6, 3, FALSE);
 	gtk_widget_show (table);
 
 	int i;
@@ -477,143 +483,6 @@ static GtkWidget *create_keyboard_page()
 		gtk_label_set_mnemonic_widget (GTK_LABEL (label), __config_keyboards[i].button);
 	}
 
-	// Setup KB_TYPE combo box
-	__widget_kb_type = gtk_combo_new();
-	gtk_widget_show (__widget_kb_type);
-
-	for (
-		i = 0; 
-		i < (int) (sizeof(builtin_keymaps) / sizeof(_builtin_keymap)); 
-		i++) {
-		kb_type_list = g_list_append(
-				kb_type_list,
-				(void *) builtin_keymaps[ i ].translated_name.c_str() );
-	}
-	
-	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_kb_type), kb_type_list);
-	g_list_free(kb_type_list);
-	gtk_combo_set_use_arrows (GTK_COMBO (__widget_kb_type), TRUE);
-	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry)), FALSE);
-	label = gtk_label_new (_("Use keyboard type:"));
-	gtk_widget_show (label);
-	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-			(GtkAttachOptions) (GTK_FILL),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_kb_type, 1, 2, 4, 5,
-			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_kb_type)->entry,
-			_("Change the default keyboard layout type"), NULL);
-	g_signal_connect(
-		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_kb_type)->entry), 
-		"changed",
-		G_CALLBACK (on_default_editable_changed),
-		&(__config_kb_type_data_translated));
-
-	// Setup chieng_mode combo box
-	__widget_chieng_mode = gtk_combo_new();
-	gtk_widget_show (__widget_chieng_mode);
-
-	for (i = 0; 
-	     i < (sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0])); 
-	     i++) {
-		chieng_mode_list = g_list_append(
-				chieng_mode_list,
-				(void *) builtin_chieng_mode[ i ] );
-	}
-	
-	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_chieng_mode), chieng_mode_list);
-	g_list_free(chieng_mode_list);
-	gtk_combo_set_use_arrows (GTK_COMBO (__widget_chieng_mode), TRUE);
-	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_chieng_mode)->entry)), FALSE);
-	label = gtk_label_new (_("Initial trigger Chinese/English mode:"));
-	gtk_widget_show (label);
-	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
-			(GtkAttachOptions) (GTK_FILL),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_chieng_mode, 1, 2, i, i+1,
-			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_chieng_mode)->entry,
-			_("Change the default Chinese/English mode on every trigger"), NULL);
-	g_signal_connect(
-		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry), 
-		"changed",
-		G_CALLBACK (on_default_editable_changed),
-		&(__config_chieng_mode_data));
-
-	// Setup selKey combo box
-	__widget_selKey_type = gtk_combo_new();
-	gtk_widget_show (__widget_selKey_type);
-
-	for (i = 0; 
-	     i < (sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0])); 
-	     i++) {
-		selKey_type_list = g_list_append(
-				selKey_type_list,
-				(void *) builtin_selectkeys[ i ] );
-	}
-	
-	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_type), selKey_type_list);
-	g_list_free(selKey_type_list);
-	gtk_combo_set_use_arrows (GTK_COMBO (__widget_selKey_type), TRUE);
-	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_selKey_type)->entry)), FALSE);
-	label = gtk_label_new (_("Customized Selection Keys:"));
-	gtk_widget_show (label);
-	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-			(GtkAttachOptions) (GTK_FILL),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_selKey_type, 1, 2, 3, 4,
-			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_type)->entry,
-			_("Change the default selection keys"), NULL);
-	g_signal_connect(
-		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry), 
-		"changed",
-		G_CALLBACK (on_default_editable_changed),
-		&(__config_selKey_type_data));
-
-	// Setup selKey_num combo box
-	__widget_selKey_num = gtk_combo_new();
-	gtk_widget_show (__widget_selKey_num);
-
-	for (i = 0; 
-	     i < (sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0])); 
-	     i++) {
-		selKey_num_list = g_list_append(
-				selKey_num_list,
-				(void *) builtin_selectkeys_num[ i ] );
-	}
-	
-	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_num), selKey_num_list);
-	g_list_free(selKey_num_list);
-	gtk_combo_set_use_arrows (GTK_COMBO (__widget_selKey_num), TRUE);
-	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_selKey_num)->entry)), FALSE);
-	label = gtk_label_new (_("Number of Selection Keys :"));
-	gtk_widget_show (label);
-	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
-	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-			(GtkAttachOptions) (GTK_FILL),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __widget_selKey_num, 1, 2, 2, 3,
-			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_num)->entry,
-			_("Change the default number of selection keys"), NULL);
-	g_signal_connect(
-		(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_num)->entry), 
-		"changed",
-		G_CALLBACK (on_default_editable_changed),
-		&(__config_selKey_num_data));
-
 	// keyboard: trigger keys
 	for (i = 0; __config_keyboards [i].key; ++ i) {
 		g_signal_connect ((gpointer) __config_keyboards [i].button, "clicked",
@@ -628,6 +497,143 @@ static GtkWidget *create_keyboard_page()
 		gtk_tooltips_set_tip (__widget_tooltips, __config_keyboards [i].entry,
 				_(__config_keyboards [i].tooltip), NULL);
 	}
+
+	// Setup chieng_mode combo box
+	__widget_chieng_mode = gtk_combo_new();
+	gtk_widget_show (__widget_chieng_mode);
+
+	for (i = 0; 
+			i < (sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0])); 
+			i++) {
+		chieng_mode_list = g_list_append(
+				chieng_mode_list,
+				(void *) builtin_chieng_mode[ i ] );
+	}
+
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_chieng_mode), chieng_mode_list);
+	g_list_free(chieng_mode_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_chieng_mode), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_chieng_mode)->entry)), FALSE);
+	label = gtk_label_new (_("Initial trigger Chinese/English mode:"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_chieng_mode, 1, 2, 2, 3,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_chieng_mode)->entry,
+			_("Change the default Chinese/English mode on every trigger"), NULL);
+	g_signal_connect(
+			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry), 
+			"changed",
+			G_CALLBACK (on_default_editable_changed),
+			&(__config_chieng_mode_data));
+
+	// Setup selKey_num combo box
+	__widget_selKey_num = gtk_combo_new();
+	gtk_widget_show (__widget_selKey_num);
+
+	for (i = 0; 
+			i < (sizeof(builtin_selectkeys_num) / sizeof(builtin_selectkeys_num[0])); 
+			i++) {
+		selKey_num_list = g_list_append(
+				selKey_num_list,
+				(void *) builtin_selectkeys_num[ i ] );
+	}
+
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_num), selKey_num_list);
+	g_list_free(selKey_num_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_selKey_num), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_selKey_num)->entry)), FALSE);
+	label = gtk_label_new (_("Number of Selection Keys :"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_selKey_num, 1, 2, 3, 4,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_num)->entry,
+			_("Change the default number of selection keys"), NULL);
+	g_signal_connect(
+			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_num)->entry), 
+			"changed",
+			G_CALLBACK (on_default_editable_changed),
+			&(__config_selKey_num_data));
+
+	// Setup selKey combo box
+	__widget_selKey_type = gtk_combo_new();
+	gtk_widget_show (__widget_selKey_type);
+
+	for (i = 0;
+			i < (sizeof(builtin_selectkeys) / sizeof(builtin_selectkeys[0]));
+			i++) {
+		selKey_type_list = g_list_append(
+				selKey_type_list,
+				(void *) builtin_selectkeys[ i ] );
+	}
+
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_type), selKey_type_list);
+	g_list_free(selKey_type_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_selKey_type), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_selKey_type)->entry)), FALSE);
+	label = gtk_label_new (_("Customized Selection Keys:"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_selKey_type, 1, 2, 4, 5,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_type)->entry,
+			_("Change the default selection keys"), NULL);
+	g_signal_connect(
+			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry),
+			"changed",
+			G_CALLBACK (on_default_editable_changed),
+			&(__config_selKey_type_data));
+
+	// Setup KB_TYPE combo box
+	__widget_kb_type = gtk_combo_new();
+	gtk_widget_show (__widget_kb_type);
+
+	for (
+			i = 0;
+			i < (int) (sizeof(builtin_keymaps) / sizeof(_builtin_keymap));
+			i++) {
+		kb_type_list = g_list_append(
+				kb_type_list,
+				(void *) builtin_keymaps[ i ].translated_name.c_str() );
+	}
+
+	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_kb_type), kb_type_list);
+	g_list_free(kb_type_list);
+	gtk_combo_set_use_arrows (GTK_COMBO (__widget_kb_type), TRUE);
+	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (__widget_kb_type)->entry)), FALSE);
+	label = gtk_label_new (_("Use keyboard type:"));
+	gtk_widget_show (label);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+	gtk_misc_set_padding (GTK_MISC (label), 4, 0);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+			(GtkAttachOptions) (GTK_FILL),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_table_attach (GTK_TABLE (table), __widget_kb_type, 1, 2, 5, 6,
+			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
+			(GtkAttachOptions) (GTK_FILL), 4, 4);
+	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_kb_type)->entry,
+			_("Change the default keyboard layout type"), NULL);
+	g_signal_connect(
+			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_kb_type)->entry),
+			"changed",
+			G_CALLBACK (on_default_editable_changed),
+			&(__config_kb_type_data_translated));
 
 	return table;
 }
