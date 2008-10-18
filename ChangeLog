@@ -19,7 +19,7 @@
 
 	* configure.ac:
 	Bump version to 0.3.2
-	Bump libchewing dependency to versio 0.3.1
+	Bump libchewing dependency to version 0.3.1
 
 2008-09-20  Kanru Chen  <kanru@kanru.info>
 
