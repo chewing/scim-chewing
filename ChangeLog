@@ -1,3 +1,9 @@
+2008-10-19  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine_setup.cp (__config_keyboards):
+	Fix Trigger key settings due to typo.
+	RedHat bugzilla #206125, rt #23574
+
 2008-10-18  Kanru Chen  <kanru@kanru.info>
 
 	* src/scim_chewing_imengine.cpp: Proper include path.
