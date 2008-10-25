@@ -140,8 +140,6 @@ static bool __config_space_as_selection = true;
 // static bool __config_show_candidate_comment= true;
 static String __config_kb_type_data;
 static String __config_kb_type_data_translated;
-static int __config_pinyin_type_data = 0;
-static String __config_external_pinyin_path;
 static String __config_selKey_type_data;
 static String __config_selKey_num_data;
 static String __config_chieng_mode_data;
@@ -309,19 +307,6 @@ static void on_color_button_changed(
 	ScimChewingColorButton *button,
 	gpointer user_data );
 
-static void on_builtin_pinyin_method_changed(
-	GtkEditable *editable,
-	gpointer user_data );
-	
-
-static void on_builtin_pinyin_method_toggled(
-	GtkButton *button,
-	gpointer user_data );
-
-static void on_external_pinyin_method_changed(
-	GtkWidget *widget,
-	gpointer user_data );
-
 static void setup_widget_value();
 
 static GtkWidget *create_options_page();
@@ -419,11 +404,6 @@ struct _builtin_keymap {
 			"KB_HANYU_PINYIN",
 			String( _( "Han-Yu PinYin Keyboard" ) ) }
 };
-
-String _builtin_pinyin_map[] = {
-	String( _("Han-Yu PinYin") )
-};
-	
 
 static const char *builtin_selectkeys[] = {
 	SCIM_CONFIG_IMENGINE_CHEWING_SELECTION_KEYS,
@@ -661,68 +641,6 @@ static GtkWidget *create_color_button_page()
 	return table;
 }
 
-static GtkWidget *create_pinyin_config_page()
-{
-	GtkWidget *table;
-
-	table = gtk_table_new (4, 5, FALSE);
-
-	// Setup KB_TYPE combo box
-	GtkWidget* widget_pinyin_type = gtk_combo_new();
-	gtk_widget_show (widget_pinyin_type);
-	GList* pinyin_type_list = NULL;
-
-	for (size_t i = 0; i < sizeof(_builtin_pinyin_map)/sizeof(_builtin_pinyin_map[0]); ++i) {
-		pinyin_type_list = g_list_append(
-			pinyin_type_list, (void*) _builtin_pinyin_map[i].c_str());
-	}
-
-	gtk_combo_set_popdown_strings (GTK_COMBO (widget_pinyin_type), pinyin_type_list);
-	g_list_free(pinyin_type_list);
-	gtk_combo_set_use_arrows (GTK_COMBO (widget_pinyin_type), TRUE);
-	gtk_editable_set_editable (GTK_EDITABLE (GTK_ENTRY (GTK_COMBO (widget_pinyin_type)->entry)), FALSE);
-	g_signal_connect(
-		(gpointer) GTK_ENTRY(GTK_COMBO(widget_pinyin_type)->entry), 
-		"changed",
-		G_CALLBACK (on_builtin_pinyin_method_changed),
-		NULL);
-
-	GtkWidget* dialog = gtk_file_chooser_dialog_new(_("Select a file"),
-		NULL,
-		GTK_FILE_CHOOSER_ACTION_OPEN,
-		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-		NULL);
-	__file_btn = gtk_file_chooser_button_new_with_dialog(dialog);
-	g_signal_connect(G_OBJECT(dialog), "response",
-		G_CALLBACK(on_external_pinyin_method_changed), NULL);
-
-	__radio_builtin = gtk_radio_button_new_with_label(NULL, _("Built-in Method:"));
-	g_signal_connect(G_OBJECT(__radio_builtin), "toggled",
-		G_CALLBACK(on_builtin_pinyin_method_toggled),
-		GTK_COMBO(widget_pinyin_type)->entry);
-	
-	__radio_external = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(__radio_builtin), _("External Method:"));
-	g_signal_connect(G_OBJECT(__radio_external), "toggled",
-		G_CALLBACK(on_external_pinyin_method_changed), NULL);
-	
-	gtk_table_attach (GTK_TABLE (table), __radio_builtin, 0, 1, 0, 1,
-			(GtkAttachOptions) (GTK_FILL),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), widget_pinyin_type, 1, 2, 0, 1,
-			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __radio_external, 0, 1, 1, 2,
-			(GtkAttachOptions) (GTK_FILL),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-	gtk_table_attach (GTK_TABLE (table), __file_btn, 1, 2, 1, 2,
-			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
-			(GtkAttachOptions) (GTK_FILL), 4, 4);
-
-	gtk_widget_show_all (table);
-	return table;
-}
-
 static GtkWidget *create_setup_window()
 {
 	static GtkWidget *window = 0;
@@ -765,15 +683,6 @@ static GtkWidget *create_setup_window()
 		label = gtk_label_new (_("Decorative Color"));
 		gtk_widget_show (label);
 		gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-
-		// Create PinYin configuration page.
-		page = create_pinyin_config_page ();
-
-		// Create the label for this note page.
-		label = gtk_label_new (_("PinYin Configuration"));
-		gtk_widget_show (label);
-		gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-		
 
 		window = notebook;
 
@@ -908,22 +817,6 @@ void load_config( const ConfigPointer &config )
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE ),
 				__config_kb_type_data);
 		
-		__config_pinyin_type_data =
-			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_PINYIN_METHD ),
-				__config_pinyin_type_data);
-
-		if (__config_pinyin_type_data == PINYIN_EXTERNAL)
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(__radio_external), TRUE);
-		else
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(__radio_builtin),TRUE);
-		
-		__config_external_pinyin_path =
-			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_EXTERNAL_PINYIN_PATH),
-				__config_external_pinyin_path);
-
-		gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(__file_btn),
-			__config_external_pinyin_path.c_str());
-
 		__config_selKey_type_data =
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS ),
 					__config_selKey_type_data);
@@ -982,12 +875,6 @@ void save_config( const ConfigPointer &config )
 
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_USER_KB_TYPE),
 			__config_kb_type_data);
-
-		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_PINYIN_METHD),
-			__config_pinyin_type_data);
-
-		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_EXTERNAL_PINYIN_PATH),
-			__config_external_pinyin_path);
 
 		// SCIM_CONFIG_IMENGINE_CHEWING_USER_SELECTION_KEYS
 		int index_selectkeys =
@@ -1186,43 +1073,4 @@ static void on_color_button_changed(
 		entry->changed = true;
 		__have_changed = true;
 	}
-}
-
-static void set_pinyin_type(const String& str)
-{
-	for (size_t i = 0; i < sizeof(_builtin_pinyin_map)/sizeof(_builtin_pinyin_map[0]); ++i) {
-		if ( str == _builtin_pinyin_map[i] ) {
-			__config_pinyin_type_data = i;
-			__have_changed = true;
-			return;
-		}
-	}
-}
-static void on_builtin_pinyin_method_changed (
-	GtkEditable *editable,
-	gpointer user_data )
-{
-	String str = String( gtk_entry_get_text( GTK_ENTRY( editable ) ) );
-	set_pinyin_type(str);
-}
-
-static void on_builtin_pinyin_method_toggled (
-	GtkButton *button,
-	gpointer user_data )
-{
-	GtkEditable* editable = static_cast <GtkEditable*> (user_data);
-	String str = String( gtk_entry_get_text( GTK_ENTRY( editable ) ) );
-	set_pinyin_type(str);	
-}
-
-static void on_external_pinyin_method_changed (
-	GtkWidget* widget, gpointer user_data)
-{
-	GSList* file_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(__file_btn));
-	if (file_list && file_list->data)
-		__config_external_pinyin_path = static_cast<char*>( file_list->data );
-
-	g_slist_free(file_list);
-	__config_pinyin_type_data = PINYIN_EXTERNAL;
-	__have_changed = true;		
 }

@@ -1,3 +1,9 @@
+2008-10-25  Kanru Chen  <kanru@kanru.info>
+
+	* src/scim_chewing_imengine.cpp,
+	src/scim_chewing_imengine_setup.cpp: Remove hanyupinyin setting page. Now
+	libchewing load the table from data directory or user data directory.
+
 2008-10-19  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cp (__config_keyboards):
