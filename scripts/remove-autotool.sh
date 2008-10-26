@@ -16,18 +16,18 @@ find -name '*.gmo' | xargs rm -f
 
 rm -rf \
 	aclocal.m4 \
-	config.sub \
-	config.guess \
+	autotools/config.sub \
+	autotools/config.guess \
 	config.status.lineno \
 	configure \
-	install-sh \
+	autotools/install-sh \
 	autom4te.cache \
 	config.log \
-	depcomp \
+	autotools/depcomp \
 	libtool \
 	config.status \
-	ltmain.sh \
-	missing \
+	autotools/ltmain.sh \
+	autotools/missing \
 	config.h.in \
 	intltool-* \
 	po/boldquot.sed \

@@ -1,3 +1,13 @@
+What's New in SCIM-chewing 0.3.2
+----------------------------------------------------------
+* Add selectable PinYin method support.
+* Fixed trigger key "Control-Space".
+* Fixed gedit crash problem.
+* Nederlands translation.
+* Keyboard layout toggle button on toolbar.
+* Added Chinese/English mode fast switch on toolbar.
+* Sync with libchewing API change.
+
 What's New in SCIM-chewing 0.3.1
 ----------------------------------------------------------
 * Fix intltool build process.
