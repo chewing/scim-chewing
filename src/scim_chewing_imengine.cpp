@@ -46,7 +46,7 @@
 static int _selection_keys_num;
 
 #include <scim.h>
-#include <chewing/chewing.h>
+#include <chewing.h>
 
 #include "scim_chewing_imengine.h"
 #include "scim_chewing_config_entry.h"
@@ -477,7 +477,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	have_input = true;
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "End Process Key\n";
-	return commit( ctx->output );
+	return commit( ctx );
 }
 
 void ChewingIMEngineInstance::move_preedit_caret( unsigned int pos )
@@ -487,7 +487,7 @@ void ChewingIMEngineInstance::move_preedit_caret( unsigned int pos )
 void ChewingIMEngineInstance::select_candidate ( unsigned int index )
 {
 	chewing_handle_Default( ctx, '1' + index );
-	commit( ctx->output );
+	commit( ctx );
 }
 
 void ChewingIMEngineInstance::update_lookup_table_page_size(
@@ -501,13 +501,13 @@ void ChewingIMEngineInstance::update_lookup_table_page_size(
 void ChewingIMEngineInstance::lookup_table_page_up()
 {
 	chewing_handle_Space( ctx );
-	commit( ctx->output );
+	commit( ctx );
 }
 
 void ChewingIMEngineInstance::lookup_table_page_down()
 {
 	chewing_handle_Space( ctx );
-	commit( ctx->output );
+	commit( ctx );
 }
 
 void ChewingIMEngineInstance::reset()
@@ -584,77 +584,74 @@ void ChewingIMEngineInstance::trigger_property( const String& property )
 	refresh_all_properties ();
 }
 
-bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
+bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 {
 	AttributeList attr;
 
-    SCIM_DEBUG_IMENGINE( 2 ) <<
-        "IMEngine Instance Commit\n";
+	SCIM_DEBUG_IMENGINE( 2 ) << "IMEngine Instance Commit\n";
 	// commit string
-	m_commit_string = L"";
-	if ( pgo->keystrokeRtn & KEYSTROKE_COMMIT ) {
-		for ( int i = 0; i < pgo->nCommitStr; i++ ) {
-			m_commit_string += utf8_mbstowcs((char *)pgo->commitStr[ i ].s, 
-					MAX_UTF8_SIZE);
-            SCIM_DEBUG_IMENGINE( 2 ) << "Commit Add: " <<
-                (char *)pgo->commitStr[ i ].s << "\n";
+	if ( chewing_commit_Check( ctx ) ) {
+		char* str = chewing_commit_String(ctx);
+		if ( str ) {
+			commit_string( utf8_mbstowcs( str ) );
+			free( str );
 		}
-		commit_string( m_commit_string );
 	}
-	m_preedit_string = L"";
+
 	// preedit string
-	// XXX show Interval
-	for ( int i = 0; i < pgo->chiSymbolCursor; i++ ) {
-		m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, MAX_UTF8_SIZE);
-		SCIM_DEBUG_IMENGINE( 2 ) << "PreEdit Add: " <<
-			(char *)pgo->chiSymbolBuf[ i ].s << "\n";
-	}
-	// zuin string
-	for ( int i = 0, j = 0; i < ZUIN_SIZE; i++ ) {
-		if ( pgo->zuinBuf[ i ].s[ 0 ] != '\0' ) {
-			m_preedit_string += utf8_mbstowcs((char *)pgo->zuinBuf[ i ].s, 
-					MAX_UTF8_SIZE);
-			attr.push_back(Attribute(pgo->chiSymbolCursor + j, 1,
-					SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
-			j++;
+	WideString preedit_string;
+	if( chewing_buffer_Check( ctx ) ) {
+		char* chibuf = chewing_buffer_String( ctx );
+		if ( chibuf ) {
+			preedit_string = utf8_mbstowcs( chibuf );
+			free( chibuf );
 		}
 	}
 
-	for ( int i = pgo->chiSymbolCursor; i < pgo->chiSymbolBufLen; i++ ) {
-        	m_preedit_string += utf8_mbstowcs((char *)pgo->chiSymbolBuf[ i ].s, 
-				MAX_UTF8_SIZE);
+	int zuin_count;
+	char* zuin_str = chewing_zuin_String( ctx, &zuin_count );
+	if( zuin_str ) {
+		preedit_string += utf8_mbstowcs( zuin_str );
+		free( zuin_str );
 	}
 
-	for ( int i = 0; i < pgo->nDispInterval; i++ ) {
-		if ( pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from > 1 ) {
+
+	chewing_interval_Enumerate( ctx );
+	int interval_count = 0;
+	while( chewing_interval_hasNext( ctx ) ) {
+		IntervalType it;
+		chewing_interval_Get( ctx, &it );
+		int len = it.to - it.from;
+		if( len > 1 ) {
 			attr.push_back(
-				Attribute(
-					pgo->dispInterval[ i ].from,
-					pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
+				Attribute( it.from, len,
 					SCIM_ATTR_DECORATE,
-					SCIM_ATTR_DECORATE_UNDERLINE));
+					SCIM_ATTR_DECORATE_UNDERLINE) );
 			attr.push_back(
-				Attribute(
-					pgo->dispInterval[ i ].from,
-					pgo->dispInterval[ i ].to - pgo->dispInterval[ i ].from,
+				Attribute( it.from, len,
 					SCIM_ATTR_BACKGROUND,
-	m_factory->m_preedit_bgcolor[i % SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM] ));
+					m_factory->m_preedit_bgcolor[interval_count % SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_NUM] ) );
+				
 		}
+		++interval_count;
 	}
+
 	// cursor decoration
-	if ( pgo->zuinBuf[ 0 ].s[ 0 ] == '\0' )
+	int current_cursor = chewing_cursor_Current( ctx );
+	if( chewing_zuin_Check( ctx ) ) {
 		attr.push_back(
 			Attribute(
-				pgo->chiSymbolCursor, 
+				current_cursor,
 				1, 
 				SCIM_ATTR_DECORATE, SCIM_ATTR_DECORATE_REVERSE));
+	}
 
 	// update display
-	update_preedit_string( m_preedit_string, attr );
-	update_preedit_caret( pgo->chiSymbolCursor );
+	update_preedit_string( preedit_string, attr );
+	update_preedit_caret( current_cursor );
 
 	// show preedit string
-	if ( m_preedit_string.empty() ) {
+	if ( preedit_string.empty() ) {
 		hide_preedit_string();
 	}
 	else {
@@ -682,23 +679,24 @@ bool ChewingIMEngineInstance::commit( ChewingOutput *pgo )
 	else {
 		hide_lookup_table();
 	}
+
 	
 	// show aux string
-	m_aux_string = L"";
-	if ( pgo->bShowMsg ) {
-		for ( int i = 0; i < pgo->showMsgLen; i++ ) {
-            m_aux_string += utf8_mbstowcs((char *)pgo->showMsg[ i ].s, MAX_UTF8_SIZE);
+	if( chewing_aux_Check( ctx ) ) {
+		char* aux_str = chewing_aux_String( ctx );
+		if( aux_str ) {
+			update_aux_string( utf8_mbstowcs( aux_str ) );
+			free( aux_str );
+			show_aux_string();
 		}
-		update_aux_string( m_aux_string );
-		show_aux_string();
-		pgo->showMsgLen = 0;
 	}
 	else {
 		hide_aux_string();
 	}
-	if ( pgo->keystrokeRtn & KEYSTROKE_ABSORB )
+
+	if( chewing_keystroke_CheckAbsorb( ctx ) )
 		return true;
-	if ( pgo->keystrokeRtn & KEYSTROKE_IGNORE )
+	if( chewing_keystroke_CheckIgnore( ctx ) )
 		return false;
 	return true;
 }
@@ -804,12 +802,18 @@ ChewingLookupTable::~ChewingLookupTable()
 
 WideString ChewingLookupTable::get_candidate( int index ) const
 {
-	WideString m_converted_string;
-	int no = pci->pageNo * pci->nChoicePerPage;
-	m_converted_string = utf8_mbstowcs(
-			(char *) pci->totalChoiceStr[ no + index ],
-			(int) strlen( (char *) pci->totalChoiceStr[ no + index ] ));
-	return m_converted_string;
+	if( index == 0 )
+		chewing_cand_Enumerate( ctx );
+
+	WideString converted_string;
+	if( chewing_cand_hasNext( ctx ) ) {
+		char* str = chewing_cand_String( ctx );
+		if( str ) {
+			converted_string = utf8_mbstowcs( str );
+			free( str );
+		}
+	}
+	return converted_string;
 }
 
 AttributeList ChewingLookupTable::get_attributes( int index ) const
@@ -819,7 +823,7 @@ AttributeList ChewingLookupTable::get_attributes( int index ) const
 
 unsigned int ChewingLookupTable::number_of_candidates() const
 {
-	return pci->nTotalChoice;
+	return chewing_cand_TotalChoice( ctx );
 }
 
 void ChewingLookupTable::clear()
@@ -840,8 +844,7 @@ void ChewingLookupTable::init(String selection_keys, int selection_keys_num)
 	set_candidate_labels( labels );
 }
 
-void ChewingLookupTable::update( ChoiceInfo *ci )
+void ChewingLookupTable::update( ChewingContext* ctx )
 {
-	pci = ci;
+	this->ctx = ctx;
 }
-

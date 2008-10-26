@@ -24,10 +24,9 @@ class ChewingLookupTable : public LookupTable
 		virtual unsigned int number_of_candidates() const;
 		virtual void clear();
 		void init( String s, int num );
-		void update( ChoiceInfo *ci );
+		void update( ChewingContext* ctx );
 	private:
-		ChoiceInfo *pci;
-		int current_page;
+		ChewingContext* ctx;
 };
 
 class ChewingIMEngineFactory : public IMEngineFactoryBase
@@ -94,7 +93,7 @@ public:
 	virtual void focus_out();
 	virtual void trigger_property( const String& property );
 private:
-	bool commit( ChewingOutput *pgo );
+	bool commit( ChewingContext* ctx );
 	void reload_config( const ConfigPointer &scim_config );
 	bool match_key_event( const KeyEventList &keylist, const KeyEvent &key );
 
@@ -105,16 +104,12 @@ private:
 	void refresh_kbtype_property ();
 
 	Connection m_reload_signal_connection;
-	WideString m_converted_string;
-	WideString m_preedit_string;
-	WideString m_commit_string;
-	WideString m_aux_string;
 	KeyEvent m_prev_key;
 	ChewingIMEngineFactory *m_factory;
 	ChewingLookupTable m_lookup_table;
 	ChewingContext *ctx;
 	ChewingConfigData config;
-    bool have_input;
+	bool have_input;
 };
 
 #endif

@@ -39,9 +39,6 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_KEY \
 	"/IMEngine/Chewing/ChiEngKey"
 
-#define SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_MODE \
-	"/IMEngine/Chewing/ChiEngMode"
-
 #define SCIM_CONFIG_IMENGINE_CHEWING_USE_CAPSLOCK \
 	"/IMEngine/Chewing/UseCapslock"
 
