@@ -1,3 +1,10 @@
+2008-10-30  Jim Huang  <jserv.tw@gmail.com>
+
+	* configure.ac: Specify the qualication of libchewing dependency
+	version as "equal" instead of "larger than or equal" because of the
+	fact that libchewing 0.3.x stands for development branch.  We intend
+	to break API/ABI at the stage.
+
 2008-10-25  Kanru Chen  <kanru@kanru.info>
 
 	* src/scim_chewing_imengine.cpp,
