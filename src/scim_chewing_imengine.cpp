@@ -328,7 +328,7 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 
 ChewingIMEngineInstance::~ChewingIMEngineInstance()
 {
-	chewing_free( ctx );
+	chewing_delete( ctx );
 	m_reload_signal_connection.disconnect();
 }
 
@@ -558,11 +558,7 @@ void ChewingIMEngineInstance::trigger_property( const String& property )
 	} else if ( property == SCIM_PROP_LETTER ) {
 		chewing_set_ShapeMode( ctx, !chewing_get_ShapeMode( ctx ) );
 	} else if ( property == SCIM_PROP_KBTYPE ) {
-		/* loop through the keyboard type array */
-		if ( chewing_get_KBType( ctx ) == KB_TYPE_NUM - 1 )
- 	                chewing_set_KBType( ctx, KB_DEFAULT );
-		else
-			chewing_set_KBType( ctx, chewing_get_KBType( ctx ) + 1 );
+		chewing_set_KBType( ctx, chewing_get_KBType( ctx ) + 1 );
 	}
 	refresh_all_properties ();
 }
@@ -577,7 +573,7 @@ bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 		char* str = chewing_commit_String(ctx);
 		if ( str ) {
 			commit_string( utf8_mbstowcs( str ) );
-			free( str );
+			chewing_free( str );
 		}
 	}
 
@@ -587,7 +583,7 @@ bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 		char* chibuf = chewing_buffer_String( ctx );
 		if ( chibuf ) {
 			preedit_string = utf8_mbstowcs( chibuf );
-			free( chibuf );
+			chewing_free( chibuf );
 		}
 	}
 
@@ -595,7 +591,7 @@ bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 	char* zuin_str = chewing_zuin_String( ctx, &zuin_count );
 	if( zuin_str ) {
 		preedit_string += utf8_mbstowcs( zuin_str );
-		free( zuin_str );
+		chewing_free( zuin_str );
 	}
 
 
@@ -668,7 +664,7 @@ bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 		char* aux_str = chewing_aux_String( ctx );
 		if( aux_str ) {
 			update_aux_string( utf8_mbstowcs( aux_str ) );
-			free( aux_str );
+			chewing_free( aux_str );
 			show_aux_string();
 		}
 	}
@@ -727,39 +723,28 @@ void ChewingIMEngineInstance::refresh_chieng_property ()
 void ChewingIMEngineInstance::refresh_kbtype_property ()
 {
 	/* look forward to be evoluted into drop-down list */
-	switch ( chewing_get_KBType( ctx ) )
-	{
-		case KB_DEFAULT:
-			_kbtype_property.set_label (_("Default"));
-			break;
-		case KB_HSU:
-			_kbtype_property.set_label (_("Hsu's"));
-			break;
-		case KB_IBM:
-			_kbtype_property.set_label (_("IBM"));
-			break;
-		case KB_GIN_YIEH:
-			_kbtype_property.set_label (_("Gin-Yieh"));
-			break;
-		case KB_ET:
-			_kbtype_property.set_label (_("ETen"));
-			break;
-		case KB_ET26:
-			_kbtype_property.set_label (_("ETen 26-key"));
-			break;
-		case KB_DVORAK:
-			_kbtype_property.set_label (_("Dvorak"));
-			break;
-		case KB_DVORAK_HSU:
-			_kbtype_property.set_label (_("Dvorak Hsu's"));
-			break;
-		case KB_HANYU_PINYIN:
-			_kbtype_property.set_label (_("Han-Yu"));
-			break;
-		default:
-			_kbtype_property.set_label (_("Default"));
-		}
-
+	char *s = chewing_get_KBString( ctx );
+	if ( ! strcmp( s, "KB_DEFAULT" ) )
+		_kbtype_property.set_label (_("Default"));
+	else if ( ! strcmp( s, "KB_HSU" ) )
+		_kbtype_property.set_label (_("Hsu's"));
+	else if ( ! strcmp( s, "KB_IBM" ) )
+		_kbtype_property.set_label (_("IBM"));
+	else if ( ! strcmp( s, "KB_GIN_YIEH" ) )
+		_kbtype_property.set_label (_("Gin-Yieh"));
+	else if ( ! strcmp( s, "KB_ET" ) )
+		_kbtype_property.set_label (_("ETen"));
+	else if ( ! strcmp( s, "KB_ET26" ) )
+		_kbtype_property.set_label (_("ETen 26-key"));
+	else if ( ! strcmp( s, "KB_DVORAK" ) )
+		_kbtype_property.set_label (_("Dvorak"));
+	else if ( ! strcmp( s, "KB_DVORAK_HSU" ) )
+		_kbtype_property.set_label (_("Dvorak Hsu's"));
+	else if ( ! strcmp( s, "KB_PINYIN" ) )
+		_kbtype_property.set_label (_("Han-Yu"));
+	else
+		_kbtype_property.set_label (_("Default"));
+	chewing_free( s );
 	update_property (_kbtype_property);
 }
 
@@ -792,7 +777,7 @@ WideString ChewingLookupTable::get_candidate( int index ) const
 		char* str = chewing_cand_String( ctx );
 		if( str ) {
 			converted_string = utf8_mbstowcs( str );
-			free( str );
+			chewing_free( str );
 		}
 	}
 	return converted_string;

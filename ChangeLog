@@ -1,3 +1,7 @@
+2008-11-27  Kanru Chen  <kanru@kanru.info>
+
+	* src/scim_chewing_imengine.cpp: Adapt the libchewing APIs.
+
 2008-10-30  Jim Huang  <jserv.tw@gmail.com>
 
 	* configure.ac: Specify the qualication of libchewing dependency
