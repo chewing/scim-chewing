@@ -308,21 +308,14 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	// Reset all data.
 	reset();
 
-	config.candPerPage = m_factory->m_selection_keys_num;
-
-	config.maxChiSymbolLen = 16;
-
+	chewing_set_candPerPage( ctx, m_factory->m_selection_keys_num );
+	chewing_set_maxChiSymbolLen( ctx, 16 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
-	config.bAddPhraseForward = m_factory->m_add_phrase_forward ? 0 : 1;
-
+	chewing_set_addPhraseDirection( ctx, m_factory->m_add_phrase_forward ? 0 : 1 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
-	config.bSpaceAsSelection = m_factory->m_space_as_selection ? 1 : 0;
-
+	chewing_set_spaceAsSelection( ctx, m_factory->m_space_as_selection ? 1 : 0 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
-	config.bEscCleanAllBuf = m_factory->m_esc_clean_all_buffer ? 1 : 0;
-
-	//SetConfig( &da, &config );
-	chewing_Configure( ctx, &config );
+	chewing_set_escCleanAllBuf( ctx, m_factory->m_esc_clean_all_buffer ? 1 : 0 );
 }
 
 
