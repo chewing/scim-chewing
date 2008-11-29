@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scim-chewing 0.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-29 10:35+0800\n"
+"POT-Creation-Date: 2008-11-29 11:54+0800\n"
 "PO-Revision-Date: 2006-06-19 22:34+0800\n"
 "Last-Translator: Jim Huang <jserv.tw@gmail.com>\n"
 "Language-Team: Chewing Developers <http://chewing.csie.net>\n"
@@ -81,8 +81,7 @@ msgstr ""
 "    (數字鍵表示字詞長度)。\n"
 "\n"
 "  Ctrl + 0:\n"
-"    使用 Ctrl + 0 可輸入符號。"
-"\n"
+"    使用 Ctrl + 0 可輸入符號。\n"
 "  j / k:\n"
 "    當選擇候選詞時，按下 j 或 k 按鍵，可在前一\n"
 "    或次一字詞間切換。"
@@ -93,11 +92,11 @@ msgstr "中"
 
 #: ../src/scim_chewing_imengine.cpp:730
 msgid "Hsu's"
-msgstr ""
+msgstr "許氏鍵盤排列"
 
 #: ../src/scim_chewing_imengine.cpp:732
 msgid "IBM"
-msgstr ""
+msgstr "IBM鍵盤"
 
 #: ../src/scim_chewing_imengine.cpp:734
 msgid "Gin-Yieh"
@@ -105,7 +104,7 @@ msgstr "精業鍵盤"
 
 #: ../src/scim_chewing_imengine.cpp:736
 msgid "ETen"
-msgstr ""
+msgstr "倚天"
 
 #: ../src/scim_chewing_imengine.cpp:738
 msgid "ETen 26-key"
@@ -113,11 +112,11 @@ msgstr "倚天26鍵"
 
 #: ../src/scim_chewing_imengine.cpp:740
 msgid "Dvorak"
-msgstr ""
+msgstr "Dvorak鍵盤"
 
 #: ../src/scim_chewing_imengine.cpp:742
 msgid "Dvorak Hsu's"
-msgstr ""
+msgstr "Dvorak + 許氏鍵盤排列"
 
 #: ../src/scim_chewing_imengine.cpp:744
 msgid "Han-Yu"
@@ -128,7 +127,7 @@ msgid "Full"
 msgstr "全形"
 
 #: ../src/scim_chewing_imengine_setup.cpp:92
-msgid "A Intelligent Chinese Phonetic IMEngine Module."
+msgid "An Intelligent Chinese Phonetic IMEngine Module."
 msgstr "智慧型注音輸入法模組"
 
 #. label
@@ -203,7 +202,7 @@ msgstr "是否在使用者字詞前方加詞"
 
 #: ../src/scim_chewing_imengine_setup.cpp:342
 msgid "_Rearward phrase choice"
-msgstr ""
+msgstr "後方選擇字詞"
 
 #: ../src/scim_chewing_imengine_setup.cpp:354
 msgid "The behavior for phrase choice to be rearward or not."

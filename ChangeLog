@@ -1,3 +1,10 @@
+2009-11-29  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine_setup.cpp
+	(scim_setup_module_get_description): Fix typo.
+
+	* po/zh_TW.po: Improve messages.
+
 2008-11-29  Jim Huang  <jserv.tw@gmail.com>
 
 	* po/zh_TW.po: Update translations.

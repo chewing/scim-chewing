@@ -89,7 +89,7 @@ extern "C" {
 
 	String scim_setup_module_get_description()
 	{
-		return String( _( "A Intelligent Chinese Phonetic IMEngine Module." ) );
+		return String( _( "An Intelligent Chinese Phonetic IMEngine Module." ) );
 	}
 
 	void scim_setup_module_load_config( const ConfigPointer &config )
