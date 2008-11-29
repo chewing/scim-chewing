@@ -2,7 +2,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2004, 2005, 2006
+ * Copyright (c) 2004, 2005, 2006, 2007, 2008
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -180,7 +180,12 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 	m_add_phrase_forward = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 			false);
-	
+
+	// SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD
+	m_phrase_choice_rearward = m_config->read(
+			String( SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD ),
+			true);
+
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
 	m_esc_clean_all_buffer = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
@@ -312,6 +317,8 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	chewing_set_maxChiSymbolLen( ctx, 16 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD
 	chewing_set_addPhraseDirection( ctx, m_factory->m_add_phrase_forward ? 0 : 1 );
+	// SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD
+	chewing_set_phraseChoiceRearward( ctx, m_factory->m_phrase_choice_rearward ? 1 : 0 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
 	chewing_set_spaceAsSelection( ctx, m_factory->m_space_as_selection ? 1 : 0 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER

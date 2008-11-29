@@ -2,7 +2,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2004, 2005, 2006
+ * Copyright (c) 2004, 2005, 2006, 2008
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -71,6 +71,9 @@
 	"#F0F0F0"
 #define SCIM_CONFIG_IMENGINE_CHEWING_PREEDIT_BGCOLOR_DEF_5 \
 	"#AAAAAA"
+
+#define SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD \
+	"/IMEngine/Chewing/PhraseChoiceRearward"
 
 #endif
 
