@@ -1,9 +1,13 @@
 2008-11-29  Jim Huang  <jserv.tw@gmail.com>
 
+	* po/zh_TW.po: Update translations.
+
+2008-11-29  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_imengine.h (class ChewingIMEngineFactory),
 	src/scim_chewing_config_entry.h
 	(SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD): Added entries
-	for the direction phrase choice.
+	for the direction of phrase choice.
 
 	* src/scim_chewing_imengine.cpp (ChewingIMEngineFactory::reload_conf),
 	src/scim_chewing_imengine_setup.cpp (create_options_page)
