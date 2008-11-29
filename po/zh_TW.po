@@ -259,7 +259,7 @@ msgstr "Dvorak 鍵盤 + 許氏注音"
 
 #: ../src/scim_chewing_imengine_setup.cpp:419
 msgid "DACHEN_CP26 Keyboard"
-msgstr "DACHEN_CP26 鍵盤"
+msgstr "大千26鍵"
 
 #: ../src/scim_chewing_imengine_setup.cpp:422
 msgid "Han-Yu PinYin Keyboard"
