@@ -1,4 +1,15 @@
-2009-11-29  Jim Huang  <jserv.tw@gmail.com>
+2008-11-30  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.h (class ChewingIMEngineFactory)
+	src/scim_chewing_config_entry.h
+	(SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR): Added entries for
+	the feature: automatically shifting cursor after selection.
+
+	* src/scim_chewing_imengine.cpp (ChewingIMEngineFactory::reload_conf),
+	src/scim_chewing_imengine_setup.cpp (create_options_page)
+	(setup_widget_value) (load_config) (save_config): Implemented.
+
+2008-11-29  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine_setup.cpp
 	(scim_setup_module_get_description): Fix typo.

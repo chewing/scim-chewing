@@ -75,5 +75,8 @@
 #define SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD \
 	"/IMEngine/Chewing/PhraseChoiceRearward"
 
+#define SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR \
+	"/IMEngine/Chewing/AutoShiftCursor"
+
 #endif
 

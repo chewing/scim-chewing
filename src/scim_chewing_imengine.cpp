@@ -186,6 +186,11 @@ void ChewingIMEngineFactory::reload_config( const ConfigPointer &scim_config )
 			String( SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD ),
 			true);
 
+	// SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR
+	m_auto_shift_cursor = m_config->read(
+			String( SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR ),
+			true);
+
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER
 	m_esc_clean_all_buffer = m_config->read(
 			String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
@@ -319,6 +324,8 @@ void ChewingIMEngineInstance::reload_config( const ConfigPointer& scim_config )
 	chewing_set_addPhraseDirection( ctx, m_factory->m_add_phrase_forward ? 0 : 1 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD
 	chewing_set_phraseChoiceRearward( ctx, m_factory->m_phrase_choice_rearward ? 1 : 0 );
+	// SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR
+	chewing_set_autoShiftCur( ctx, m_factory->m_auto_shift_cursor ? 1 : 0 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_SPACE_AS_SELECTION
 	chewing_set_spaceAsSelection( ctx, m_factory->m_space_as_selection ? 1 : 0 );
 	// SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER

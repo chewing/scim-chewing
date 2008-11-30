@@ -136,6 +136,7 @@ struct ColorConfigData {
 // static bool __config_use_capslock          = true;
 static bool __config_add_phrase_forward = false;
 static bool __config_phrase_choice_rearward = true;
+static bool __config_auto_shift_cursor = true;
 static bool __config_esc_clean_all_buffer = false;
 static bool __config_space_as_selection = true;
 // static bool __config_show_candidate_comment= true;
@@ -149,6 +150,7 @@ static bool __have_changed                 = false;
 // static GtkWidget    * __widget_use_capslock          = 0;
 static GtkWidget    * __widget_add_phrase_forward = 0;
 static GtkWidget    * __widget_phrase_choice_rearward = 0;
+static GtkWidget    * __widget_auto_shift_cursor = 0;
 static GtkWidget    * __widget_esc_clean_all_buffer = 0;
 static GtkWidget    * __widget_space_as_selection = 0;
 static GtkWidget    * __widget_kb_type = 0;
@@ -352,6 +354,21 @@ static GtkWidget *create_options_page()
 	gtk_tooltips_set_tip(
 			__widget_tooltips, __widget_phrase_choice_rearward,
 			_( "The behavior for phrase choice to be rearward or not." ), NULL );
+
+	__widget_auto_shift_cursor =
+		gtk_check_button_new_with_mnemonic( _( "_Automatically shift cursor" ) );
+	gtk_widget_show( __widget_auto_shift_cursor );
+	gtk_box_pack_start( GTK_BOX( vbox ), __widget_auto_shift_cursor, FALSE, FALSE, 4 );
+	gtk_container_set_border_width( GTK_CONTAINER( __widget_auto_shift_cursor ), 4 );
+
+	g_signal_connect(
+			(gpointer) __widget_auto_shift_cursor, "toggled",
+			G_CALLBACK( on_default_toggle_button_toggled ),
+			&__config_auto_shift_cursor );
+
+	gtk_tooltips_set_tip(
+			__widget_tooltips, __widget_auto_shift_cursor,
+			_( "Automatically shift cursor after selection." ), NULL );
 
 	__widget_esc_clean_all_buffer =
 		gtk_check_button_new_with_mnemonic(_( "_Esc key to clean all buffer" ) );
@@ -723,6 +740,12 @@ void setup_widget_value()
 				__config_phrase_choice_rearward );
 	}
 
+	if ( __widget_auto_shift_cursor ) {
+		gtk_toggle_button_set_active(
+				GTK_TOGGLE_BUTTON( __widget_auto_shift_cursor ),
+				__config_auto_shift_cursor );
+	}
+
 	if ( __widget_space_as_selection ) {
 		gtk_toggle_button_set_active(
 				GTK_TOGGLE_BUTTON( __widget_space_as_selection ),
@@ -832,6 +855,10 @@ void load_config( const ConfigPointer &config )
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD ),
 				__config_phrase_choice_rearward );
 
+		__config_auto_shift_cursor =
+			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR ),
+				__config_auto_shift_cursor );
+
 		__config_esc_clean_all_buffer =
 			config->read( String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
 				__config_esc_clean_all_buffer );
@@ -881,8 +908,11 @@ void save_config( const ConfigPointer &config )
 		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_ADD_PHRASE_FORWARD ),
 				__config_add_phrase_forward );
 
-		config->write( String ( SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD ),
+		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_PHRASE_CHOICE_REARWARD ),
 				__config_phrase_choice_rearward );
+
+		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR ),
+				__config_auto_shift_cursor );
 
 		config->write( String( SCIM_CONFIG_IMENGINE_CHEWING_ESC_CLEAN_ALL_BUFFER ),
 				__config_esc_clean_all_buffer );
