@@ -222,7 +222,7 @@ msgstr "_Esc 鍵清除所有的鍵盤緩衝區"
 
 #: ../src/scim_chewing_imengine_setup.cpp:386
 msgid "Assign Esc key to clean all keyboard buffer or not."
-msgstr "指定 Esc 鍵清楚所有按鍵緩衝區與否"
+msgstr "指定 Esc 鍵清除所有按鍵緩衝區與否"
 
 #: ../src/scim_chewing_imengine_setup.cpp:389
 msgid "_SpaceKey as selection key"

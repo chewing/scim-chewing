@@ -21,7 +21,7 @@ What's New in SCIM-chewing 0.3.1
 ----------------------------------------------------------
 * Fix intltool build process.
 * Fix invalid memory access in scim-setup.
-* Handle unknown input key event in IME engine.
+* Handle unknown input key event in IM engine.
 
 
 What's New in SCIM-chewing 0.3.0
