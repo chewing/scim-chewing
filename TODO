@@ -1,1 +1,8 @@
-1) Configure via SetupUI.
+1) Improve SetupUI to follow the options listed in win32-chewing/UserGuide .
+   - Three tabs: behaviors, UI, special symbols.
+
+2) Merge PhraseEd utility in scim-setup.
+   - chewing-utils rework.
+
+3) SCIM toolbar UI tweaks.
+   - Allow variant representations of visual components.
