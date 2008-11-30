@@ -525,14 +525,15 @@ void ChewingIMEngineInstance::reset()
 
 	/* Configure selection keys definition */
 	int i = 0;
+	int *selkey = new int[ m_factory->m_selection_keys_num ];
 	for (; m_factory->m_selection_keys[i] &&
 	       i <= m_factory->m_selection_keys_num; i++) {
-		config.selKey[i] = m_factory->m_selection_keys[i];
+		selkey[i] = m_factory->m_selection_keys[i];
 	}
-	config.selKey[i] = '\0';
+	chewing_set_selKey( ctx, selkey, m_factory->m_selection_keys_num );
 	m_lookup_table.init( m_factory->m_selection_keys,
 	                     m_factory->m_selection_keys_num );
-
+    delete [] selkey;
 	/* Re-focus to clear preedit, to avoid gedit crash when select-all. */
 	focus_out();
 	focus_in();

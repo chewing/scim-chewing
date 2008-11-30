@@ -110,7 +110,6 @@ private:
 	ChewingIMEngineFactory *m_factory;
 	ChewingLookupTable m_lookup_table;
 	ChewingContext *ctx;
-	ChewingConfigData config;
 	bool have_input;
 };
 
