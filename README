@@ -2,10 +2,10 @@ How to build SCIM-chewing
 =========================
 1. Make sure you have installed development packages of SCIM, whose
    version must be 1.0.0 or above.
-   Take Debian sid as example:
+   Take Debian/Ubuntu as example:
     # apt-get install scim-dev
 
-2. Make sure you have installed libchewing 0.2.4 (or above version).
+2. Make sure you have installed libchewing 0.3.2 (or above version).
 
    # ./autogen.sh
    # ./configure
@@ -21,10 +21,10 @@ How to build SCIM-chewing
 
 
 How to launch SCIM-chewing
-=========================
+==========================
 1. Make sure you have alread installed SCIM-chewing, to see if the
    following file exists or not.
-    # ls /usr/lib/scim-1.0/IMEngine/chewing.so
+    # ls /usr/lib/scim-1.0/*/IMEngine/chewing.so
 
 2. Set up SCIM, and specify the proper modules, such as XIM frontend,
    GTK+ im-module, and QT im-module.
