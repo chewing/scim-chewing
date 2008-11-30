@@ -1,5 +1,9 @@
 2008-11-30  Jim Huang  <jserv.tw@gmail.com>
 
+	* po/zh_TW.po: Update translations.
+
+2008-11-30  Jim Huang  <jserv.tw@gmail.com>
+
 	* src/scim_chewing_imengine.h (class ChewingIMEngineFactory)
 	src/scim_chewing_config_entry.h
 	(SCIM_CONFIG_IMENGINE_CHEWING_AUTO_SHIFT_CURSOR): Added entries for
