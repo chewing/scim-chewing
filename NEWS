@@ -1,3 +1,11 @@
+What's New in Subversion
+----------------------------------------------------------
+* New configuration options:
+  - Automatically shifting cursor after selection.
+  - The direction of phrase choice.
+* Sync with libchewing 0.3.2 API changes.
+
+
 What's New in SCIM-chewing 0.3.2
 ----------------------------------------------------------
 * Add selectable PinYin method support.
@@ -8,11 +16,13 @@ What's New in SCIM-chewing 0.3.2
 * Added Chinese/English mode fast switch on toolbar.
 * Sync with libchewing API change.
 
+
 What's New in SCIM-chewing 0.3.1
 ----------------------------------------------------------
 * Fix intltool build process.
 * Fix invalid memory access in scim-setup.
 * Handle unknown input key event in IME engine.
+
 
 What's New in SCIM-chewing 0.3.0
 ----------------------------------------------------------
@@ -25,6 +35,7 @@ What's New in SCIM-chewing 0.3.0
 * Add new option to assign Esc key to clean all keyboard buffer
   or not.
 
+
 What's New in SCIM-chewing 0.2.1
 ----------------------------------------------------------
 * Zuin output looks much pretty.
@@ -33,6 +44,7 @@ What's New in SCIM-chewing 0.2.1
   old style of space key.
 * Handle key mask to make working under SCIM 1.2.1 .
 * Fix CtrlNum failure.
+
 
 What's New in SCIM-chewing 0.2.0
 ----------------------------------------------------------
