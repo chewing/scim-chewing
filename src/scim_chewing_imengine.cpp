@@ -527,7 +527,7 @@ void ChewingIMEngineInstance::reset()
 	int i = 0;
 	int *selkey = new int[ m_factory->m_selection_keys_num ];
 	for (; m_factory->m_selection_keys[i] &&
-	       i <= m_factory->m_selection_keys_num; i++) {
+	       i < m_factory->m_selection_keys_num; i++) {
 		selkey[i] = m_factory->m_selection_keys[i];
 	}
 	chewing_set_selKey( ctx, selkey, m_factory->m_selection_keys_num );

@@ -1,5 +1,9 @@
 2008-11-30  Kanru Chen  <kanru@kanru.info>
 
+	* src/scim_chewing_imengine.cpp: Fix off-by-one bug.
+
+2008-11-30  Kanru Chen  <kanru@kanru.info>
+
 	* src/scim_chewing_imengine.cpp,
 	src/scim_chewing_imengine.h: Set selection key correctly.
 
