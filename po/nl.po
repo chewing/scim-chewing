@@ -1,13 +1,13 @@
 # translation of nl.po to Nederlands
-# Ronald Stroethoff <stroet43@zonnet.nl>, 2007.
+# Ronald Stroethoff <stroet43@zonnet.nl>, 2007, 2008.
 # Copyright (c) 2004, 2005, 2006 Chewing Developers
 # Under same license as SCIM-chewing
 msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-15 14:28+0800\n"
-"PO-Revision-Date: 2007-07-24 20:59+0200\n"
+"POT-Creation-Date: 2008-12-01 23:42+0800\n"
+"PO-Revision-Date: 2008-12-09 09:57+0100\n"
 "Last-Translator: Ronald Stroethoff <stroet43@zonnet.nl>\n"
 "Language-Team: Nederlands\n"
 "MIME-Version: 1.0\n"
@@ -15,36 +15,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../src/scim_chewing_imengine.cpp:77
+#: ../src/scim_chewing_imengine.cpp:82
 msgid "The status of the current input method. Click to change it."
-msgstr "De status van de nu gebruikte invoer-methode. Klik hierop om deze te veranderen."
+msgstr ""
+"De status van de nu gebruikte invoer-methode. Klik hierop om deze te "
+"veranderen."
 
-#: ../src/scim_chewing_imengine.cpp:78 ../src/scim_chewing_imengine.cpp:659
+#: ../src/scim_chewing_imengine.cpp:83 ../src/scim_chewing_imengine.cpp:724
 msgid "Eng"
 msgstr "Ned"
 
-#: ../src/scim_chewing_imengine.cpp:79 ../src/scim_chewing_imengine.cpp:669
+#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:762
 msgid "Half"
 msgstr "Half"
 
-#: ../src/scim_chewing_imengine.cpp:201
-#: ../src/scim_chewing_imengine_setup.cpp:84
+#: ../src/scim_chewing_imengine.cpp:85 ../src/scim_chewing_imengine.cpp:736
+#: ../src/scim_chewing_imengine.cpp:754
+msgid "Default"
+msgstr "Standaard"
+
+#: ../src/scim_chewing_imengine.cpp:225
+#: ../src/scim_chewing_imengine_setup.cpp:87
 msgid "Chewing"
 msgstr "Chewing"
 
-#: ../src/scim_chewing_imengine.cpp:216
+#: ../src/scim_chewing_imengine.cpp:240
 msgid "Chewing core team <http://chewing.csie.net>"
 msgstr "Chewing kern groep <http://chewing.csie.net>"
 
-#: ../src/scim_chewing_imengine.cpp:232
+#: ../src/scim_chewing_imengine.cpp:256
 msgid "Hot Keys:"
 msgstr "Snel toetsen:"
 
-#: ../src/scim_chewing_imengine.cpp:234
+#: ../src/scim_chewing_imengine.cpp:258
 msgid "    Switch between English/Chinese mode."
 msgstr "    Schakelen tussen de Nederlandse/Chinese invoer."
 
-#: ../src/scim_chewing_imengine.cpp:235
+#: ../src/scim_chewing_imengine.cpp:259
 msgid ""
 "\n"
 "\n"
@@ -55,11 +62,15 @@ msgid ""
 "    Use tab key to dispart or connect a phrase.\n"
 "\n"
 "  Ctrl + [number]:\n"
-"    Use ctrl + number key to add a user-defined phrase.\n"
+"    Use Ctrl + number key to add a user-defined phrase.\n"
 "    (Here number stands for the length of the user-defined phrase.)\n"
 "\n"
 "  Ctrl + 0:\n"
-"    Use Ctrl + 0 to specify symbolic input."
+"    Use Ctrl + 0 to specify symbolic input.\n"
+"\n"
+" j / k:\n"
+"    While selecting candidate phrases, it could invoke \n"
+"    switching between the previous and the next one."
 msgstr ""
 "\n"
 "\n"
@@ -74,174 +85,245 @@ msgstr ""
 "    (Het nummer is de lengte van de eigen uitdrukking.)\n"
 "\n"
 "  Ctrl + 0:\n"
-"    Gebruik Ctrl + 0 voor een nummerieke invoer."
+"    Gebruik Ctrl + 0 voor een nummerieke invoer.\n"
+"\n"
+" J / k:\n"
+"     Wanneer een uitdrukking wordt geselecteerd, dan kan dat een heen en weer schakelen tussen de volgende en de vorige veroorzaken."
 
-#: ../src/scim_chewing_imengine.cpp:661
+#: ../src/scim_chewing_imengine.cpp:726
 msgid "Chi"
 msgstr "Chi"
 
-#: ../src/scim_chewing_imengine.cpp:671
+#: ../src/scim_chewing_imengine.cpp:738
+msgid "Hsu's"
+msgstr "Hsu's"
+
+#: ../src/scim_chewing_imengine.cpp:740
+msgid "IBM"
+msgstr "IBM"
+
+#: ../src/scim_chewing_imengine.cpp:742
+msgid "Gin-Yieh"
+msgstr "Gin-Yieh"
+
+#: ../src/scim_chewing_imengine.cpp:744
+msgid "ETen"
+msgstr "ETen"
+
+#: ../src/scim_chewing_imengine.cpp:746
+msgid "ETen 26-key"
+msgstr "ETen 26-key toets"
+
+#: ../src/scim_chewing_imengine.cpp:748
+msgid "Dvorak"
+msgstr "Dvorak"
+
+#: ../src/scim_chewing_imengine.cpp:750
+msgid "Dvorak Hsu's"
+msgstr "Dvorak Hsu's"
+
+#: ../src/scim_chewing_imengine.cpp:752
+msgid "Han-Yu"
+msgstr "Han-Yu"
+
+#: ../src/scim_chewing_imengine.cpp:764
 msgid "Full"
 msgstr "Vol"
 
-#: ../src/scim_chewing_imengine_setup.cpp:89
-msgid "A Intelligent Chinese Phonetic IMEngine Module."
+#: ../src/scim_chewing_imengine_setup.cpp:92
+msgid "An Intelligent Chinese Phonetic IMEngine Module."
 msgstr "Een intelligent fonetisch Chinees invoer methode."
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:163
+#: ../src/scim_chewing_imengine_setup.cpp:176
 msgid "Trigger keys:"
-msgstr "Trigger toetsen:"
+msgstr "Schakel toetsen:"
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:165
+#: ../src/scim_chewing_imengine_setup.cpp:178
 msgid "Select trigger keys"
-msgstr "Trigger-toetsen kiezen"
+msgstr "Schakel-toetsen kiezen"
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:167
+#: ../src/scim_chewing_imengine_setup.cpp:180
 msgid ""
 "The key events to switch Chewing input mode. Click on the button on the "
 "right to edit it."
-msgstr "Toets-combinatie, waarmee de Chewing invoer-methode wordt gewisseld. Klik om te veranderen op de rechter muisknop."
+msgstr ""
+"Toets-combinatie, waarmee de Chewing invoer-methode wordt gewisseld. Klik om "
+"te veranderen op de rechter muisknop."
 
 #. label
-#: ../src/scim_chewing_imengine_setup.cpp:180
+#: ../src/scim_chewing_imengine_setup.cpp:193
 msgid "Chewing CHI/ENG keys:"
 msgstr "Chewing CHI/NED-toetsen:"
 
 #. title
-#: ../src/scim_chewing_imengine_setup.cpp:182
+#: ../src/scim_chewing_imengine_setup.cpp:195
 msgid "Select CHI/ENG keys"
 msgstr "Kies de CHI/NED-toetsen"
 
 #. tooltip
-#: ../src/scim_chewing_imengine_setup.cpp:184
+#: ../src/scim_chewing_imengine_setup.cpp:197
 msgid ""
 "The key events to switch English and Chinese mode. Click on the button on "
 "the right to edit it."
-msgstr "Toets-combinatie, waarmee tussen de Nederlandse en de Chinesche invoer-methode wordt gewisseld. Klik om te veranderen op de rechter muisknop."
+msgstr ""
+"Toets-combinatie, waarmee tussen de Nederlandse en de Chinesche invoer-"
+"methode wordt gewisseld. Klik om te veranderen op de rechter muisknop."
 
-#: ../src/scim_chewing_imengine_setup.cpp:223
+#: ../src/scim_chewing_imengine_setup.cpp:236
 msgid "Color #1"
 msgstr "Kleur 1"
 
-#: ../src/scim_chewing_imengine_setup.cpp:224
 #: ../src/scim_chewing_imengine_setup.cpp:237
 #: ../src/scim_chewing_imengine_setup.cpp:250
 #: ../src/scim_chewing_imengine_setup.cpp:263
 #: ../src/scim_chewing_imengine_setup.cpp:276
+#: ../src/scim_chewing_imengine_setup.cpp:289
 msgid "The color of preediting text"
 msgstr "De kleur van de ingevoerde tekst"
 
-#: ../src/scim_chewing_imengine_setup.cpp:236
+#: ../src/scim_chewing_imengine_setup.cpp:249
 msgid "Color #2"
 msgstr "Kleur 2"
 
-#: ../src/scim_chewing_imengine_setup.cpp:249
+#: ../src/scim_chewing_imengine_setup.cpp:262
 msgid "Color #3"
 msgstr "Kleur 3"
 
-#: ../src/scim_chewing_imengine_setup.cpp:262
+#: ../src/scim_chewing_imengine_setup.cpp:275
 msgid "Color #4"
 msgstr "Kleur 4"
 
-#: ../src/scim_chewing_imengine_setup.cpp:275
+#: ../src/scim_chewing_imengine_setup.cpp:288
 msgid "Color #5"
 msgstr "Kleur 5"
 
-#: ../src/scim_chewing_imengine_setup.cpp:316
+#: ../src/scim_chewing_imengine_setup.cpp:329
 msgid "Add _Phrase forward"
 msgstr "Directe invoer(_P)"
 
-#: ../src/scim_chewing_imengine_setup.cpp:328
+#: ../src/scim_chewing_imengine_setup.cpp:341
 msgid "Whether to add Phrase forward or not."
 msgstr "Wanneer deze optie is gekozen, is directe invoer ingeschakeld."
 
-#: ../src/scim_chewing_imengine_setup.cpp:331
+#: ../src/scim_chewing_imengine_setup.cpp:344
+msgid "_Rearward phrase choice"
+msgstr "Sorteren op achterkant"
+
+#: ../src/scim_chewing_imengine_setup.cpp:356
+msgid "The behavior for phrase choice to be rearward or not."
+msgstr "Sorteren op voorkant of achterkant."
+
+#: ../src/scim_chewing_imengine_setup.cpp:359
+msgid "_Automatically shift cursor"
+msgstr "_Automatisch cursor opschuiven"
+
+#: ../src/scim_chewing_imengine_setup.cpp:371
+msgid "Automatically shift cursor after selection."
+msgstr "Automatisch cursor na keuze opschuiven."
+
+#: ../src/scim_chewing_imengine_setup.cpp:374
 msgid "_Esc key to clean all buffer"
 msgstr "_Escape-toets voor het legen van alle buffers"
 
-#: ../src/scim_chewing_imengine_setup.cpp:343
+#: ../src/scim_chewing_imengine_setup.cpp:386
 msgid "Assign Esc key to clean all keyboard buffer or not."
 msgstr "Escape-toets toewijzen voor het wel of niet legen van alle buffers"
 
-#: ../src/scim_chewing_imengine_setup.cpp:346
+#: ../src/scim_chewing_imengine_setup.cpp:389
 msgid "_SpaceKey as selection key"
 msgstr "_Spatiebalk als selectietoets"
 
-#: ../src/scim_chewing_imengine_setup.cpp:358
+#: ../src/scim_chewing_imengine_setup.cpp:401
 msgid "Whether SpaceKey is used as selection key or not."
 msgstr "Bepaal of de spatiebalk wordt gebruikt als selectietoets."
 
-#: ../src/scim_chewing_imengine_setup.cpp:369
+#: ../src/scim_chewing_imengine_setup.cpp:412
 msgid "Default Keyboard"
 msgstr "Standaard toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:372
+#: ../src/scim_chewing_imengine_setup.cpp:415
 msgid "Hsu's Keyboard"
 msgstr "Hsu's toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:375
+#: ../src/scim_chewing_imengine_setup.cpp:418
+msgid "IBM Keyboard"
+msgstr "IBM Toetsenbord"
+
+#: ../src/scim_chewing_imengine_setup.cpp:421
 msgid "Gin-Yieh Keyboard"
 msgstr "Gin-Yieh toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:378
+#: ../src/scim_chewing_imengine_setup.cpp:424
 msgid "ETen Keyboard"
 msgstr "ETen toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:381
+#: ../src/scim_chewing_imengine_setup.cpp:427
 msgid "ETen 26-key Keyboard"
 msgstr "ETen 26-key toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:384
+#: ../src/scim_chewing_imengine_setup.cpp:430
 msgid "Dvorak Keyboard"
 msgstr "Dvorak toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:387
+#: ../src/scim_chewing_imengine_setup.cpp:433
 msgid "Dvorak Keyboard with Hsu's support"
 msgstr "Dvorak toetsenbord met Hsu's ondersteuning"
 
-#: ../src/scim_chewing_imengine_setup.cpp:390
+#: ../src/scim_chewing_imengine_setup.cpp:436
+msgid "DACHEN_CP26 Keyboard"
+msgstr "Dachen_CP26 Toetsenbord"
+
+#: ../src/scim_chewing_imengine_setup.cpp:439
 msgid "Han-Yu PinYin Keyboard"
 msgstr "Han-Yu PinYin toetsenbord"
 
-#: ../src/scim_chewing_imengine_setup.cpp:462
-msgid "Use keyboard type:"
-msgstr "Kies toetsenbord-type:"
+#: ../src/scim_chewing_imengine_setup.cpp:531
+msgid "Initial trigger Chinese/English mode:"
+msgstr "Beginstand Chinees/Nederlands:"
 
-#: ../src/scim_chewing_imengine_setup.cpp:473
-msgid "Change the default keyboard layout type"
-msgstr "Een toetsenbord layout als standaard kiezen"
+#: ../src/scim_chewing_imengine_setup.cpp:542
+msgid "Change the default Chinese/English mode on every trigger"
+msgstr "Verander de standaard selectie-toetsen met iedere wisseling"
 
-#: ../src/scim_chewing_imengine_setup.cpp:496
-msgid "Customized Selection Keys:"
-msgstr "Aangepaste selectie-toetsen:"
-
-#: ../src/scim_chewing_imengine_setup.cpp:507
-msgid "Change the default selection keys"
-msgstr "Verander de standaard selectie-toetsen"
-
-#: ../src/scim_chewing_imengine_setup.cpp:530
+#: ../src/scim_chewing_imengine_setup.cpp:565
 msgid "Number of Selection Keys :"
 msgstr "Aantal selectie-toetsen :"
 
-#: ../src/scim_chewing_imengine_setup.cpp:541
+#: ../src/scim_chewing_imengine_setup.cpp:576
 msgid "Change the default number of selection keys"
 msgstr "Verander het standaard aantal selectie-toetsen"
 
-#. Create the label for this note page.
+#: ../src/scim_chewing_imengine_setup.cpp:599
+msgid "Customized Selection Keys:"
+msgstr "Aangepaste selectie-toetsen:"
+
 #: ../src/scim_chewing_imengine_setup.cpp:610
+msgid "Change the default selection keys"
+msgstr "Verander de standaard selectie-toetsen"
+
+#: ../src/scim_chewing_imengine_setup.cpp:633
+msgid "Use keyboard type:"
+msgstr "Kies toetsenbord-type:"
+
+#: ../src/scim_chewing_imengine_setup.cpp:644
+msgid "Change the default keyboard layout type"
+msgstr "Een toetsenbord layout als standaard kiezen"
+
+#. Create the label for this note page.
+#: ../src/scim_chewing_imengine_setup.cpp:698
 msgid "Options"
 msgstr "Optie's"
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:621
+#: ../src/scim_chewing_imengine_setup.cpp:709
 msgid "Keyboard"
 msgstr "Toetsenbord"
 
 #. Create the label for this note page.
-#: ../src/scim_chewing_imengine_setup.cpp:629
+#: ../src/scim_chewing_imengine_setup.cpp:717
 msgid "Decorative Color"
 msgstr "Decoratie-kleur"
 
