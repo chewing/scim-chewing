@@ -1,3 +1,8 @@
+2009-01-24  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event): Handle 0-9 in keypad.
+
 2008-12-09  Jim Huang  <jserv.tw@gmail.com>
 
 	* po/nl.po: Update Nederlands translation contributed by

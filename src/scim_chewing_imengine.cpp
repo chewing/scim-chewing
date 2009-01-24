@@ -419,6 +419,19 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
                 SCIM_DEBUG_IMENGINE( 2 ) <<
                     "Unused keys, End Process Key\n";
 				return true;
+			case SCIM_KEY_KP_0:
+			case SCIM_KEY_KP_1:
+			case SCIM_KEY_KP_2:
+			case SCIM_KEY_KP_3:
+			case SCIM_KEY_KP_4:
+			case SCIM_KEY_KP_5:
+			case SCIM_KEY_KP_6:
+			case SCIM_KEY_KP_7:
+			case SCIM_KEY_KP_8:
+			case SCIM_KEY_KP_9:
+				chewing_handle_Numlock( ctx,
+					'0' + key.code - SCIM_KEY_KP_0 );
+				break;
 			default:
                 SCIM_DEBUG_IMENGINE( 2 ) <<
                     "Begin OnKeyDefault\n";
