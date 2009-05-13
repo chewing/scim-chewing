@@ -1,3 +1,10 @@
+2009-05-14  Jim Huang  <jserv.tw@gmail.com>
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event): Handle Enter and '.' in
+	keypad.
+	Patched by Sprite93@ptt.cc .
+
 2009-01-24  Jim Huang  <jserv.tw@gmail.com>
 
 	* src/scim_chewing_imengine.cpp

@@ -410,6 +410,9 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_Page_Down:
 				chewing_handle_PageDown( ctx );
 				break;
+			case SCIM_KEY_KP_Enter:
+				chewing_handle_Enter( ctx );
+				break;
 			case SCIM_KEY_Shift_L:
 			case SCIM_KEY_Shift_R:
 			case SCIM_KEY_Control_L:
@@ -429,6 +432,7 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_KP_7:
 			case SCIM_KEY_KP_8:
 			case SCIM_KEY_KP_9:
+			case SCIM_KEY_KP_Decimal:
 				chewing_handle_Numlock( ctx,
 					'0' + key.code - SCIM_KEY_KP_0 );
 				break;
