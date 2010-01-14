@@ -1,6 +1,15 @@
 2010-01-14  Jim Huang  <jserv@0xlab.org>
 
 	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event): Fix the unexpected
+	behavior on candidate phrases in Google search bar browsed by Firefox.
+	Reported by Youchen Lee <youchen.lee@gmail.com>.
+	NOTE: the workaround for OpenOffice might not fit anymore since the
+	usage of GTK-IM API changes a lot.
+
+2010-01-14  Jim Huang  <jserv@0xlab.org>
+
+	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::process_key_event): Release F1-F19 Keys.
 	Patched by Youchen Lee <youchen.lee@gmail.com>.
 

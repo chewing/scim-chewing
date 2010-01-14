@@ -360,8 +360,8 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 	if ( key.is_key_release() ) {
         SCIM_DEBUG_IMENGINE( 2 ) <<
             "Key Release, End Process Key\n";
-		return true;
-    }
+		return false;
+	}
 
 	if ( key.mask == 0 ) {
 		switch ( key.code ) {
