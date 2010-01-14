@@ -440,6 +440,28 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 				chewing_handle_Numlock( ctx,
 					'0' + key.code - SCIM_KEY_KP_0 );
 				break;
+			case SCIM_KEY_F1:
+			case SCIM_KEY_F2:
+			case SCIM_KEY_F3:
+			case SCIM_KEY_F4:
+			case SCIM_KEY_F5:
+			case SCIM_KEY_F6:
+			case SCIM_KEY_F7:
+			case SCIM_KEY_F8:
+			case SCIM_KEY_F9:
+			case SCIM_KEY_F10:
+			case SCIM_KEY_F11:
+			case SCIM_KEY_F12:
+			case SCIM_KEY_F13:
+			case SCIM_KEY_F14:
+			case SCIM_KEY_F15:
+			case SCIM_KEY_F16:
+			case SCIM_KEY_F17:
+			case SCIM_KEY_F18:
+			case SCIM_KEY_F19:
+				SCIM_DEBUG_IMENGINE( 2 ) << 
+					"Release function keys.\n"; 
+				return false;
 			default:
                 SCIM_DEBUG_IMENGINE( 2 ) <<
                     "Begin OnKeyDefault\n";

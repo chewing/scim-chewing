@@ -1,6 +1,12 @@
 2010-01-14  Jim Huang  <jserv@0xlab.org>
 
 	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event): Release F1-F19 Keys.
+	Patched by Youchen Lee <youchen.lee@gmail.com>.
+
+2010-01-14  Jim Huang  <jserv@0xlab.org>
+
+	* src/scim_chewing_imengine.cpp
 	(ChewingIMEngineInstance::process_key_event): Added the support of
 	"+-*/" keys on numpad.
 	Patched by Youchen Lee <youchen.lee@gmail.com>.
