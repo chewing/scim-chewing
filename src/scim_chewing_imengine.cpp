@@ -2,7 +2,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2004, 2005, 2006, 2007, 2008
+ * Copyright (c) 2004, 2005, 2006, 2007, 2008, 2009, 2010
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -433,6 +433,10 @@ bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
 			case SCIM_KEY_KP_8:
 			case SCIM_KEY_KP_9:
 			case SCIM_KEY_KP_Decimal:
+			case SCIM_KEY_KP_Add: 
+			case SCIM_KEY_KP_Subtract: 
+			case SCIM_KEY_KP_Multiply: 
+			case SCIM_KEY_KP_Divide: 
 				chewing_handle_Numlock( ctx,
 					'0' + key.code - SCIM_KEY_KP_0 );
 				break;
