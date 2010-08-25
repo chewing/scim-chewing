@@ -339,10 +339,12 @@ ChewingIMEngineInstance::~ChewingIMEngineInstance()
 	m_reload_signal_connection.disconnect();
 }
 
-bool ChewingIMEngineInstance::process_key_event( const KeyEvent& key )
+bool ChewingIMEngineInstance::process_key_event( const KeyEvent& rawkey )
 {
     SCIM_DEBUG_IMENGINE( 2 ) <<
         "Process Key Event\n";
+
+	KeyEvent key = rawkey.map_to_layout(SCIM_KEYBOARD_Default);
 
 	if ( match_key_event( m_factory->m_chi_eng_keys, key ) ) {
 		m_prev_key = key;
