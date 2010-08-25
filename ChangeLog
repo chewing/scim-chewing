@@ -1,3 +1,11 @@
+2010-08-26  Jim Huang  <jserv@0xlab.org>
+
+	* src/scim_chewing_imengine.cpp
+	(ChewingIMEngineInstance::process_key_event): Be aware of the "Keyboard
+	Layout" setting in SCIM, Thus, users can use a French AZERTY or German
+	QWERTZ without having to switch to a US layout beforehand.
+	Patched by Matthieu Valleton <seeschloss@gmail.com>
+
 2010-01-14  Jim Huang  <jserv@0xlab.org>
 
 	* src/scim_chewing_imengine.cpp
