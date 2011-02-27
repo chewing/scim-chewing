@@ -1,3 +1,10 @@
+2011-02-27  Jim Huang  <jserv@0xlab.org>
+
+	* configure.ac: Bump version to 0.3.4
+	Bump libchewing dependency to version 0.3.3 (equal)
+
+	* NEWS: ditto.
+
 2010-08-26  Jim Huang  <jserv@0xlab.org>
 
 	* src/scim_chewing_imengine.cpp
