@@ -1,3 +1,7 @@
+What's New in libchewing GIT
+---------------------------------------------------------
+
+
 What's New in SCIM-chewing 0.3.4
 ---------------------------------------------------------
 * Handle 0-9, "+-*/" keys, Enter and '.' in keypad.
