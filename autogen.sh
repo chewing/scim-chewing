@@ -8,6 +8,9 @@ if [ "x${ACLOCAL_DIR}" != "x" ]; then
   ACLOCAL_ARG=-I ${ACLOCAL_DIR}
 fi
 
+# ChangeLog is deprecated, but autotool expects one.
+touch ChangeLog
+
 AUTOMAKE=${AUTOMAKE:-automake$AM_VERSION} libtoolize -c --automake 
 AUTOMAKE=${AUTOMAKE:-automake$AM_VERSION} intltoolize -c --automake
 ${ACLOCAL:-aclocal$AM_VERSION} ${ACLOCAL_ARG}
