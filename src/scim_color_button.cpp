@@ -146,8 +146,8 @@ scim_color_button_init (ScimChewingColorButton *object)
 {
     /*set default color */ 
 #if GTK_CHECK_VERSION(3, 0, 0)
-    gdk_rgba_parse (&object->fg_color, "000000");
-    gdk_rgba_parse (&object->bg_color, "ffffff");
+    gdk_rgba_parse (&object->fg_color, "#000000");
+    gdk_rgba_parse (&object->bg_color, "#ffffff");
 #else
     gdk_color_parse ("#000000", &object->fg_color);
     gdk_color_parse ("#ffffff", &object->bg_color);
@@ -267,17 +267,15 @@ scim_color_button_expose (GtkWidget      *widget,
     gint            rect_w, rect_h;
   
 #if GTK_CHECK_VERSION(2, 18, 0)
-      if (gtk_widget_is_drawable (widget))
+    if (!gtk_widget_is_drawable (widget))
 #else
     if (!GTK_WIDGET_DRAWABLE (widget))
 #endif
         return FALSE;
 
 #if GTK_CHECK_VERSION(3, 0, 0)
-    GtkAllocation allocation;
-    gtk_widget_get_allocation (widget, &allocation);
-    width = allocation.width;
-    height = allocation.height;
+    width = gdk_window_get_width(gtk_widget_get_window (widget));
+    height = gdk_window_get_height(gtk_widget_get_window (widget));
 #else
     width  = widget->allocation.width;
     height = widget->allocation.height;
@@ -318,7 +316,6 @@ scim_color_button_expose (GtkWidget      *widget,
 
     button->rect_width  = rect_w;
     button->rect_height = rect_h;
-  
   
     /*  draw the background area  */
     scim_color_button_draw_rect (button,
@@ -402,17 +399,15 @@ scim_color_button_target (ScimChewingColorButton *button,
                           gint            y)
 {
 #if GTK_CHECK_VERSION(3, 0, 0)
-    GtkAllocation allocation;
-    gtk_widget_get_allocation (GTK_WIDGET (button), &allocation);
-    gint width = allocation.width;
-    gint height = allocation.height;
+    gint width = gdk_window_get_width(gtk_widget_get_window (GTK_WIDGET(button)));
+    gint height = gdk_window_get_height(gtk_widget_get_window (GTK_WIDGET(button)));
 #else
     gint width  = GTK_WIDGET (button)->allocation.width;
     gint height = GTK_WIDGET (button)->allocation.height;
 #endif
     gint rect_w = button->rect_width;
     gint rect_h = button->rect_height;
-  
+
     if (x > 0 && x < rect_w && y > 0 && y < rect_h)
         return FOREGROUND_AREA;
     else if (x > (width - rect_w)  && x < width  &&
@@ -620,6 +615,7 @@ scim_color_button_get_colors (ScimChewingColorButton *button,
                 ((button->bg_color.blue)>>8)
 #endif
                 );
+
     *fg_value = String (fg_color_str); 
     *bg_value = String (bg_color_str); 
 
@@ -634,10 +630,6 @@ scim_color_button_set_colors (ScimChewingColorButton *button,
 #if GTK_CHECK_VERSION(3, 0, 0)
     const char *fg_str = fg_value.c_str();
     const char *bg_str = bg_value.c_str();
-    if (fg_str[0] == '#')
-        ++fg_str;
-    if (bg_str[0] == '#')
-        ++bg_str;
     gdk_rgba_parse (&button->fg_color, fg_str); 
     gdk_rgba_parse (&button->bg_color, bg_str); 
 #else
