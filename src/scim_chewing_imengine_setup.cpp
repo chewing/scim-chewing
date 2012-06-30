@@ -606,7 +606,7 @@ static GtkWidget *create_keyboard_page()
 #endif
 	g_signal_connect(
 #if GTK_CHECK_VERSION(2, 4, 0)
-			G_OBJECT(__widget_chieng_mode),
+			G_OBJECT(gtk_bin_get_child(GTK_BIN(__widget_chieng_mode))),
 #else
 			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry), 
 #endif
@@ -661,7 +661,7 @@ static GtkWidget *create_keyboard_page()
 #endif
 	g_signal_connect(
 #if GTK_CHECK_VERSION(2, 4, 0)
-			G_OBJECT(__widget_selKey_num),
+			G_OBJECT(gtk_bin_get_child(GTK_BIN(__widget_selKey_num))),
 #else
 			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_num)->entry), 
 #endif
@@ -716,7 +716,7 @@ static GtkWidget *create_keyboard_page()
 #endif
 	g_signal_connect(
 #if GTK_CHECK_VERSION(2, 4, 0)
-			G_OBJECT(__widget_selKey_type),
+			G_OBJECT(gtk_bin_get_child(GTK_BIN(__widget_selKey_type))),
 #else
 			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_selKey_type)->entry),
 #endif
@@ -773,7 +773,7 @@ static GtkWidget *create_keyboard_page()
 #endif
 	g_signal_connect(
 #if GTK_CHECK_VERSION(2, 4, 0)
-			G_OBJECT(__widget_kb_type),
+			G_OBJECT(gtk_bin_get_child(GTK_BIN(__widget_kb_type))),
 #else
 			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_kb_type)->entry),
 #endif

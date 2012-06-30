@@ -599,9 +599,9 @@ scim_color_button_get_colors (ScimChewingColorButton *button,
     g_snprintf (fg_color_str, G_N_ELEMENTS (fg_color_str),
                 "#%02X%02X%02X", 
 #if GTK_CHECK_VERSION(3, 0, 0)
-                static_cast<unsigned char>(255*button->fg_color.red),
-                static_cast<unsigned char>(255*button->fg_color.green),
-                static_cast<unsigned char>(255*button->fg_color.blue)
+                static_cast<unsigned int>(255*button->fg_color.red),
+                static_cast<unsigned int>(255*button->fg_color.green),
+                static_cast<unsigned int>(255*button->fg_color.blue)
 #else
                 ((button->fg_color.red)>>8),
                 ((button->fg_color.green)>>8),
@@ -611,9 +611,9 @@ scim_color_button_get_colors (ScimChewingColorButton *button,
     g_snprintf (bg_color_str, G_N_ELEMENTS (bg_color_str),
                 "#%02X%02X%02X", 
 #if GTK_CHECK_VERSION(3, 0, 0)
-                static_cast<unsigned char>(255*button->bg_color.red),
-                static_cast<unsigned char>(255*button->bg_color.green),
-                static_cast<unsigned char>(255*button->bg_color.blue)
+                static_cast<unsigned int>(255*button->bg_color.red),
+                static_cast<unsigned int>(255*button->bg_color.green),
+                static_cast<unsigned int>(255*button->bg_color.blue)
 #else
                 ((button->bg_color.red)>>8),
                 ((button->bg_color.green)>>8),
