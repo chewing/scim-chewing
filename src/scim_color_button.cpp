@@ -628,10 +628,8 @@ scim_color_button_set_colors (ScimChewingColorButton *button,
                               const String &bg_value)
 {
 #if GTK_CHECK_VERSION(3, 0, 0)
-    const char *fg_str = fg_value.c_str();
-    const char *bg_str = bg_value.c_str();
-    gdk_rgba_parse (&button->fg_color, fg_str); 
-    gdk_rgba_parse (&button->bg_color, bg_str); 
+    gdk_rgba_parse (&button->fg_color, fg_value.c_str()); 
+    gdk_rgba_parse (&button->bg_color, bg_value.c_str()); 
 #else
     GdkColor fg_color, bg_color;
     gdk_color_parse (fg_value.c_str (), &fg_color);
