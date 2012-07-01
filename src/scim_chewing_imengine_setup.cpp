@@ -576,6 +576,9 @@ static GtkWidget *create_keyboard_page()
 	}
 
 #if GTK_CHECK_VERSION(2, 4, 0)
+	gtk_editable_set_editable (
+		GTK_EDITABLE (gtk_bin_get_child (GTK_BIN (__widget_chieng_mode))),
+		FALSE);
 #else
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_chieng_mode), chieng_mode_list);
 	g_list_free(chieng_mode_list);
@@ -594,11 +597,7 @@ static GtkWidget *create_keyboard_page()
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 #if GTK_CHECK_VERSION(2, 12, 0)
 	gtk_widget_set_tooltip_text(
-#if GTK_CHECK_VERSION(2, 4, 0)
-			__widget_chieng_mode,
-#else
-			GTK_COMBO (__widget_chieng_mode)->entry,
-#endif
+			gtk_bin_get_child (GTK_BIN (__widget_chieng_mode)),
 			_("Change the default Chinese/English mode on every trigger"));
 #else
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_chieng_mode)->entry,
@@ -606,7 +605,7 @@ static GtkWidget *create_keyboard_page()
 #endif
 	g_signal_connect(
 #if GTK_CHECK_VERSION(2, 4, 0)
-			G_OBJECT(gtk_bin_get_child(GTK_BIN(__widget_chieng_mode))),
+			G_OBJECT (gtk_bin_get_child (GTK_BIN (__widget_chieng_mode))),
 #else
 			(gpointer) GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry), 
 #endif
@@ -636,6 +635,9 @@ static GtkWidget *create_keyboard_page()
 	}
 
 #if GTK_CHECK_VERSION(2, 4, 0)
+	gtk_editable_set_editable (
+		GTK_EDITABLE (gtk_bin_get_child (GTK_BIN (__widget_selKey_num))),
+		FALSE);
 #else
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_num), selKey_num_list);
 	g_list_free(selKey_num_list);
@@ -653,7 +655,7 @@ static GtkWidget *create_keyboard_page()
 			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 #if GTK_CHECK_VERSION(2, 12, 0)
-	gtk_widget_set_tooltip_text(__widget_selKey_num,
+	gtk_widget_set_tooltip_text(gtk_bin_get_child (GTK_BIN (__widget_selKey_num)),
 			_("Change the default number of selection keys"));
 #else
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_num)->entry,
@@ -691,6 +693,7 @@ static GtkWidget *create_keyboard_page()
 	}
 
 #if GTK_CHECK_VERSION(2, 4, 0)
+	gtk_editable_set_editable (GTK_EDITABLE (gtk_bin_get_child (GTK_BIN (__widget_selKey_type))), FALSE);
 #else
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_selKey_type), selKey_type_list);
 	g_list_free(selKey_type_list);
@@ -708,7 +711,7 @@ static GtkWidget *create_keyboard_page()
 			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 #if GTK_CHECK_VERSION(2, 12, 0)
-	gtk_widget_set_tooltip_text(__widget_selKey_type,
+	gtk_widget_set_tooltip_text(gtk_bin_get_child (GTK_BIN (__widget_selKey_type)),
 			_("Change the default selection keys"));
 #else
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_selKey_type)->entry,
@@ -747,6 +750,7 @@ static GtkWidget *create_keyboard_page()
 	}
 
 #if GTK_CHECK_VERSION(2, 4, 0)
+	gtk_editable_set_editable (GTK_EDITABLE (gtk_bin_get_child (GTK_BIN (__widget_kb_type))), FALSE);
 #else
 	gtk_combo_set_popdown_strings (GTK_COMBO (__widget_kb_type), kb_type_list);
 	g_list_free(kb_type_list);
@@ -765,7 +769,7 @@ static GtkWidget *create_keyboard_page()
 			(GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 			(GtkAttachOptions) (GTK_FILL), 4, 4);
 #if GTK_CHECK_VERSION(2, 12, 0)
-	gtk_widget_set_tooltip_text(__widget_kb_type,
+	gtk_widget_set_tooltip_text(gtk_bin_get_child (GTK_BIN (__widget_kb_type)),
 			_("Change the default keyboard layout type"));
 #else
 	gtk_tooltips_set_tip (__widget_tooltips, GTK_COMBO (__widget_kb_type)->entry,
