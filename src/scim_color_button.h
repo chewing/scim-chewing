@@ -53,8 +53,13 @@ struct _ScimChewingColorButton
   gint             rect_height;
   gint             click_target;
 
+#if GTK_CHECK_VERSION(3, 0, 0)
+  GdkRGBA          fg_color;
+  GdkRGBA          bg_color;
+#else
   GdkColor         fg_color;
   GdkColor	   bg_color;
+#endif
 };
 
 struct _ScimChewingColorButtonClass
