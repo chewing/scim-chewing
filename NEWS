@@ -1,5 +1,8 @@
 What's New in libchewing GIT
 ---------------------------------------------------------
+* Gtk+ 3.x support
+* Handle translated Chi-Eng mode switch properly
+* Fix incorrect color cand problem
 
 
 What's New in SCIM-chewing 0.3.4
