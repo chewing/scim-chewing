@@ -494,9 +494,12 @@ static const char *builtin_selectkeys_num[] = {
 	"5"
 };
 
-static const char *builtin_chieng_mode[] = {
-	"Chi",
-	"Eng"
+static const struct _builtin_chieng_mode {
+	const char *entry;
+	const char *translated_name;
+} builtin_chieng_mode[] = {
+	{ "Chi", _( "Chi" ) },
+	{ "Eng", _( "Eng" ) }
 };
 
 static GtkWidget *create_keyboard_page()
@@ -567,11 +570,11 @@ static GtkWidget *create_keyboard_page()
 			i++) {
 #if GTK_CHECK_VERSION(2, 4, 0)
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(__widget_chieng_mode),
-				builtin_chieng_mode[ i ] );
+				builtin_chieng_mode[ i ].translated_name );
 #else
 		chieng_mode_list = g_list_append(
 				chieng_mode_list,
-				(void *) builtin_chieng_mode[ i ] );
+				(void *) builtin_chieng_mode[ i ].translated_name );
 #endif
 	}
 
@@ -987,7 +990,7 @@ void setup_widget_value()
 		sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0]) - 1;
 	for ( ; index_chieng_mode >= 0;  index_chieng_mode--) {
 		if ( __config_chieng_mode_data ==
-			builtin_chieng_mode[index_chieng_mode]) {
+			builtin_chieng_mode[index_chieng_mode].entry) {
 			break;
 		}
 	}
@@ -999,7 +1002,7 @@ void setup_widget_value()
 #else
 	gtk_entry_set_text (
 		GTK_ENTRY(GTK_COMBO(__widget_chieng_mode)->entry),
-		builtin_chieng_mode[index_chieng_mode]
+		builtin_chieng_mode[index_chieng_mode].translated_name
 	);
 #endif
 }
@@ -1135,14 +1138,17 @@ void save_config( const ConfigPointer &config )
 			sizeof(builtin_chieng_mode) / sizeof(builtin_chieng_mode[0]) - 1;
 		for ( ; index_chieng_mode >= 0; index_chieng_mode--) {
 			if (__config_chieng_mode_data ==
-			    builtin_chieng_mode[index_chieng_mode]) {
+			    builtin_chieng_mode[index_chieng_mode].entry ||
+			    __config_chieng_mode_data ==
+			    builtin_chieng_mode[index_chieng_mode].translated_name
+			    ) {
 				break;
 			}
 		}
 		if (index_chieng_mode < 0)
 			index_chieng_mode = 0;
 		__config_chieng_mode_data =
-			builtin_chieng_mode[index_chieng_mode];
+			builtin_chieng_mode[index_chieng_mode].entry;
 
 		config->write (String (SCIM_CONFIG_IMENGINE_CHEWING_CHI_ENG_MODE)		               , __config_chieng_mode_data);
 
