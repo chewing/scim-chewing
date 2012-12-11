@@ -739,7 +739,8 @@ bool ChewingIMEngineInstance::match_key_event(
 	KeyEventList::const_iterator kit;
 	for (kit = keylist.begin(); kit != keylist.end(); ++kit) {
 		if (key.code == kit->code && key.mask == kit->mask)
-			if (key.is_key_press() || m_prev_key.code == key.code)
+			if (!(key.mask & SCIM_KEY_ReleaseMask) ||
+			    m_prev_key.code == key.code)
 				return true;
 	}
 	return false;
