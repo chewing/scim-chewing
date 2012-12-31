@@ -794,8 +794,12 @@ void ChewingIMEngineInstance::refresh_kbtype_property ()
 		_kbtype_property.set_label (_("Dvorak"));
 	else if ( ! strcmp( s, "KB_DVORAK_HSU" ) )
 		_kbtype_property.set_label (_("Dvorak Hsu's"));
-	else if ( ! strcmp( s, "KB_PINYIN" ) )
-		_kbtype_property.set_label (_("Han-Yu"));
+	else if ( ! strcmp( s, "KB_HANYU_PINYIN" ) )
+		_kbtype_property.set_label (_("Han-Yu Pinyin"));
+	else if ( ! strcmp( s, "KB_THL_PINYIN" ) )
+		_kbtype_property.set_label (_("THL Pinyin"));
+	else if ( ! strcmp( s, "KB_MPS2_PINYIN" ) )
+		_kbtype_property.set_label (_("MPS2 Pinyin"));
 	else
 		_kbtype_property.set_label (_("Default"));
 	chewing_free( s );

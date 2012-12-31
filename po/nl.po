@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-31 13:40+0800\n"
+"POT-Creation-Date: 2012-12-31 14:51+0800\n"
 "PO-Revision-Date: 2008-12-09 09:57+0100\n"
 "Last-Translator: Ronald Stroethoff <stroet43@zonnet.nl>\n"
 "Language-Team: Nederlands\n"
@@ -27,12 +27,12 @@ msgstr ""
 msgid "Eng"
 msgstr "Ned"
 
-#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:808
+#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:812
 msgid "Half"
 msgstr "Half"
 
 #: ../src/scim_chewing_imengine.cpp:85 ../src/scim_chewing_imengine.cpp:782
-#: ../src/scim_chewing_imengine.cpp:800
+#: ../src/scim_chewing_imengine.cpp:804
 msgid "Default"
 msgstr "Standaard"
 
@@ -127,10 +127,18 @@ msgid "Dvorak Hsu's"
 msgstr "Dvorak Hsu's"
 
 #: ../src/scim_chewing_imengine.cpp:798
-msgid "Han-Yu"
-msgstr "Han-Yu"
+msgid "Han-Yu Pinyin"
+msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:810
+#: ../src/scim_chewing_imengine.cpp:800
+msgid "THL Pinyin"
+msgstr ""
+
+#: ../src/scim_chewing_imengine.cpp:802
+msgid "MPS2 Pinyin"
+msgstr ""
+
+#: ../src/scim_chewing_imengine.cpp:814
 msgid "Full"
 msgstr "Vol"
 
@@ -281,14 +289,12 @@ msgid "Han-Yu PinYin Keyboard"
 msgstr "Han-Yu PinYin toetsenbord"
 
 #: ../src/scim_chewing_imengine_setup.cpp:510
-#, fuzzy
 msgid "Taiwan Huayu Luomapinyin Keyboard"
-msgstr "Han-Yu PinYin toetsenbord"
+msgstr ""
 
 #: ../src/scim_chewing_imengine_setup.cpp:513
-#, fuzzy
 msgid "MPS2 PinYin Keyboard"
-msgstr "Han-Yu PinYin toetsenbord"
+msgstr ""
 
 #: ../src/scim_chewing_imengine_setup.cpp:628
 msgid "Initial trigger Chinese/English mode:"

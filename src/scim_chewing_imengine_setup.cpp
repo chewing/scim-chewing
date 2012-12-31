@@ -506,10 +506,10 @@ struct _builtin_keymap {
 			"KB_HANYU_PINYIN",
 			String( _( "Han-Yu PinYin Keyboard" ) ) },
 		{
-			"KB_THL",
+			"KB_THL_PINYIN",
 			String( _( "Taiwan Huayu Luomapinyin Keyboard" ) ) },
 		{
-			"KB_MPS2",
+			"KB_MPS2_PINYIN",
 			String( _( "MPS2 PinYin Keyboard"  ) ) },
 };
 
