@@ -504,7 +504,13 @@ struct _builtin_keymap {
 			String( _( "DACHEN_CP26 Keyboard") ) },
 		{
 			"KB_HANYU_PINYIN",
-			String( _( "Han-Yu PinYin Keyboard" ) ) }
+			String( _( "Han-Yu PinYin Keyboard" ) ) },
+		{
+			"KB_THL",
+			String( _( "Taiwan Huayu Luomapinyin Keyboard" ) ) },
+		{
+			"KB_MPS2",
+			String( _( "MPS2 PinYin Keyboard"  ) ) },
 };
 
 static const char *builtin_selectkeys[] = {
