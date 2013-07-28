@@ -1,0 +1,46 @@
+# maintainer files
+.dir-locals.el
+ID
+TAGS
+GTAGS
+GPATH
+GRTAGS
+GSYMS
+
+# autotools generated
+INSTALL
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+build-aux/
+autotools/
+config.log
+config.status
+configure
+libtool
+/m4/libtool.m4
+/m4/lt*.m4
+scim-chewing.spec
+stamp-h1
+
+# compiling output
+*.dat
+*.la
+*.lo
+*.o
+.deps
+.libs
+
+config.h
+config.h.in
+include/stamp-h1
+
+# intltools
+po/*.gmo
+po/POTFILES
+po/stamp-it
+intltool-extract.in
+intltool-merge.in
+intltool-update.in
+po/Makefile.in.in
