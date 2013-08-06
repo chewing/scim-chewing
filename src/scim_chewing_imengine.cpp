@@ -237,7 +237,7 @@ String ChewingIMEngineFactory::get_icon_file() const
 
 WideString ChewingIMEngineFactory::get_authors() const
 {
-	return utf8_mbstowcs( _( "Chewing core team <http://chewing.csie.net>" ) );
+	return utf8_mbstowcs( _( "Chewing core team <http://chewing.im>" ) );
 }
 
 WideString ChewingIMEngineFactory::get_credits() const

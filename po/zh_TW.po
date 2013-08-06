@@ -8,7 +8,7 @@ msgstr ""
 "POT-Creation-Date: 2012-12-31 14:51+0800\n"
 "PO-Revision-Date: 2006-06-19 22:34+0800\n"
 "Last-Translator: Jim Huang <jserv.tw@gmail.com>\n"
-"Language-Team: Chewing Developers <http://chewing.csie.net>\n"
+"Language-Team: Chewing Developers <http://chewing.im>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,8 +38,8 @@ msgid "Chewing"
 msgstr "新酷音"
 
 #: ../src/scim_chewing_imengine.cpp:240
-msgid "Chewing core team <http://chewing.csie.net>"
-msgstr "新酷音發展團隊 <http://chewing.csie.net>"
+msgid "Chewing core team <http://chewing.im>"
+msgstr "新酷音發展團隊 <http://chewing.im>"
 
 #: ../src/scim_chewing_imengine.cpp:256
 msgid "Hot Keys:"

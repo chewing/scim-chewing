@@ -42,8 +42,8 @@ msgid "Chewing"
 msgstr "Chewing"
 
 #: ../src/scim_chewing_imengine.cpp:240
-msgid "Chewing core team <http://chewing.csie.net>"
-msgstr "Chewing kern groep <http://chewing.csie.net>"
+msgid "Chewing core team <http://chewing.im>"
+msgstr "Chewing kern groep <http://chewing.im>"
 
 #: ../src/scim_chewing_imengine.cpp:256
 msgid "Hot Keys:"
