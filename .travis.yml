@@ -7,7 +7,7 @@ matrix:
     - compiler: clang
 
 script:
-  - ./autogen.sh && ./configure
+  - ./autogen.sh && ./configure && make
 
 before_install:
   - sudo add-apt-repository --yes ppa:chewing/chewing
