@@ -1,3 +1,9 @@
+What's New in SCIM-chewing GIT
+---------------------------------------------------------
+* Support libchewing 0.4.0 APIs
+* Fix THL and MPS2 Pinyin configurations
+
+
 What's New in SCIM-chewing 0.3.5
 ---------------------------------------------------------
 * Gtk+ 3.x support
