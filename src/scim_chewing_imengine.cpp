@@ -2,7 +2,7 @@
  * SCIM-chewing -
  *	Intelligent Chinese Phonetic IM Engine for SCIM.
  *
- * Copyright (c) 2004, 2005, 2006, 2007, 2008, 2009, 2010
+ * Copyright (c) 2004-2010, 2012-2014
  *	SCIM-chewing Developers. See ChangeLog for details.
  *
  * See the file "COPYING" for information on usage and redistribution
@@ -73,8 +73,6 @@ extern "C" {
 	void scim_module_exit()
 	{
 		_scim_config.reset();
-		/* New API introduced in libchewing 0.2.7 */
-		chewing_Terminate();
 	}
 
 	unsigned int scim_imengine_module_init( const ConfigPointer& config )
@@ -122,10 +120,6 @@ ChewingIMEngineFactory::ChewingIMEngineFactory( const ConfigPointer& config )
 
 bool ChewingIMEngineFactory::init()
 {
-	char prefix[] = CHEWING_DATADIR;
-	char hash_postfix[] = "/.chewing/";
-
-	chewing_Init(prefix, (char *)(scim_get_home_dir() + hash_postfix).c_str() );
 	return true;
 }
 
@@ -670,7 +664,7 @@ bool ChewingIMEngineInstance::commit( ChewingContext* ctx )
 
 	// cursor decoration
 	int current_cursor = chewing_cursor_Current( ctx );
-	if( chewing_zuin_Check( ctx ) ) {
+	if (chewing_bopomofo_Check(ctx)) {
 		attr.push_back(
 			Attribute(
 				current_cursor,
