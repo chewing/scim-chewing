@@ -1,5 +1,5 @@
 #! /bin/sh
-AM_VERSION=-1.14
+AM_VERSION=-1.11
 AC_VERSION=
 
 set -x
