@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-31 14:51+0800\n"
+"POT-Creation-Date: 2014-04-19 23:41+0800\n"
 "PO-Revision-Date: 2008-12-09 09:57+0100\n"
 "Last-Translator: Ronald Stroethoff <stroet43@zonnet.nl>\n"
 "Language-Team: Nederlands\n"
@@ -16,44 +16,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../src/scim_chewing_imengine.cpp:82
+#: ../src/scim_chewing_imengine.cpp:81
 msgid "The status of the current input method. Click to change it."
 msgstr ""
 "De status van de nu gebruikte invoer-methode. Klik hierop om deze te "
 "veranderen."
 
-#: ../src/scim_chewing_imengine.cpp:83 ../src/scim_chewing_imengine.cpp:770
+#: ../src/scim_chewing_imengine.cpp:83 ../src/scim_chewing_imengine.cpp:726
 #: ../src/scim_chewing_imengine_setup.cpp:539
 msgid "Eng"
 msgstr "Ned"
 
-#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:812
+#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:769
 msgid "Half"
 msgstr "Half"
 
-#: ../src/scim_chewing_imengine.cpp:85 ../src/scim_chewing_imengine.cpp:782
-#: ../src/scim_chewing_imengine.cpp:804
+#: ../src/scim_chewing_imengine.cpp:85 ../src/scim_chewing_imengine.cpp:739
+#: ../src/scim_chewing_imengine.cpp:761
 msgid "Default"
 msgstr "Standaard"
 
-#: ../src/scim_chewing_imengine.cpp:225
+#: ../src/scim_chewing_imengine.cpp:205
 #: ../src/scim_chewing_imengine_setup.cpp:109
 msgid "Chewing"
 msgstr "Chewing"
 
-#: ../src/scim_chewing_imengine.cpp:240
+#: ../src/scim_chewing_imengine.cpp:220
 msgid "Chewing core team <http://chewing.im>"
 msgstr "Chewing kern groep <http://chewing.im>"
 
-#: ../src/scim_chewing_imengine.cpp:256
+#: ../src/scim_chewing_imengine.cpp:236
 msgid "Hot Keys:"
 msgstr "Snel toetsen:"
 
-#: ../src/scim_chewing_imengine.cpp:258
+#: ../src/scim_chewing_imengine.cpp:238
 msgid "    Switch between English/Chinese mode."
 msgstr "    Schakelen tussen de Nederlandse/Chinese invoer."
 
-#: ../src/scim_chewing_imengine.cpp:259
+#: ../src/scim_chewing_imengine.cpp:239
 msgid ""
 "\n"
 "\n"
@@ -93,52 +93,52 @@ msgstr ""
 "     Wanneer een uitdrukking wordt geselecteerd, dan kan dat een heen en "
 "weer schakelen tussen de volgende en de vorige veroorzaken."
 
-#: ../src/scim_chewing_imengine.cpp:772
+#: ../src/scim_chewing_imengine.cpp:728
 #: ../src/scim_chewing_imengine_setup.cpp:538
 msgid "Chi"
 msgstr "Chi"
 
-#: ../src/scim_chewing_imengine.cpp:784
+#: ../src/scim_chewing_imengine.cpp:741
 msgid "Hsu's"
 msgstr "Hsu's"
 
-#: ../src/scim_chewing_imengine.cpp:786
+#: ../src/scim_chewing_imengine.cpp:743
 msgid "IBM"
 msgstr "IBM"
 
-#: ../src/scim_chewing_imengine.cpp:788
+#: ../src/scim_chewing_imengine.cpp:745
 msgid "Gin-Yieh"
 msgstr "Gin-Yieh"
 
-#: ../src/scim_chewing_imengine.cpp:790
+#: ../src/scim_chewing_imengine.cpp:747
 msgid "ETen"
 msgstr "ETen"
 
-#: ../src/scim_chewing_imengine.cpp:792
+#: ../src/scim_chewing_imengine.cpp:749
 msgid "ETen 26-key"
 msgstr "ETen 26-key toets"
 
-#: ../src/scim_chewing_imengine.cpp:794
+#: ../src/scim_chewing_imengine.cpp:751
 msgid "Dvorak"
 msgstr "Dvorak"
 
-#: ../src/scim_chewing_imengine.cpp:796
+#: ../src/scim_chewing_imengine.cpp:753
 msgid "Dvorak Hsu's"
 msgstr "Dvorak Hsu's"
 
-#: ../src/scim_chewing_imengine.cpp:798
+#: ../src/scim_chewing_imengine.cpp:755
 msgid "Han-Yu Pinyin"
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:800
+#: ../src/scim_chewing_imengine.cpp:757
 msgid "THL Pinyin"
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:802
+#: ../src/scim_chewing_imengine.cpp:759
 msgid "MPS2 Pinyin"
 msgstr ""
 
-#: ../src/scim_chewing_imengine.cpp:814
+#: ../src/scim_chewing_imengine.cpp:771
 msgid "Full"
 msgstr "Vol"
 

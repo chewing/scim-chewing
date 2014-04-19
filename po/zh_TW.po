@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: scim-chewing 0.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-31 14:51+0800\n"
+"POT-Creation-Date: 2014-04-19 23:41+0800\n"
 "PO-Revision-Date: 2006-06-19 22:34+0800\n"
 "Last-Translator: Jim Huang <jserv.tw@gmail.com>\n"
 "Language-Team: Chewing Developers <http://chewing.im>\n"
@@ -14,42 +14,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/scim_chewing_imengine.cpp:82
+#: ../src/scim_chewing_imengine.cpp:81
 msgid "The status of the current input method. Click to change it."
 msgstr "目前輸入法的狀態，按一下可更改"
 
-#: ../src/scim_chewing_imengine.cpp:83 ../src/scim_chewing_imengine.cpp:770
+#: ../src/scim_chewing_imengine.cpp:83 ../src/scim_chewing_imengine.cpp:726
 #: ../src/scim_chewing_imengine_setup.cpp:539
 msgid "Eng"
 msgstr "英"
 
-#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:812
+#: ../src/scim_chewing_imengine.cpp:84 ../src/scim_chewing_imengine.cpp:769
 msgid "Half"
 msgstr "半形"
 
-#: ../src/scim_chewing_imengine.cpp:85 ../src/scim_chewing_imengine.cpp:782
-#: ../src/scim_chewing_imengine.cpp:804
+#: ../src/scim_chewing_imengine.cpp:85 ../src/scim_chewing_imengine.cpp:739
+#: ../src/scim_chewing_imengine.cpp:761
 msgid "Default"
 msgstr "預設鍵盤"
 
-#: ../src/scim_chewing_imengine.cpp:225
+#: ../src/scim_chewing_imengine.cpp:205
 #: ../src/scim_chewing_imengine_setup.cpp:109
 msgid "Chewing"
 msgstr "新酷音"
 
-#: ../src/scim_chewing_imengine.cpp:240
+#: ../src/scim_chewing_imengine.cpp:220
 msgid "Chewing core team <http://chewing.im>"
 msgstr "新酷音發展團隊 <http://chewing.im>"
 
-#: ../src/scim_chewing_imengine.cpp:256
+#: ../src/scim_chewing_imengine.cpp:236
 msgid "Hot Keys:"
 msgstr "快速鍵"
 
-#: ../src/scim_chewing_imengine.cpp:258
+#: ../src/scim_chewing_imengine.cpp:238
 msgid "    Switch between English/Chinese mode."
 msgstr "    在中英模式切換"
 
-#: ../src/scim_chewing_imengine.cpp:259
+#: ../src/scim_chewing_imengine.cpp:239
 msgid ""
 "\n"
 "\n"
@@ -88,52 +88,52 @@ msgstr ""
 "    當選擇候選詞時，按下 j 或 k 按鍵，可在前一\n"
 "    或次一字詞間切換。"
 
-#: ../src/scim_chewing_imengine.cpp:772
+#: ../src/scim_chewing_imengine.cpp:728
 #: ../src/scim_chewing_imengine_setup.cpp:538
 msgid "Chi"
 msgstr "中"
 
-#: ../src/scim_chewing_imengine.cpp:784
+#: ../src/scim_chewing_imengine.cpp:741
 msgid "Hsu's"
 msgstr "許氏鍵盤排列"
 
-#: ../src/scim_chewing_imengine.cpp:786
+#: ../src/scim_chewing_imengine.cpp:743
 msgid "IBM"
 msgstr "IBM鍵盤"
 
-#: ../src/scim_chewing_imengine.cpp:788
+#: ../src/scim_chewing_imengine.cpp:745
 msgid "Gin-Yieh"
 msgstr "精業鍵盤"
 
-#: ../src/scim_chewing_imengine.cpp:790
+#: ../src/scim_chewing_imengine.cpp:747
 msgid "ETen"
 msgstr "倚天"
 
-#: ../src/scim_chewing_imengine.cpp:792
+#: ../src/scim_chewing_imengine.cpp:749
 msgid "ETen 26-key"
 msgstr "倚天26鍵"
 
-#: ../src/scim_chewing_imengine.cpp:794
+#: ../src/scim_chewing_imengine.cpp:751
 msgid "Dvorak"
 msgstr "Dvorak鍵盤"
 
-#: ../src/scim_chewing_imengine.cpp:796
+#: ../src/scim_chewing_imengine.cpp:753
 msgid "Dvorak Hsu's"
 msgstr "Dvorak+許氏鍵盤"
 
-#: ../src/scim_chewing_imengine.cpp:798
+#: ../src/scim_chewing_imengine.cpp:755
 msgid "Han-Yu Pinyin"
 msgstr "漢語拼音排列"
 
-#: ../src/scim_chewing_imengine.cpp:800
+#: ../src/scim_chewing_imengine.cpp:757
 msgid "THL Pinyin"
 msgstr "台灣華語羅馬拼音"
 
-#: ../src/scim_chewing_imengine.cpp:802
+#: ../src/scim_chewing_imengine.cpp:759
 msgid "MPS2 Pinyin"
 msgstr "注音二式"
 
-#: ../src/scim_chewing_imengine.cpp:814
+#: ../src/scim_chewing_imengine.cpp:771
 msgid "Full"
 msgstr "全形"
 
