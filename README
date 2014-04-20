@@ -5,7 +5,7 @@ How to build SCIM-chewing
    Take Debian/Ubuntu as example:
     # apt-get install scim-dev
 
-2. Make sure you have installed libchewing 0.3.2 (or above version).
+2. Make sure you have installed libchewing 0.4.0 (or above version).
 
    # ./autogen.sh
    # ./configure
