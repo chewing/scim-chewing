@@ -628,7 +628,7 @@ bool ChewingIMEngineInstance::commit(ChewingContext *ctx)
     // cursor decoration
     int current_cursor = chewing_cursor_Current(ctx);
 
-    if (chewing_bopomofo_Check(ctx)) {
+    if (!chewing_bopomofo_Check(ctx)) {
         attr.push_back(Attribute(current_cursor, 1,
                                  SCIM_ATTR_DECORATE,
                                  SCIM_ATTR_DECORATE_REVERSE));
