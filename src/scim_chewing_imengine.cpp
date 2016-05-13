@@ -601,7 +601,6 @@ bool ChewingIMEngineInstance::commit(ChewingContext *ctx)
     const char *zuin_str = chewing_bopomofo_String_static(ctx);
     if (zuin_str) {
         preedit_string += utf8_mbstowcs(zuin_str);
-        chewing_free((char *) zuin_str);
     }
 
     chewing_interval_Enumerate(ctx);
